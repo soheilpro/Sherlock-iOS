@@ -8,28 +8,20 @@
 
 #import "AppDelegate.h"
 #import "MainViewController.h"
-#import "CategoryNode.h"
-#import "ItemNode.h"
+#import "Database.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
+    Database* database = [self readFile];
+
     UIUserInterfaceIdiom idiom = [[UIDevice currentDevice] userInterfaceIdiom];
-    
-    CategoryNode* rootNode = [[CategoryNode alloc] init];
-    CategoryNode* cat1Node = [[CategoryNode alloc] initWithName:@"Cat 1"];
-    [cat1Node.categories addObject:[[CategoryNode alloc] initWithName:@"Cat 1.1"]];
-    [cat1Node.items addObject:[[ItemNode alloc] initWithName:@"Item 1.2" andValue:@"Val 1.2"]];
-    [rootNode.categories addObject:cat1Node];
-    [rootNode.categories addObject:[[CategoryNode alloc] initWithName:@"Cat 2"]];
-    [rootNode.items addObject:[[ItemNode alloc] initWithName:@"Item 1" andValue:@"Val 1"]];
-    [rootNode.items addObject:[[ItemNode alloc] initWithName:@"Item 2" andValue:@"Val 2"]];
-    
+
     if (idiom == UIUserInterfaceIdiomPhone)
     {
         MainViewController* mainViewController = [((UINavigationController*)self.window.rootViewController).viewControllers objectAtIndex:0];
-        mainViewController.rootNode = rootNode;
+        mainViewController.rootNode = database.root;
         mainViewController.showCategories = YES;
         mainViewController.showItems = YES;
     }
@@ -37,12 +29,12 @@
     {
         UINavigationController* masterViewController = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"Navigation"];
         MainViewController* masterMainViewController = [masterViewController.viewControllers objectAtIndex:0];
-        masterMainViewController.rootNode = rootNode;
+        masterMainViewController.rootNode = database.root;
         masterMainViewController.showCategories = YES;
         
         UINavigationController* detailViewController = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"Navigation"];
         MainViewController* detailMainViewController = [detailViewController.viewControllers objectAtIndex:0];
-        detailMainViewController.rootNode = rootNode;
+        detailMainViewController.rootNode = database.root;
         detailMainViewController.showItems = YES;
 
         UISplitViewController* splitViewController = (UISplitViewController*)self.window.rootViewController;
@@ -51,6 +43,15 @@
     }
     
     return YES;
+}
+
+- (Database*)readFile
+{
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* documentsDir = [paths objectAtIndex:0];
+    NSString* filePath = [documentsDir stringByAppendingPathComponent:@"Soheil.xml"];
+    
+    return [Database openDatabaseFromFile:filePath];
 }
 
 @end

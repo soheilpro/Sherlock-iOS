@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CategoryNode.h"
-#import "ItemNode.h"
+#import "Database.h"
 
 @interface MainViewController : UITableViewController <UISplitViewControllerDelegate>
 

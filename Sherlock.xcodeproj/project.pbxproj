@@ -23,6 +23,8 @@
 		5BF813101706FF0C00039E45 /* CategoryNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF8130F1706FF0C00039E45 /* CategoryNode.m */; };
 		5BF813131706FF3100039E45 /* ItemNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF813121706FF3100039E45 /* ItemNode.m */; };
 		5BF8131E1707145C00039E45 /* ItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF8131D1707145C00039E45 /* ItemViewController.m */; };
+		5BF8132217071CED00039E45 /* GDataXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF8132117071CED00039E45 /* GDataXMLNode.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		5BF8132A1707543E00039E45 /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF813291707543E00039E45 /* Database.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +53,10 @@
 		5BF813121706FF3100039E45 /* ItemNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemNode.m; sourceTree = "<group>"; };
 		5BF8131C1707145C00039E45 /* ItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemViewController.h; sourceTree = "<group>"; };
 		5BF8131D1707145C00039E45 /* ItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemViewController.m; sourceTree = "<group>"; };
+		5BF8132017071CED00039E45 /* GDataXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataXMLNode.h; sourceTree = "<group>"; };
+		5BF8132117071CED00039E45 /* GDataXMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDataXMLNode.m; sourceTree = "<group>"; };
+		5BF813281707543E00039E45 /* Database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Database.h; sourceTree = "<group>"; };
+		5BF813291707543E00039E45 /* Database.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Database.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +77,7 @@
 			isa = PBXGroup;
 			children = (
 				5BF812AA1706E83E00039E45 /* Sherlock */,
+				5BF8132317071CF800039E45 /* Libraries */,
 				5BF812A31706E83E00039E45 /* Frameworks */,
 				5BF812A11706E83E00039E45 /* Products */,
 				5BF812AB1706E83E00039E45 /* Supporting Files */,
@@ -137,6 +144,8 @@
 		5BF8130A1706FEBD00039E45 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				5BF813281707543E00039E45 /* Database.h */,
+				5BF813291707543E00039E45 /* Database.m */,
 				5BF8130B1706FEFA00039E45 /* Node.h */,
 				5BF8130C1706FEFA00039E45 /* Node.m */,
 				5BF8130E1706FF0C00039E45 /* CategoryNode.h */,
@@ -145,6 +154,16 @@
 				5BF813121706FF3100039E45 /* ItemNode.m */,
 			);
 			name = Core;
+			sourceTree = "<group>";
+		};
+		5BF8132317071CF800039E45 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				5BF8132017071CED00039E45 /* GDataXMLNode.h */,
+				5BF8132117071CED00039E45 /* GDataXMLNode.m */,
+			);
+			name = Libraries;
+			path = Sherlock;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -221,6 +240,8 @@
 				5BF813101706FF0C00039E45 /* CategoryNode.m in Sources */,
 				5BF813131706FF3100039E45 /* ItemNode.m in Sources */,
 				5BF8131E1707145C00039E45 /* ItemViewController.m in Sources */,
+				5BF8132217071CED00039E45 /* GDataXMLNode.m in Sources */,
+				5BF8132A1707543E00039E45 /* Database.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,7 +297,9 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_LDFLAGS = "-lxml2";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -297,8 +320,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = "-lxml2";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
