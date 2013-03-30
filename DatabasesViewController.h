@@ -10,4 +10,6 @@
 
 @interface DatabasesViewController : UITableViewController
 
+- (IBAction)openSettings:(id)sender;
+
 @end

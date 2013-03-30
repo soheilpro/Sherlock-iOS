@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Softtool. All rights reserved.
 //
 
+#import <Dropbox/Dropbox.h>
 #import "AppDelegate.h"
 #import "MainViewController.h"
 
@@ -42,10 +43,36 @@
         splitViewController.delegate = detailMainViewController;
     }
     
+    [self setupDropbox];
+    
     [self.window makeKeyAndVisible];
     [self selectDatabase:NO];
     
     return YES;
+}
+
+- (BOOL)application:(UIApplication*)app openURL:(NSURL*)url sourceApplication:(NSString*)source annotation:(id)annotation
+{    
+    DBAccount* account = [[DBAccountManager sharedManager] handleOpenURL:url];
+    
+    if (account != nil)
+        return YES;
+    
+    return NO;
+}
+
+- (void)setupDropbox
+{
+    DBAccountManager* accountManager = [[DBAccountManager alloc] initWithAppKey:@"YOUR_APP_KEY" secret:@"YOUR_APP_SECRET"];
+    [DBAccountManager setSharedManager:accountManager];
+
+    DBAccount* account = accountManager.linkedAccount;
+    
+    if (account)
+    {
+        DBFilesystem* filesystem = [[DBFilesystem alloc] initWithAccount:account];
+        [DBFilesystem setSharedFilesystem:filesystem];
+    }
 }
 
 - (void)selectDatabase:(BOOL)animated;
