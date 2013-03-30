@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B8942C017076DB800A618C7 /* Dropbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B8942BF17076DB800A618C7 /* Dropbox.framework */; };
+		5B8942C317076DD600A618C7 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B8942C217076DD600A618C7 /* CFNetwork.framework */; };
+		5B8942C517076DDE00A618C7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B8942C417076DDE00A618C7 /* Security.framework */; };
+		5B8942C717076DE600A618C7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B8942C617076DE600A618C7 /* SystemConfiguration.framework */; };
+		5B8942C917076DEC00A618C7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B8942C817076DEC00A618C7 /* QuartzCore.framework */; };
 		5BF812A51706E83E00039E45 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF812A41706E83E00039E45 /* UIKit.framework */; };
 		5BF812A71706E83E00039E45 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF812A61706E83E00039E45 /* Foundation.framework */; };
 		5BF812A91706E83E00039E45 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF812A81706E83E00039E45 /* CoreGraphics.framework */; };
@@ -28,6 +33,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5B8942BF17076DB800A618C7 /* Dropbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Dropbox.framework; sourceTree = "<group>"; };
+		5B8942C217076DD600A618C7 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		5B8942C417076DDE00A618C7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		5B8942C617076DE600A618C7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		5B8942C817076DEC00A618C7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5BF812A01706E83E00039E45 /* Sherlock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sherlock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BF812A41706E83E00039E45 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5BF812A61706E83E00039E45 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -64,9 +74,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B8942C917076DEC00A618C7 /* QuartzCore.framework in Frameworks */,
+				5B8942C717076DE600A618C7 /* SystemConfiguration.framework in Frameworks */,
+				5B8942C517076DDE00A618C7 /* Security.framework in Frameworks */,
+				5B8942C317076DD600A618C7 /* CFNetwork.framework in Frameworks */,
 				5BF812A51706E83E00039E45 /* UIKit.framework in Frameworks */,
 				5BF812A71706E83E00039E45 /* Foundation.framework in Frameworks */,
 				5BF812A91706E83E00039E45 /* CoreGraphics.framework in Frameworks */,
+				5B8942C017076DB800A618C7 /* Dropbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,9 +110,14 @@
 		5BF812A31706E83E00039E45 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5BF812A41706E83E00039E45 /* UIKit.framework */,
-				5BF812A61706E83E00039E45 /* Foundation.framework */,
+				5B8942C217076DD600A618C7 /* CFNetwork.framework */,
 				5BF812A81706E83E00039E45 /* CoreGraphics.framework */,
+				5B8942BF17076DB800A618C7 /* Dropbox.framework */,
+				5BF812A61706E83E00039E45 /* Foundation.framework */,
+				5B8942C817076DEC00A618C7 /* QuartzCore.framework */,
+				5B8942C417076DDE00A618C7 /* Security.framework */,
+				5B8942C617076DE600A618C7 /* SystemConfiguration.framework */,
+				5BF812A41706E83E00039E45 /* UIKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -333,6 +353,10 @@
 		5BF812CB1706E83E00039E45 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sherlock/Sherlock-Prefix.pch";
 				INFOPLIST_FILE = "Sherlock/Sherlock-Info.plist";
@@ -345,6 +369,10 @@
 		5BF812CC1706E83E00039E45 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sherlock/Sherlock-Prefix.pch";
 				INFOPLIST_FILE = "Sherlock/Sherlock-Info.plist";
