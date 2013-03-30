@@ -12,6 +12,8 @@
 		5B8942C517076DDE00A618C7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B8942C417076DDE00A618C7 /* Security.framework */; };
 		5B8942C717076DE600A618C7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B8942C617076DE600A618C7 /* SystemConfiguration.framework */; };
 		5B8942C917076DEC00A618C7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B8942C817076DEC00A618C7 /* QuartzCore.framework */; };
+		5B8942CF1707704D00A618C7 /* DatabasesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8942CE1707704D00A618C7 /* DatabasesViewController.m */; };
+		5B8942D2170773EC00A618C7 /* PasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8942D1170773EC00A618C7 /* PasswordViewController.m */; };
 		5BF812A51706E83E00039E45 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF812A41706E83E00039E45 /* UIKit.framework */; };
 		5BF812A71706E83E00039E45 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF812A61706E83E00039E45 /* Foundation.framework */; };
 		5BF812A91706E83E00039E45 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF812A81706E83E00039E45 /* CoreGraphics.framework */; };
@@ -38,6 +40,10 @@
 		5B8942C417076DDE00A618C7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		5B8942C617076DE600A618C7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		5B8942C817076DEC00A618C7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		5B8942CD1707704D00A618C7 /* DatabasesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DatabasesViewController.h; path = ../DatabasesViewController.h; sourceTree = "<group>"; };
+		5B8942CE1707704D00A618C7 /* DatabasesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DatabasesViewController.m; path = ../DatabasesViewController.m; sourceTree = "<group>"; };
+		5B8942D0170773EC00A618C7 /* PasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasswordViewController.h; sourceTree = "<group>"; };
+		5B8942D1170773EC00A618C7 /* PasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordViewController.m; sourceTree = "<group>"; };
 		5BF812A01706E83E00039E45 /* Sherlock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sherlock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BF812A41706E83E00039E45 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5BF812A61706E83E00039E45 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -153,6 +159,10 @@
 			children = (
 				5BF812BC1706E83E00039E45 /* MainStoryboard_iPhone.storyboard */,
 				5BF812BF1706E83E00039E45 /* MainStoryboard_iPad.storyboard */,
+				5B8942CD1707704D00A618C7 /* DatabasesViewController.h */,
+				5B8942CE1707704D00A618C7 /* DatabasesViewController.m */,
+				5B8942D0170773EC00A618C7 /* PasswordViewController.h */,
+				5B8942D1170773EC00A618C7 /* PasswordViewController.m */,
 				5BF812C21706E83E00039E45 /* MainViewController.h */,
 				5BF812C31706E83E00039E45 /* MainViewController.m */,
 				5BF8131C1707145C00039E45 /* ItemViewController.h */,
@@ -262,6 +272,8 @@
 				5BF8131E1707145C00039E45 /* ItemViewController.m in Sources */,
 				5BF8132217071CED00039E45 /* GDataXMLNode.m in Sources */,
 				5BF8132A1707543E00039E45 /* Database.m in Sources */,
+				5B8942CF1707704D00A618C7 /* DatabasesViewController.m in Sources */,
+				5B8942D2170773EC00A618C7 /* PasswordViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

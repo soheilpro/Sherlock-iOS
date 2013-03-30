@@ -12,12 +12,18 @@
 
 @implementation Database
 
-+ (Database*)openDatabaseFromFile:(NSString*)file withPassword:(NSString *)password
++ (Database*)openDatabaseFromData:(NSData*)data withPassword:(NSString *)password
 {
-    NSData* encryptedData = [NSData dataWithContentsOfFile:file];
-    NSData* decryptedData = [self tripleDESDecryptData:encryptedData withPassword:password];
+    NSData* decryptedData = [self tripleDESDecryptData:data withPassword:password];
     
-    GDataXMLDocument* document = [[GDataXMLDocument alloc] initWithData:decryptedData options:0 error:nil]; // TODO
+    if (decryptedData == nil)
+        return nil;
+    
+    NSError* error;
+    GDataXMLDocument* document = [[GDataXMLDocument alloc] initWithData:decryptedData options:0 error:&error];
+    
+    if (error != nil)
+        return nil;
     
     Database* database = [[Database alloc] init];
     database.root = [self categooryFromElement:document.rootElement];

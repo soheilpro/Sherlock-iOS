@@ -15,6 +15,6 @@
 
 @property (nonatomic, strong) CategoryNode* root;
 
-+ (Database*)openDatabaseFromFile:(NSString*)file withPassword:(NSString*)password;
++ (Database*)openDatabaseFromData:(NSData*)data withPassword:(NSString*)password;
 
 @end
