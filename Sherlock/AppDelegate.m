@@ -14,7 +14,7 @@
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
-    Database* database = [self readFile];
+    Database* database = [self openDatabase];
 
     UIUserInterfaceIdiom idiom = [[UIDevice currentDevice] userInterfaceIdiom];
 
@@ -45,13 +45,13 @@
     return YES;
 }
 
-- (Database*)readFile
+- (Database*)openDatabase
 {
     NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString* documentsDir = [paths objectAtIndex:0];
-    NSString* filePath = [documentsDir stringByAppendingPathComponent:@"Soheil.xml"];
+    NSString* filePath = [documentsDir stringByAppendingPathComponent:@"Soheil.sdb"];
     
-    return [Database openDatabaseFromFile:filePath];
+    return [Database openDatabaseFromFile:filePath withPassword:@""];
 }
 
 @end

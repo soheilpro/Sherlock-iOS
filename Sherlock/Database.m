@@ -8,13 +8,16 @@
 
 #import "Database.h"
 #import "GDataXMLNode.h"
+#import <CommonCrypto/CommonCryptor.h>
 
 @implementation Database
 
-+ (Database*)openDatabaseFromFile:(NSString*)file;
++ (Database*)openDatabaseFromFile:(NSString*)file withPassword:(NSString *)password
 {
-    NSData* data = [NSData dataWithContentsOfFile:file];
-    GDataXMLDocument* document = [[GDataXMLDocument alloc] initWithData:data options:0 error:nil]; // TODO
+    NSData* encryptedData = [NSData dataWithContentsOfFile:file];
+    NSData* decryptedData = [self tripleDESDecryptData:encryptedData withPassword:password];
+    
+    GDataXMLDocument* document = [[GDataXMLDocument alloc] initWithData:decryptedData options:0 error:nil]; // TODO
     
     Database* database = [[Database alloc] init];
     database.root = [self categooryFromElement:document.rootElement];
@@ -54,6 +57,51 @@
     item.value = [element stringValue];
     
     return item;
+}
+
++ (NSData*)tripleDESDecryptData:(NSData*)inputData withPassword:(NSString*)password
+{
+    NSData* key = [self tripleDESKeyFromPassword:password];
+    NSData* iv = [self tripleDESIVFromPassword:password];
+    NSMutableData* outputData = [NSMutableData dataWithLength:(inputData.length + kCCBlockSize3DES)];
+    
+    size_t outLength;
+    CCCryptorStatus result = CCCrypt(kCCDecrypt, kCCAlgorithm3DES, kCCOptionPKCS7Padding, key.bytes, key.length, iv.bytes, inputData.bytes, inputData.length, outputData.mutableBytes, outputData.length, &outLength);
+    
+    if (result != kCCSuccess)
+        return nil;
+    
+    [outputData setLength:outLength];
+    
+    return outputData;
+}
+
++ (NSData*)tripleDESKeyFromPassword:(NSString*)password
+{
+    NSString* key = [password copy];
+    int length = kCCKeySize3DES;
+    
+    while (key.length < length)
+        key = [key stringByAppendingString:password];
+    
+    if (key.length > length)
+        key = [key substringToIndex:length];
+    
+    return [key dataUsingEncoding:NSASCIIStringEncoding];
+}
+
++ (NSData*)tripleDESIVFromPassword:(NSString*)password
+{
+    NSString* key = [password copy];
+    int length = 8;
+    
+    while (key.length < length)
+        key = [key stringByAppendingString:password];
+    
+    if (key.length > length)
+        key = [key substringToIndex:length];
+    
+    return [key dataUsingEncoding:NSASCIIStringEncoding];
 }
 
 @end
