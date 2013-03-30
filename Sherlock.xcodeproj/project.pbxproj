@@ -15,6 +15,7 @@
 		5B8942CF1707704D00A618C7 /* DatabasesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8942CE1707704D00A618C7 /* DatabasesViewController.m */; };
 		5B8942D2170773EC00A618C7 /* PasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8942D1170773EC00A618C7 /* PasswordViewController.m */; };
 		5B8942D51707837800A618C7 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8942D41707837800A618C7 /* SettingsViewController.m */; };
+		5B8942DF17079A3F00A618C7 /* ActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8942DE17079A3F00A618C7 /* ActionSheet.m */; };
 		5BF812A51706E83E00039E45 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF812A41706E83E00039E45 /* UIKit.framework */; };
 		5BF812A71706E83E00039E45 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF812A61706E83E00039E45 /* Foundation.framework */; };
 		5BF812A91706E83E00039E45 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF812A81706E83E00039E45 /* CoreGraphics.framework */; };
@@ -47,6 +48,8 @@
 		5B8942D1170773EC00A618C7 /* PasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordViewController.m; sourceTree = "<group>"; };
 		5B8942D31707837800A618C7 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		5B8942D41707837800A618C7 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		5B8942DD17079A3F00A618C7 /* ActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheet.h; sourceTree = "<group>"; };
+		5B8942DE17079A3F00A618C7 /* ActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionSheet.m; sourceTree = "<group>"; };
 		5BF812A01706E83E00039E45 /* Sherlock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sherlock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BF812A41706E83E00039E45 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5BF812A61706E83E00039E45 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -172,6 +175,8 @@
 				5BF8131D1707145C00039E45 /* ItemViewController.m */,
 				5B8942D31707837800A618C7 /* SettingsViewController.h */,
 				5B8942D41707837800A618C7 /* SettingsViewController.m */,
+				5B8942DD17079A3F00A618C7 /* ActionSheet.h */,
+				5B8942DE17079A3F00A618C7 /* ActionSheet.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -280,6 +285,7 @@
 				5B8942CF1707704D00A618C7 /* DatabasesViewController.m in Sources */,
 				5B8942D2170773EC00A618C7 /* PasswordViewController.m in Sources */,
 				5B8942D51707837800A618C7 /* SettingsViewController.m in Sources */,
+				5B8942DF17079A3F00A618C7 /* ActionSheet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

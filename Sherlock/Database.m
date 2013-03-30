@@ -47,7 +47,7 @@
         ItemNode* item1 = (ItemNode*)obj1;
         ItemNode* item2 = (ItemNode*)obj2;
         
-        return [item1.name compare:item2.name];
+        return [item1.name compare:item2.name options:NSCaseInsensitiveSearch];
     };
     
     [category.categories sortUsingComparator:nodeComparer];
@@ -61,6 +61,7 @@
     ItemNode* item = [[ItemNode alloc] init];
     item.name = [[element attributeForName:@"name"] stringValue];
     item.value = [element stringValue];
+    item.isSecret = [[[element attributeForName:@"type"] stringValue] isEqualToString:@"password"];
     
     return item;
 }

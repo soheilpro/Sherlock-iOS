@@ -8,6 +8,7 @@
 
 #import "MainViewController.h"
 #import "ItemViewController.h"
+#import "ActionSheet.h"
 
 #define SECTION_CATEGORIES 0
 #define SECTION_ITEMS 1
@@ -100,7 +101,7 @@
         
         UITableViewCell* cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItemCell"];
         cell.textLabel.text = item.name;
-        cell.detailTextLabel.text = item.value;
+        cell.detailTextLabel.text = !item.isSecret ? item.value : [@"" stringByPaddingToLength:item.value.length withString:@"\u2022" startingAtIndex:0];
         
         return cell;
     }
@@ -114,7 +115,34 @@
         [self performSegueWithIdentifier:@"CategorySegue" sender:tableView];
     
     if (indexPath.section == SECTION_ITEMS)
-        [self performSegueWithIdentifier:@"ItemSegue" sender:tableView];
+    {
+        ItemNode* item = [self.rootNode.items objectAtIndex:indexPath.row];
+        
+        ActionSheet* actionSheet = [ActionSheet actionSheet];
+        [actionSheet addButtonWithTitle:@"View" selectBlock:^
+        {
+            [self performSegueWithIdentifier:@"ItemSegue" sender:tableView];
+        }];
+
+        [actionSheet addButtonWithTitle:@"Copy" selectBlock:^
+        {
+            UIPasteboard* pasteboard = [UIPasteboard generalPasteboard];
+            pasteboard.string = item.value;
+        }];
+
+        NSURL* url = [NSURL URLWithString:item.value];
+        
+        if (url != nil && url.scheme != nil)
+        {
+            [actionSheet addButtonWithTitle:@"Open" selectBlock:^
+            {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:item.value]];
+            }];
+        }
+        
+        [actionSheet addCancelButtonWithTitle:@"Cancel"];
+        [actionSheet presentInView:self.view];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
