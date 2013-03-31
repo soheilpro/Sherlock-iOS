@@ -17,8 +17,8 @@
 
 @interface DatabasesViewController ()
 
-@property (nonatomic, strong) NSArray* localFiles;
-@property (nonatomic, strong) NSArray* dropboxFiles;
+@property (nonatomic, strong) NSArray* localDatabaseFiles;
+@property (nonatomic, strong) NSArray* dropboxDatabaseFiles;
 
 @end
 
@@ -33,8 +33,8 @@
         [self refreshFiles];
     }];
     
-    self.localFiles = @[];
-    self.dropboxFiles = @[];
+    self.localDatabaseFiles = @[];
+    self.dropboxDatabaseFiles = @[];
     
     [self refreshFiles];
 }
@@ -45,8 +45,8 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
     {
-        self.localFiles = [self getListOfLocalFiles];
-        self.dropboxFiles = [self getListOfDropboxFiles];
+        self.localDatabaseFiles = [self getListOfLocalDatabaseFiles];
+        self.dropboxDatabaseFiles = [self getListOfDropboxDatabaseFiles];
         
         dispatch_async(dispatch_get_main_queue(), ^
         {
@@ -57,7 +57,7 @@
     });
 }
 
-- (NSArray*)getListOfLocalFiles
+- (NSArray*)getListOfLocalDatabaseFiles
 {
     NSString* documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSMutableArray* files = [NSMutableArray array];
@@ -68,7 +68,7 @@
     return files;
 }
 
-- (NSArray*)getListOfDropboxFiles
+- (NSArray*)getListOfDropboxDatabaseFiles
 {
     if ([DBAccountManager sharedManager].linkedAccount == nil)
         return [NSArray array];
@@ -116,10 +116,10 @@
 - (NSString*)tableView:(UITableView*)tableView titleForHeaderInSection:(NSInteger)section
 {
     if (section == SECTION_LOCAL)
-        return self.localFiles.count > 0 ? @"Local" : nil;
+        return self.localDatabaseFiles.count > 0 ? @"Local" : nil;
     
     if (section == SECTION_DROPBOX)
-        return self.dropboxFiles.count > 0 ? @"Dropbox" : nil;
+        return self.dropboxDatabaseFiles.count > 0 ? @"Dropbox" : nil;
     
     return nil;
 }
@@ -127,10 +127,10 @@
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == SECTION_LOCAL)
-        return self.localFiles.count;
+        return self.localDatabaseFiles.count;
     
     if (section == SECTION_DROPBOX)
-        return self.dropboxFiles.count;
+        return self.dropboxDatabaseFiles.count;
     
     return 0;
 }
@@ -141,23 +141,23 @@
     
     if (indexPath.section == SECTION_LOCAL)
     {
-        file = [self.localFiles objectAtIndex:indexPath.row];
+        file = [self.localDatabaseFiles objectAtIndex:indexPath.row];
     }
     else if (indexPath.section == SECTION_DROPBOX)
     {
-        file = [self.dropboxFiles objectAtIndex:indexPath.row];
+        file = [self.dropboxDatabaseFiles objectAtIndex:indexPath.row];
     }
     
-    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"FileCell"];
+    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"DatabaseCell"];
     cell.textLabel.text = [[file lastPathComponent] stringByDeletingPathExtension];
     
     return cell;
 }
 
-
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    __block NSData* fileData;
+    __block NSString* databaseFile;
+    __block NSData* datanaseFileData;
     
     MBProgressHUD* hud = [self showHUDWithText:@"Loading database"];
     
@@ -165,17 +165,18 @@
     {
         if (indexPath.section == SECTION_LOCAL)
         {
-            NSString* file = [self.localFiles objectAtIndex:indexPath.row];
-            fileData = [NSData dataWithContentsOfFile:file];
+            databaseFile = [self.localDatabaseFiles objectAtIndex:indexPath.row];            
+            datanaseFileData = [NSData dataWithContentsOfFile:databaseFile];
         }
         else if (indexPath.section == SECTION_DROPBOX)
         {
-            NSString* file = [self.dropboxFiles objectAtIndex:indexPath.row];
-            DBPath* dbPath = [[DBPath alloc] initWithString:file];
+            databaseFile = [self.dropboxDatabaseFiles objectAtIndex:indexPath.row];
+            
+            DBPath* dbPath = [[DBPath alloc] initWithString:databaseFile];
             DBFilesystem* dbFilesystem = [[DBFilesystem alloc] initWithAccount:[DBAccountManager sharedManager].linkedAccount];
             DBFile* dbFile = [dbFilesystem openFile:dbPath error:nil];
 
-            fileData = [dbFile readData:nil];
+            datanaseFileData = [dbFile readData:nil];
         }
 
         dispatch_async(dispatch_get_main_queue(), ^
@@ -183,7 +184,8 @@
             [hud hide:YES];
 
             PasswordViewController* passwordViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Password"];
-            passwordViewController.fileData = fileData;
+            passwordViewController.databaseFile = databaseFile;
+            passwordViewController.databaseFileData = datanaseFileData;
             
             [self.navigationController pushViewController:passwordViewController animated:YES];
         });

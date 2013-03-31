@@ -9,6 +9,7 @@
 #import "FolderViewController.h"
 #import "ItemViewController.h"
 #import "ActionSheet.h"
+#import "AppDelegate.h"
 
 #define SECTION_CATEGORIES 0
 #define SECTION_ITEMS 1
@@ -35,7 +36,41 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     [self refresh];
+    
+    if (self.folder.parent == nil)
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Unload" style:UIBarButtonItemStylePlain target:self action:@selector(unloadDatabase)];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if (self.folder.parent == nil)
+        self.navigationItem.leftBarButtonItem.enabled = NO;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    if (self.folder.parent == nil)
+    {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void)
+        {
+            self.navigationItem.leftBarButtonItem.enabled = YES;
+        });
+    }
+
+    // If we're in the master view controller, update the detail view controller as well
+    if (self.splitViewController != nil && [self.splitViewController.viewControllers objectAtIndex:0] == self.navigationController)
+    {
+        UINavigationController* detailViewController = [self.splitViewController.viewControllers lastObject];
+        FolderViewController* detailMainViewController = [detailViewController.viewControllers objectAtIndex:0];
+        detailMainViewController.folder = self.folder;
+        [detailMainViewController refresh];
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue*)segue sender:(id)sender
@@ -60,9 +95,15 @@
 
 - (void)refresh
 {
-    self.navigationItem.title = self.folder.name;
+    self.navigationItem.title = self.folder.parent != nil ? self.folder.name : self.folder.database.name;
     
     [self.tableView reloadData];
+    [self.tableView setContentOffset:CGPointZero animated:NO];
+}
+
+- (void)unloadDatabase
+{
+    [((AppDelegate*)[UIApplication sharedApplication].delegate) unloadCurrentDatabase];
 }
 
 #pragma mark - Table View
@@ -122,12 +163,16 @@
         [actionSheet addButtonWithTitle:@"View" selectBlock:^
         {
             [self performSegueWithIdentifier:@"ItemSegue" sender:tableView];
+            
+            [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
         }];
 
         [actionSheet addButtonWithTitle:@"Copy" selectBlock:^
         {
             UIPasteboard* pasteboard = [UIPasteboard generalPasteboard];
             pasteboard.string = item.value;
+            
+            [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
         }];
 
         NSURL* url = [NSURL URLWithString:item.value];
@@ -137,23 +182,17 @@
             [actionSheet addButtonWithTitle:@"Open" selectBlock:^
             {
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:item.value]];
+                
+                [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
             }];
         }
         
-        [actionSheet addCancelButtonWithTitle:@"Cancel"];
+        [actionSheet addCancelButtonWithTitle:@"Cancel" selectBlock:^
+        {
+            [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+        }];
+         
         [actionSheet presentInView:self.view];
-    }
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    // If we're in the master view controller, update the detail view controller as well
-    if (self.splitViewController != nil && [self.splitViewController.viewControllers objectAtIndex:0] == self.navigationController)
-    {
-        UINavigationController* detailViewController = [self.splitViewController.viewControllers lastObject];
-        FolderViewController* detailMainViewController = [detailViewController.viewControllers objectAtIndex:0];
-        detailMainViewController.folder = self.folder;
-        [detailMainViewController refresh];
     }
 }
 

@@ -73,7 +73,7 @@
 - (void)selectDatabase:(BOOL)animated;
 {
     UIViewController* rootViewController = self.window.rootViewController;
-    UINavigationController* navigationViewController = [rootViewController.storyboard instantiateViewControllerWithIdentifier:@"FilesNavigation"];
+    UINavigationController* navigationViewController = [rootViewController.storyboard instantiateViewControllerWithIdentifier:@"DatabasesNavigation"];
     
     [rootViewController presentModalViewController:navigationViewController animated:animated];
 }
@@ -85,6 +85,13 @@
     FolderViewController* mainViewController = [((UINavigationController*)self.window.rootViewController).viewControllers objectAtIndex:0];
     mainViewController.folder = database.root;
     [mainViewController refresh];
+}
+
+- (void)unloadCurrentDatabase
+{
+    self.database = nil;
+    
+    [self selectDatabase:YES];
 }
 
 @end

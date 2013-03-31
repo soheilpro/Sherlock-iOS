@@ -10,7 +10,8 @@
 
 @interface PasswordViewController : UIViewController<UITextFieldDelegate>
 
-@property (nonatomic, strong) NSData* fileData;
+@property (nonatomic, strong) NSString* databaseFile;
+@property (nonatomic, strong) NSData* databaseFileData;
 @property (nonatomic, weak) IBOutlet UITextField* passwordTextField;
 
 - (IBAction)open:(id)sender;

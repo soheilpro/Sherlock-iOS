@@ -12,7 +12,7 @@
 
 @implementation Database
 
-+ (Database*)openDatabaseFromData:(NSData*)data withPassword:(NSString *)password
++ (Database*)openDatabaseNamed:(NSString*)name fromData:(NSData*)data withPassword:(NSString*)password;
 {
     NSData* decryptedData = [self tripleDESDecryptData:data withPassword:password];
     
@@ -26,21 +26,24 @@
         return nil;
     
     Database* database = [[Database alloc] init];
-    database.root = [self folderFromElement:document.rootElement];
+    database.name = name;
+    database.root = [self folderFromElement:document.rootElement withParent:nil inDatabase:database];
     
     return database;
 }
 
-+ (Folder*)folderFromElement:(GDataXMLElement*)element
++ (Folder*)folderFromElement:(GDataXMLElement*)element withParent:(Folder*)parent inDatabase:(Database*)database;
 {
     Folder* folder = [[Folder alloc] init];
     folder.name = [[element attributeForName:@"name"] stringValue];
+    folder.parent = parent;
+    folder.database = database;
     
     for (GDataXMLElement* categoryElement in [element elementsForName:@"category"])
-        [folder.folders addObject:[self folderFromElement:categoryElement]];
+        [folder.folders addObject:[self folderFromElement:categoryElement withParent:folder inDatabase:database]];
     
     for (GDataXMLElement* itemElement in [element elementsForName:@"item"])
-        [folder.items addObject:[self itemFromElement:itemElement]];
+        [folder.items addObject:[self itemFromElement:itemElement withParent:folder inDatabase:database]];
     
     id nodeComparer = ^NSComparisonResult(id obj1, id obj2)
     {
@@ -56,12 +59,14 @@
     return folder;
 }
 
-+ (Item*)itemFromElement:(GDataXMLElement*)element
++ (Item*)itemFromElement:(GDataXMLElement*)element withParent:(Folder*)parent inDatabase:(Database*)database;
 {
     Item* item = [[Item alloc] init];
     item.name = [[element attributeForName:@"name"] stringValue];
     item.value = [element stringValue];
     item.isSecret = [[[element attributeForName:@"type"] stringValue] isEqualToString:@"password"];
+    item.parent = parent;
+    item.database = database;
     
     return item;
 }

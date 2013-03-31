@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B4466A617089FC000A42D7C /* Dropbox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B4466A517089FC000A42D7C /* Dropbox@2x.png */; };
 		5B59E1FB170830F900AEC98D /* Dropbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B59E1FA170830F900AEC98D /* Dropbox.framework */; };
 		5B59E1FE1708311400AEC98D /* DatabasesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B59E1FD1708311400AEC98D /* DatabasesViewController.m */; };
 		5B59E2101708338F00AEC98D /* PTC75F.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B59E2011708338F00AEC98D /* PTC75F.ttf */; };
@@ -62,6 +63,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5B4466A517089FC000A42D7C /* Dropbox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Dropbox@2x.png"; sourceTree = "<group>"; };
 		5B59E1FA170830F900AEC98D /* Dropbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Dropbox.framework; path = Sherlock/Dropbox.framework; sourceTree = "<group>"; };
 		5B59E1FC1708311400AEC98D /* DatabasesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabasesViewController.h; sourceTree = "<group>"; };
 		5B59E1FD1708311400AEC98D /* DatabasesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabasesViewController.m; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 				5B59E20D1708338F00AEC98D /* MenuAccessoryDark@2x.png */,
 				5B59E20E1708338F00AEC98D /* MenuAccessoryLight.png */,
 				5B59E20F1708338F00AEC98D /* MenuAccessoryLight@2x.png */,
+				5B4466A517089FC000A42D7C /* Dropbox@2x.png */,
 			);
 			name = Images;
 			path = Sherlock/Images;
@@ -416,6 +419,7 @@
 				5B59E21B1708338F00AEC98D /* MenuAccessoryDark@2x.png in Resources */,
 				5B59E21C1708338F00AEC98D /* MenuAccessoryLight.png in Resources */,
 				5B59E21D1708338F00AEC98D /* MenuAccessoryLight@2x.png in Resources */,
+				5B4466A617089FC000A42D7C /* Dropbox@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

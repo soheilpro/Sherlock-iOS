@@ -40,15 +40,8 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Dropbox" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UuU-QM-cZT" customClass="ThemedLabelBold">
-                                <rect key="frame" x="20" y="64" width="280" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view contentMode="scaleToFill" id="VoJ-pc-5Zr" customClass="ThemedPanel">
-                                <rect key="frame" x="10" y="102" width="301" height="64"/>
+                                <rect key="frame" x="10" y="124" width="301" height="64"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="i12-II-9c7" customClass="ThemedLabel">
@@ -91,6 +84,10 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Dropbox@2x.png" id="Sg8-IM-Rus">
+                                <rect key="frame" x="15" y="76" width="136" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -114,7 +111,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FileCell" textLabel="hOl-Ya-nA4" style="IBUITableViewCellStyleDefault" id="eBb-FI-cyL" customClass="ThemedTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DatabaseCell" textLabel="hOl-Ya-nA4" style="IBUITableViewCellStyleDefault" id="eBb-FI-cyL" customClass="ThemedTableViewCell">
                                 <rect key="frame" x="0.0" y="46" width="320" height="45"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -188,7 +185,7 @@
         <!--Navigation Controller-->
         <scene sceneID="Do3-NJ-pZg">
             <objects>
-                <navigationController storyboardIdentifier="FilesNavigation" definesPresentationContext="YES" id="FKU-p6-WSH" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="DatabasesNavigation" definesPresentationContext="YES" modalTransitionStyle="flipHorizontal" id="FKU-p6-WSH" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="HfO-Sv-iDJ">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -321,12 +318,18 @@
             <point key="canvasLocation" x="907" y="64"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Dropbox@2x.png" width="272" height="70"/>
+    </resources>
     <classes>
         <class className="DatabasesViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/DatabasesViewController.h"/>
             <relationships>
                 <relationship kind="action" name="openSettings:"/>
             </relationships>
+        </class>
+        <class className="FolderViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FolderViewController.h"/>
         </class>
         <class className="ItemViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ItemViewController.h"/>
