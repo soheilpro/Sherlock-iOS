@@ -68,14 +68,6 @@
 {
     DBAccountManager* accountManager = [[DBAccountManager alloc] initWithAppKey:@"YOUR_APP_KEY" secret:@"YOUR_APP_SECRET"];
     [DBAccountManager setSharedManager:accountManager];
-
-    DBAccount* account = accountManager.linkedAccount;
-    
-    if (account)
-    {
-        DBFilesystem* filesystem = [[DBFilesystem alloc] initWithAccount:account];
-        [DBFilesystem setSharedFilesystem:filesystem];
-    }
 }
 
 - (void)selectDatabase:(BOOL)animated;

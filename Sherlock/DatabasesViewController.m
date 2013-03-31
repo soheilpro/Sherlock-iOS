@@ -9,6 +9,8 @@
 #import "DatabasesViewController.h"
 #import "PasswordViewController.h"
 #import <Dropbox/Dropbox.h>
+#import "MBProgressHUD.h"
+#import "Theme.h"
 
 #define SECTION_LOCAL 0
 #define SECTION_DROPBOX 1
@@ -22,38 +24,37 @@
 
 @implementation DatabasesViewController
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidLoad
 {
-    [super viewWillAppear:animated];
+    [super viewDidLoad];
     
-    self.localFiles = [self getListOfLocalFiles];
-    self.dropboxFiles = [self getListOfDropboxFiles];
+    [[DBAccountManager sharedManager] addObserver:self block:^(DBAccount* account)
+    {
+        [self refreshFiles];
+    }];
+    
+    self.localFiles = @[];
+    self.dropboxFiles = @[];
+    
+    [self refreshFiles];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue*)segue sender:(id)sender
+- (void)refreshFiles
 {
-    if ([segue.identifier isEqualToString:@"PasswordSegue"])
+    MBProgressHUD* hud = [self showHUDWithText:@"Loading list of databases"];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
     {
-        NSIndexPath* indexPath = [self.tableView indexPathForSelectedRow];
-        NSData* fileData;
+        self.localFiles = [self getListOfLocalFiles];
+        self.dropboxFiles = [self getListOfDropboxFiles];
         
-        if (indexPath.section == SECTION_LOCAL)
+        dispatch_async(dispatch_get_main_queue(), ^
         {
-            NSString* file = [self.localFiles objectAtIndex:indexPath.row];
-            fileData = [NSData dataWithContentsOfFile:file];
-        }
-        else if (indexPath.section == SECTION_DROPBOX)
-        {
-            NSString* file = [self.dropboxFiles objectAtIndex:indexPath.row];
-            DBPath* dbPath = [[DBPath alloc] initWithString:file];
-            DBFile* dbFile = [[DBFilesystem sharedFilesystem] openFile:dbPath error:nil];
+            [hud hide:YES];
             
-            fileData = [dbFile readData:nil];
-        }
-
-        PasswordViewController* passwordViewController = segue.destinationViewController;
-        passwordViewController.fileData = fileData;
-    }
+            [self.tableView reloadData];
+        });
+    });
 }
 
 - (NSArray*)getListOfLocalFiles
@@ -69,15 +70,33 @@
 
 - (NSArray*)getListOfDropboxFiles
 {
-    if ([DBFilesystem sharedFilesystem] == nil)
+    if ([DBAccountManager sharedManager].linkedAccount == nil)
         return [NSArray array];
     
+    DBFilesystem* dbFilesystem = [[DBFilesystem alloc] initWithAccount:[DBAccountManager sharedManager].linkedAccount];
+
     NSMutableArray* files = [NSMutableArray array];
     
-    for (DBFileInfo* file in [[DBFilesystem sharedFilesystem] listFolder:[DBPath root] error:nil])
+    for (DBFileInfo* file in [dbFilesystem listFolder:[DBPath root] error:nil])
         [files addObject:[file.path stringValue]];
     
     return files;
+}
+
+- (MBProgressHUD*)showHUDWithText:(NSString*)text
+{
+    MBProgressHUD* hud = [[MBProgressHUD alloc] initWithView:self.view];
+    hud.yOffset = -40;
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = text;
+    hud.labelFont = [Theme defaultTheme].hudFont;
+    hud.removeFromSuperViewOnHide = YES;
+    hud.userInteractionEnabled = NO;
+    
+    [self.view addSubview:hud];
+    [hud show:YES];
+    
+    return hud;
 }
 
 - (IBAction)openSettings:(id)sender
@@ -133,6 +152,42 @@
     cell.textLabel.text = [[file lastPathComponent] stringByDeletingPathExtension];
     
     return cell;
+}
+
+
+- (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    __block NSData* fileData;
+    
+    MBProgressHUD* hud = [self showHUDWithText:@"Loading database"];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+    {
+        if (indexPath.section == SECTION_LOCAL)
+        {
+            NSString* file = [self.localFiles objectAtIndex:indexPath.row];
+            fileData = [NSData dataWithContentsOfFile:file];
+        }
+        else if (indexPath.section == SECTION_DROPBOX)
+        {
+            NSString* file = [self.dropboxFiles objectAtIndex:indexPath.row];
+            DBPath* dbPath = [[DBPath alloc] initWithString:file];
+            DBFilesystem* dbFilesystem = [[DBFilesystem alloc] initWithAccount:[DBAccountManager sharedManager].linkedAccount];
+            DBFile* dbFile = [dbFilesystem openFile:dbPath error:nil];
+
+            fileData = [dbFile readData:nil];
+        }
+
+        dispatch_async(dispatch_get_main_queue(), ^
+        {
+            [hud hide:YES];
+
+            PasswordViewController* passwordViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Password"];
+            passwordViewController.fileData = fileData;
+            
+            [self.navigationController pushViewController:passwordViewController animated:YES];
+        });
+    });
 }
 
 @end

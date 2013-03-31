@@ -33,6 +33,7 @@
 		5B59E2381708374E00AEC98D /* ThemedLabelBold.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B59E2371708374D00AEC98D /* ThemedLabelBold.m */; };
 		5B59E23B1708409E00AEC98D /* ThemedTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B59E23A1708409D00AEC98D /* ThemedTextView.m */; };
 		5B59E23E1708433400AEC98D /* ThemedPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B59E23D1708433400AEC98D /* ThemedPanel.m */; };
+		5B59E2421708596400AEC98D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B59E2411708596400AEC98D /* MBProgressHUD.m */; };
 		5B8942C317076DD600A618C7 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B8942C217076DD600A618C7 /* CFNetwork.framework */; };
 		5B8942C517076DDE00A618C7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B8942C417076DDE00A618C7 /* Security.framework */; };
 		5B8942C717076DE600A618C7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B8942C617076DE600A618C7 /* SystemConfiguration.framework */; };
@@ -98,6 +99,8 @@
 		5B59E23A1708409D00AEC98D /* ThemedTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemedTextView.m; sourceTree = "<group>"; };
 		5B59E23C1708433300AEC98D /* ThemedPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemedPanel.h; sourceTree = "<group>"; };
 		5B59E23D1708433400AEC98D /* ThemedPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemedPanel.m; sourceTree = "<group>"; };
+		5B59E2401708596400AEC98D /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		5B59E2411708596400AEC98D /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		5B8942C217076DD600A618C7 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		5B8942C417076DDE00A618C7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		5B8942C617076DE600A618C7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -195,6 +198,24 @@
 			);
 			name = Images;
 			path = Sherlock/Images;
+			sourceTree = "<group>";
+		};
+		5B59E23F1708596400AEC98D /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				5B59E2401708596400AEC98D /* MBProgressHUD.h */,
+				5B59E2411708596400AEC98D /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		5B59E2431708596C00AEC98D /* GDataXML */ = {
+			isa = PBXGroup;
+			children = (
+				5BF8132017071CED00039E45 /* GDataXMLNode.h */,
+				5BF8132117071CED00039E45 /* GDataXMLNode.m */,
+			);
+			name = GDataXML;
 			sourceTree = "<group>";
 		};
 		5BF812951706E83E00039E45 = {
@@ -317,8 +338,8 @@
 		5BF8132317071CF800039E45 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				5BF8132017071CED00039E45 /* GDataXMLNode.h */,
-				5BF8132117071CED00039E45 /* GDataXMLNode.m */,
+				5B59E23F1708596400AEC98D /* MBProgressHUD */,
+				5B59E2431708596C00AEC98D /* GDataXML */,
 			);
 			name = Libraries;
 			path = Sherlock;
@@ -428,6 +449,7 @@
 				5B59E2381708374E00AEC98D /* ThemedLabelBold.m in Sources */,
 				5B59E23B1708409E00AEC98D /* ThemedTextView.m in Sources */,
 				5B59E23E1708433400AEC98D /* ThemedPanel.m in Sources */,
+				5B59E2421708596400AEC98D /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

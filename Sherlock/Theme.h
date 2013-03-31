@@ -68,6 +68,8 @@
 @property (nonatomic) UIOffset barButtonItemTitleTextShadowOffset;
 @property (nonatomic, strong) UIFont* barButtonItemTitleFont;
 
+@property (nonatomic, strong) UIFont* hudFont;
+
 - (void)apply;
 - (UIFont*)textFontOfSizePlus:(NSInteger)size;
 - (UIFont*)textFontBoldOfSizePlus:(NSInteger)size;

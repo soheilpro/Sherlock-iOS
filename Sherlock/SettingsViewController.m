@@ -8,13 +8,19 @@
 
 #import <Dropbox/Dropbox.h>
 #import "SettingsViewController.h"
+#import "ActionSheet.h"
 
 @implementation SettingsViewController
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidLoad
 {
-    [super viewWillAppear:animated];
+    [super viewDidLoad];
     
+    [[DBAccountManager sharedManager] addObserver:self block:^(DBAccount* account)
+    {
+        [self refreshDropboxStatus];
+    }];
+
     [self refreshDropboxStatus];
 }
 
@@ -26,15 +32,20 @@
 - (IBAction)linkDropbox:(id)sender
 {
     [[DBAccountManager sharedManager] linkFromController:self];
-
-    [self refreshDropboxStatus];
 }
 
 - (void)unlinkDropbox:(id)sender
 {
-    [[[DBAccountManager sharedManager] linkedAccount] unlink];
+    ActionSheet* actionSheet = [ActionSheet actionSheet];
     
-    [self refreshDropboxStatus];
+    [actionSheet addDestructiveButtonWithTitle:@"Unlink" selectBlock:^
+    {
+        [[[DBAccountManager sharedManager] linkedAccount] unlink];
+    }];
+    
+    [actionSheet addCancelButtonWithTitle:@"Cancel"];
+    
+    [actionSheet presentInView:self.view];
 }
 
 - (void)refreshDropboxStatus
@@ -45,7 +56,7 @@
     {
         self.linkDropboxButton.hidden = NO;
         self.unlinkDropboxButton.hidden = YES;
-        self.dropboxDislpayNameLabel.text = @"";
+        self.dropboxDislpayNameLabel.text = @"no linked account";
     }
     else
     {

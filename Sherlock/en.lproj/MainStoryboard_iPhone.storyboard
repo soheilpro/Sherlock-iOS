@@ -73,7 +73,7 @@
                                             <action selector="unlinkDropbox:" destination="D5M-zf-6gs" eventType="touchUpInside" id="Ffj-YD-K39"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="uWT-6i-obU" customClass="ThemedButtonLight">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="uWT-6i-obU" customClass="ThemedButtonDark">
                                         <rect key="frame" x="190" y="13" width="100" height="38"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -131,9 +131,6 @@
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
-                                <connections>
-                                    <segue destination="X5u-e4-UNX" kind="push" identifier="PasswordSegue" id="s5T-4U-9Qv"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                     </tableView>
@@ -152,9 +149,9 @@
         <!--Password View Controller - Password-->
         <scene sceneID="M98-Ge-mMe">
             <objects>
-                <viewController id="X5u-e4-UNX" customClass="PasswordViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Password" id="X5u-e4-UNX" customClass="PasswordViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lwL-bD-pGl" customClass="ThemedView">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Please enter the password:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7se-H5-vrk" customClass="ThemedLabel">

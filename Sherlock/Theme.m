@@ -87,6 +87,8 @@
         self.barButtonItemTitleTextShadowColor = RGBA(0, 0, 0, .25);
         self.barButtonItemTitleTextShadowOffset = UIOffsetMake(1, 1);
         self.barButtonItemTitleFont = [UIFont fontWithName:@"PTSans-Bold" size:14];
+        
+        self.hudFont = [UIFont fontWithName:self.textFontName size:self.textFontSize];
     }
     
     return self;
