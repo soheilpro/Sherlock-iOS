@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Softtool. All rights reserved.
 //
 
+#import <CommonCrypto/CommonCryptor.h>
 #import "Database.h"
 #import "GDataXMLNode.h"
-#import <CommonCrypto/CommonCryptor.h>
 
 @implementation Database
 
@@ -26,39 +26,39 @@
         return nil;
     
     Database* database = [[Database alloc] init];
-    database.root = [self categooryFromElement:document.rootElement];
+    database.root = [self folderFromElement:document.rootElement];
     
     return database;
 }
 
-+ (CategoryNode*)categooryFromElement:(GDataXMLElement*)element
++ (Folder*)folderFromElement:(GDataXMLElement*)element
 {
-    CategoryNode* category = [[CategoryNode alloc] init];
-    category.name = [[element attributeForName:@"name"] stringValue];
+    Folder* folder = [[Folder alloc] init];
+    folder.name = [[element attributeForName:@"name"] stringValue];
     
     for (GDataXMLElement* categoryElement in [element elementsForName:@"category"])
-        [category.categories addObject:[self categooryFromElement:categoryElement]];
+        [folder.folders addObject:[self folderFromElement:categoryElement]];
     
     for (GDataXMLElement* itemElement in [element elementsForName:@"item"])
-        [category.items addObject:[self itemFromElement:itemElement]];
+        [folder.items addObject:[self itemFromElement:itemElement]];
     
     id nodeComparer = ^NSComparisonResult(id obj1, id obj2)
     {
-        ItemNode* item1 = (ItemNode*)obj1;
-        ItemNode* item2 = (ItemNode*)obj2;
+        Item* item1 = (Item*)obj1;
+        Item* item2 = (Item*)obj2;
         
         return [item1.name compare:item2.name options:NSCaseInsensitiveSearch];
     };
     
-    [category.categories sortUsingComparator:nodeComparer];
-    [category.items sortUsingComparator:nodeComparer];
+    [folder.folders sortUsingComparator:nodeComparer];
+    [folder.items sortUsingComparator:nodeComparer];
 
-    return category;
+    return folder;
 }
 
-+ (ItemNode*)itemFromElement:(GDataXMLElement*)element
++ (Item*)itemFromElement:(GDataXMLElement*)element
 {
-    ItemNode* item = [[ItemNode alloc] init];
+    Item* item = [[Item alloc] init];
     item.name = [[element attributeForName:@"name"] stringValue];
     item.value = [element stringValue];
     item.isSecret = [[[element attributeForName:@"type"] stringValue] isEqualToString:@"password"];

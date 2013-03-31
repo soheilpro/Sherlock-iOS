@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "Node.h"
-#import "CategoryNode.h"
-#import "ItemNode.h"
+#import "Folder.h"
+#import "Item.h"
 
 @interface Database : NSObject
 
-@property (nonatomic, strong) CategoryNode* root;
+@property (nonatomic, strong) Folder* root;
 
 + (Database*)openDatabaseFromData:(NSData*)data withPassword:(NSString*)password;
 

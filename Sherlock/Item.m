@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Softtool. All rights reserved.
 //
 
-#import "ItemNode.h"
+#import "Item.h"
 
-@implementation ItemNode
+@implementation Item
 
 - (id)initWithName:(NSString*)name andValue:(NSString*)value
 {

@@ -200,16 +200,16 @@
             </objects>
             <point key="canvasLocation" x="-1" y="-682"/>
         </scene>
-        <!--Main View Controller - Master-->
+        <!--Folder View Controller - Master-->
         <scene sceneID="18">
             <objects>
-                <tableViewController storyboardIdentifier="" title="Master" id="12" customClass="MainViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="" title="Master" id="12" customClass="FolderViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="13" customClass="ThemedTableView">
                         <rect key="frame" x="0.0" y="64" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CategoryCell" textLabel="phq-AM-6qj" style="IBUITableViewCellStyleDefault" id="lJ0-d7-vTF" customClass="ThemedTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FolderCell" textLabel="phq-AM-6qj" style="IBUITableViewCellStyleDefault" id="lJ0-d7-vTF" customClass="ThemedTableViewCell">
                                 <rect key="frame" x="0.0" y="46" width="320" height="45"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -228,7 +228,7 @@
                                 </view>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <segue destination="12" kind="push" identifier="CategorySegue" trigger="accessoryAction" id="tVh-A6-OcP"/>
+                                    <segue destination="12" kind="push" identifier="FolderSegue" trigger="accessoryAction" id="tVh-A6-OcP"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="ItemCell" textLabel="680-sD-nuP" detailTextLabel="Vmr-fB-vqw" style="IBUITableViewCellStyleValue1" id="FvE-ci-1t0" customClass="ThemedTableViewCell">
@@ -321,6 +321,67 @@
             <point key="canvasLocation" x="907" y="64"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="DatabasesViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DatabasesViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="openSettings:"/>
+            </relationships>
+        </class>
+        <class className="ItemViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ItemViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="close:"/>
+                <relationship kind="outlet" name="nameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="valueTextView" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="PasswordViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PasswordViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="open:"/>
+                <relationship kind="outlet" name="passwordTextField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="SettingsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="close:"/>
+                <relationship kind="action" name="linkDropbox:"/>
+                <relationship kind="action" name="unlinkDropbox:"/>
+                <relationship kind="outlet" name="dropboxDislpayNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="linkDropboxButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="unlinkDropboxButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="ThemedButtonDark" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ThemedButtonDark.h"/>
+        </class>
+        <class className="ThemedLabel" superclassName="UILabel">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ThemedLabel.h"/>
+        </class>
+        <class className="ThemedLabelBold" superclassName="UILabel">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ThemedLabelBold.h"/>
+        </class>
+        <class className="ThemedPanel" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ThemedPanel.h"/>
+        </class>
+        <class className="ThemedTableView" superclassName="UITableView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ThemedTableView.h"/>
+        </class>
+        <class className="ThemedTableViewCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ThemedTableViewCell.h"/>
+        </class>
+        <class className="ThemedTextField" superclassName="UITextField">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ThemedTextField.h"/>
+        </class>
+        <class className="ThemedTextView" superclassName="UITextView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ThemedTextView.h"/>
+        </class>
+        <class className="ThemedView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ThemedView.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

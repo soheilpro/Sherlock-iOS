@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "Node.h"
 
-@interface ItemNode : Node
+@interface Item : Node
 
 @property (nonatomic, strong) NSString* value;
 @property (nonatomic) BOOL isSecret;

@@ -11,7 +11,7 @@
 
 @interface ItemViewController : UIViewController
 
-@property (nonatomic, strong) ItemNode* item;
+@property (nonatomic, strong) Item* item;
 @property (nonatomic, strong) IBOutlet UILabel* nameLabel;
 @property (nonatomic, strong) IBOutlet UITextView* valueTextView;
 

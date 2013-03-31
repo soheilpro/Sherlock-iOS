@@ -8,7 +8,7 @@
 
 #import <Dropbox/Dropbox.h>
 #import "AppDelegate.h"
-#import "MainViewController.h"
+#import "FolderViewController.h"
 #import "Theme.h"
 
 @interface AppDelegate ()
@@ -25,18 +25,18 @@
 
     if (idiom == UIUserInterfaceIdiomPhone)
     {
-        MainViewController* mainViewController = [((UINavigationController*)self.window.rootViewController).viewControllers objectAtIndex:0];
+        FolderViewController* mainViewController = [((UINavigationController*)self.window.rootViewController).viewControllers objectAtIndex:0];
         mainViewController.showCategories = YES;
         mainViewController.showItems = YES;
     }
     else if (idiom == UIUserInterfaceIdiomPad)
     {
         UINavigationController* masterViewController = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"Navigation"];
-        MainViewController* masterMainViewController = [masterViewController.viewControllers objectAtIndex:0];
+        FolderViewController* masterMainViewController = [masterViewController.viewControllers objectAtIndex:0];
         masterMainViewController.showCategories = YES;
         
         UINavigationController* detailViewController = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"Navigation"];
-        MainViewController* detailMainViewController = [detailViewController.viewControllers objectAtIndex:0];
+        FolderViewController* detailMainViewController = [detailViewController.viewControllers objectAtIndex:0];
         detailMainViewController.showItems = YES;
 
         UISplitViewController* splitViewController = (UISplitViewController*)self.window.rootViewController;
@@ -82,8 +82,8 @@
 {
     self.database = database;
     
-    MainViewController* mainViewController = [((UINavigationController*)self.window.rootViewController).viewControllers objectAtIndex:0];
-    mainViewController.rootNode = database.root;
+    FolderViewController* mainViewController = [((UINavigationController*)self.window.rootViewController).viewControllers objectAtIndex:0];
+    mainViewController.folder = database.root;
     [mainViewController refresh];
 }
 

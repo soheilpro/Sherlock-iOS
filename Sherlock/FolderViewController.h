@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "Database.h"
 
-@interface MainViewController : UITableViewController <UISplitViewControllerDelegate>
+@interface FolderViewController : UITableViewController <UISplitViewControllerDelegate>
 
-@property (nonatomic, strong) CategoryNode* rootNode;
+@property (nonatomic, strong) Folder* folder;
 @property (nonatomic) BOOL showCategories;
 @property (nonatomic) BOOL showItems;
 

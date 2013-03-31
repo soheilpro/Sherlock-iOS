@@ -1,5 +1,5 @@
 //
-//  CategoryNode.h
+//  Folder.h
 //  Sherlock
 //
 //  Created by Soheil Rashidi on 3/30/13.
@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "Node.h"
 
-@interface CategoryNode : Node
+@interface Folder : Node
 
-@property (nonatomic, strong) NSMutableArray* categories;
+@property (nonatomic, strong) NSMutableArray* folders;
 @property (nonatomic, strong) NSMutableArray* items;
 
 - (id)initWithName:(NSString*)name;

@@ -6,20 +6,20 @@
 //  Copyright (c) 2013 Softtool. All rights reserved.
 //
 
-#import "MainViewController.h"
+#import "FolderViewController.h"
 #import "ItemViewController.h"
 #import "ActionSheet.h"
 
 #define SECTION_CATEGORIES 0
 #define SECTION_ITEMS 1
 
-@interface MainViewController ()
+@interface FolderViewController ()
 
 @property (strong, nonatomic) UIPopoverController* masterPopoverController;
 
 @end
 
-@implementation MainViewController
+@implementation FolderViewController
 
 - (void)awakeFromNib
 {
@@ -40,18 +40,18 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue*)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"CategorySegue"])
+    if ([segue.identifier isEqualToString:@"FolderSegue"])
     {
-        CategoryNode* category = [self.rootNode.categories objectAtIndex:[self.tableView indexPathForSelectedRow].row];
+        Folder* folder = [self.folder.folders objectAtIndex:[self.tableView indexPathForSelectedRow].row];
 
-        MainViewController* destinationViewController = segue.destinationViewController;
-        destinationViewController.rootNode = category;
+        FolderViewController* destinationViewController = segue.destinationViewController;
+        destinationViewController.folder = folder;
         destinationViewController.showCategories = self.showCategories;
         destinationViewController.showItems = self.showItems;
     }
     else if ([segue.identifier isEqualToString:@"ItemSegue"])
     {
-        ItemNode* item = [self.rootNode.items objectAtIndex:[self.tableView indexPathForSelectedRow].row];
+        Item* item = [self.folder.items objectAtIndex:[self.tableView indexPathForSelectedRow].row];
         
         ItemViewController* itemViewController = segue.destinationViewController;
         itemViewController.item = item;
@@ -60,7 +60,7 @@
 
 - (void)refresh
 {
-    self.navigationItem.title = self.rootNode.name;
+    self.navigationItem.title = self.folder.name;
     
     [self.tableView reloadData];
 }
@@ -75,10 +75,10 @@
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == SECTION_CATEGORIES)
-        return self.showCategories ? self.rootNode.categories.count : 0;
+        return self.showCategories ? self.folder.folders.count : 0;
 
     if (section == SECTION_ITEMS)
-        return self.showItems ? self.rootNode.items.count : 0;
+        return self.showItems ? self.folder.items.count : 0;
     
     return 0;
 }
@@ -87,17 +87,17 @@
 {
     if (indexPath.section == SECTION_CATEGORIES)
     {
-        CategoryNode* category = [self.rootNode.categories objectAtIndex:indexPath.row];
+        Folder* folder = [self.folder.folders objectAtIndex:indexPath.row];
         
-        UITableViewCell* cell = [self.tableView dequeueReusableCellWithIdentifier:@"CategoryCell"];
-        cell.textLabel.text = category.name;
+        UITableViewCell* cell = [self.tableView dequeueReusableCellWithIdentifier:@"FolderCell"];
+        cell.textLabel.text = folder.name;
         
         return cell;
     }
 
     if (indexPath.section == SECTION_ITEMS)
     {
-        ItemNode* item = [self.rootNode.items objectAtIndex:indexPath.row];
+        Item* item = [self.folder.items objectAtIndex:indexPath.row];
         
         UITableViewCell* cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItemCell"];
         cell.textLabel.text = item.name;
@@ -112,11 +112,11 @@
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
     if (indexPath.section == SECTION_CATEGORIES)
-        [self performSegueWithIdentifier:@"CategorySegue" sender:tableView];
+        [self performSegueWithIdentifier:@"FolderSegue" sender:tableView];
     
     if (indexPath.section == SECTION_ITEMS)
     {
-        ItemNode* item = [self.rootNode.items objectAtIndex:indexPath.row];
+        Item* item = [self.folder.items objectAtIndex:indexPath.row];
         
         ActionSheet* actionSheet = [ActionSheet actionSheet];
         [actionSheet addButtonWithTitle:@"View" selectBlock:^
@@ -151,8 +151,8 @@
     if (self.splitViewController != nil && [self.splitViewController.viewControllers objectAtIndex:0] == self.navigationController)
     {
         UINavigationController* detailViewController = [self.splitViewController.viewControllers lastObject];
-        MainViewController* detailMainViewController = [detailViewController.viewControllers objectAtIndex:0];
-        detailMainViewController.rootNode = self.rootNode;
+        FolderViewController* detailMainViewController = [detailViewController.viewControllers objectAtIndex:0];
+        detailMainViewController.folder = self.folder;
         [detailMainViewController refresh];
     }
 }

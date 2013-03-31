@@ -52,10 +52,10 @@
 		5BF812BB1706E83E00039E45 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BF812BA1706E83E00039E45 /* Default-568h@2x.png */; };
 		5BF812BE1706E83E00039E45 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BF812BC1706E83E00039E45 /* MainStoryboard_iPhone.storyboard */; };
 		5BF812C11706E83E00039E45 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BF812BF1706E83E00039E45 /* MainStoryboard_iPad.storyboard */; };
-		5BF812C41706E83E00039E45 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF812C31706E83E00039E45 /* MainViewController.m */; };
+		5BF812C41706E83E00039E45 /* FolderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF812C31706E83E00039E45 /* FolderViewController.m */; };
 		5BF8130D1706FEFA00039E45 /* Node.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF8130C1706FEFA00039E45 /* Node.m */; };
-		5BF813101706FF0C00039E45 /* CategoryNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF8130F1706FF0C00039E45 /* CategoryNode.m */; };
-		5BF813131706FF3100039E45 /* ItemNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF813121706FF3100039E45 /* ItemNode.m */; };
+		5BF813101706FF0C00039E45 /* Folder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF8130F1706FF0C00039E45 /* Folder.m */; };
+		5BF813131706FF3100039E45 /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF813121706FF3100039E45 /* Item.m */; };
 		5BF8131E1707145C00039E45 /* ItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF8131D1707145C00039E45 /* ItemViewController.m */; };
 		5BF8132217071CED00039E45 /* GDataXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF8132117071CED00039E45 /* GDataXMLNode.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5BF8132A1707543E00039E45 /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF813291707543E00039E45 /* Database.m */; };
@@ -126,14 +126,14 @@
 		5BF812BA1706E83E00039E45 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		5BF812BD1706E83E00039E45 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		5BF812C01706E83E00039E45 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
-		5BF812C21706E83E00039E45 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
-		5BF812C31706E83E00039E45 /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		5BF812C21706E83E00039E45 /* FolderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FolderViewController.h; sourceTree = "<group>"; };
+		5BF812C31706E83E00039E45 /* FolderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FolderViewController.m; sourceTree = "<group>"; };
 		5BF8130B1706FEFA00039E45 /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
 		5BF8130C1706FEFA00039E45 /* Node.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Node.m; sourceTree = "<group>"; };
-		5BF8130E1706FF0C00039E45 /* CategoryNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryNode.h; sourceTree = "<group>"; };
-		5BF8130F1706FF0C00039E45 /* CategoryNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryNode.m; sourceTree = "<group>"; };
-		5BF813111706FF3100039E45 /* ItemNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemNode.h; sourceTree = "<group>"; };
-		5BF813121706FF3100039E45 /* ItemNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemNode.m; sourceTree = "<group>"; };
+		5BF8130E1706FF0C00039E45 /* Folder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Folder.h; sourceTree = "<group>"; };
+		5BF8130F1706FF0C00039E45 /* Folder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Folder.m; sourceTree = "<group>"; };
+		5BF813111706FF3100039E45 /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
+		5BF813121706FF3100039E45 /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
 		5BF8131C1707145C00039E45 /* ItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemViewController.h; sourceTree = "<group>"; };
 		5BF8131D1707145C00039E45 /* ItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemViewController.m; sourceTree = "<group>"; };
 		5BF8132017071CED00039E45 /* GDataXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataXMLNode.h; sourceTree = "<group>"; };
@@ -256,7 +256,7 @@
 		5BF812AA1706E83E00039E45 /* Sherlock */ = {
 			isa = PBXGroup;
 			children = (
-				5BF8130A1706FEBD00039E45 /* Core */,
+				5BF8130A1706FEBD00039E45 /* Database */,
 				5BF813091706FE8800039E45 /* UI */,
 				5BF812B31706E83E00039E45 /* AppDelegate.h */,
 				5BF812B41706E83E00039E45 /* AppDelegate.m */,
@@ -288,8 +288,8 @@
 				5B59E1FD1708311400AEC98D /* DatabasesViewController.m */,
 				5B8942D0170773EC00A618C7 /* PasswordViewController.h */,
 				5B8942D1170773EC00A618C7 /* PasswordViewController.m */,
-				5BF812C21706E83E00039E45 /* MainViewController.h */,
-				5BF812C31706E83E00039E45 /* MainViewController.m */,
+				5BF812C21706E83E00039E45 /* FolderViewController.h */,
+				5BF812C31706E83E00039E45 /* FolderViewController.m */,
 				5BF8131C1707145C00039E45 /* ItemViewController.h */,
 				5BF8131D1707145C00039E45 /* ItemViewController.m */,
 				5B8942D31707837800A618C7 /* SettingsViewController.h */,
@@ -320,19 +320,19 @@
 			name = UI;
 			sourceTree = "<group>";
 		};
-		5BF8130A1706FEBD00039E45 /* Core */ = {
+		5BF8130A1706FEBD00039E45 /* Database */ = {
 			isa = PBXGroup;
 			children = (
 				5BF813281707543E00039E45 /* Database.h */,
 				5BF813291707543E00039E45 /* Database.m */,
 				5BF8130B1706FEFA00039E45 /* Node.h */,
 				5BF8130C1706FEFA00039E45 /* Node.m */,
-				5BF8130E1706FF0C00039E45 /* CategoryNode.h */,
-				5BF8130F1706FF0C00039E45 /* CategoryNode.m */,
-				5BF813111706FF3100039E45 /* ItemNode.h */,
-				5BF813121706FF3100039E45 /* ItemNode.m */,
+				5BF8130E1706FF0C00039E45 /* Folder.h */,
+				5BF8130F1706FF0C00039E45 /* Folder.m */,
+				5BF813111706FF3100039E45 /* Item.h */,
+				5BF813121706FF3100039E45 /* Item.m */,
 			);
-			name = Core;
+			name = Database;
 			sourceTree = "<group>";
 		};
 		5BF8132317071CF800039E45 /* Libraries */ = {
@@ -428,10 +428,10 @@
 			files = (
 				5BF812B11706E83E00039E45 /* Main.m in Sources */,
 				5BF812B51706E83E00039E45 /* AppDelegate.m in Sources */,
-				5BF812C41706E83E00039E45 /* MainViewController.m in Sources */,
+				5BF812C41706E83E00039E45 /* FolderViewController.m in Sources */,
 				5BF8130D1706FEFA00039E45 /* Node.m in Sources */,
-				5BF813101706FF0C00039E45 /* CategoryNode.m in Sources */,
-				5BF813131706FF3100039E45 /* ItemNode.m in Sources */,
+				5BF813101706FF0C00039E45 /* Folder.m in Sources */,
+				5BF813131706FF3100039E45 /* Item.m in Sources */,
 				5BF8131E1707145C00039E45 /* ItemViewController.m in Sources */,
 				5BF8132217071CED00039E45 /* GDataXMLNode.m in Sources */,
 				5BF8132A1707543E00039E45 /* Database.m in Sources */,

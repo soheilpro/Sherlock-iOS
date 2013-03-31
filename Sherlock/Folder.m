@@ -1,14 +1,14 @@
 //
-//  CategoryNode.m
+//  Folder.m
 //  Sherlock
 //
 //  Created by Soheil Rashidi on 3/30/13.
 //  Copyright (c) 2013 Softtool. All rights reserved.
 //
 
-#import "CategoryNode.h"
+#import "Folder.h"
 
-@implementation CategoryNode
+@implementation Folder
 
 - (id)init
 {
@@ -16,7 +16,7 @@
     
     if (self)
     {
-        self.categories = [NSMutableArray array];
+        self.folders = [NSMutableArray array];
         self.items = [NSMutableArray array];
     }
     
