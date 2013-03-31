@@ -70,14 +70,17 @@
 
 - (NSArray*)getListOfDropboxDatabaseFiles
 {
-    if ([DBAccountManager sharedManager].linkedAccount == nil)
+    DBAccount* account = [DBAccountManager sharedManager].linkedAccount;
+    
+    if (account == nil)
         return [NSArray array];
     
-    DBFilesystem* dbFilesystem = [[DBFilesystem alloc] initWithAccount:[DBAccountManager sharedManager].linkedAccount];
+    if ([DBFilesystem sharedFilesystem] == nil)
+        [DBFilesystem setSharedFilesystem:[[DBFilesystem alloc] initWithAccount:account]];
 
     NSMutableArray* files = [NSMutableArray array];
     
-    for (DBFileInfo* file in [dbFilesystem listFolder:[DBPath root] error:nil])
+    for (DBFileInfo* file in [[DBFilesystem sharedFilesystem] listFolder:[DBPath root] error:nil])
         [files addObject:[file.path stringValue]];
     
     return files;
@@ -173,8 +176,7 @@
             databaseFile = [self.dropboxDatabaseFiles objectAtIndex:indexPath.row];
             
             DBPath* dbPath = [[DBPath alloc] initWithString:databaseFile];
-            DBFilesystem* dbFilesystem = [[DBFilesystem alloc] initWithAccount:[DBAccountManager sharedManager].linkedAccount];
-            DBFile* dbFile = [dbFilesystem openFile:dbPath error:nil];
+            DBFile* dbFile = [[DBFilesystem sharedFilesystem] openFile:dbPath error:nil];
 
             datanaseFileData = [dbFile readData:nil];
         }

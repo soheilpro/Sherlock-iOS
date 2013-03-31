@@ -40,7 +40,7 @@
     
     [actionSheet addDestructiveButtonWithTitle:@"Unlink" selectBlock:^
     {
-        [[[DBAccountManager sharedManager] linkedAccount] unlink];
+        [[DBAccountManager sharedManager].linkedAccount unlink];
     }];
     
     [actionSheet addCancelButtonWithTitle:@"Cancel"];
@@ -50,7 +50,7 @@
 
 - (void)refreshDropboxStatus
 {
-    DBAccount* account = [[DBAccountManager sharedManager] linkedAccount];
+    DBAccount* account = [DBAccountManager sharedManager].linkedAccount;
     
     if (account == nil)
     {
