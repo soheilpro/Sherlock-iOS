@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5B4466A617089FC000A42D7C /* Dropbox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B4466A517089FC000A42D7C /* Dropbox@2x.png */; };
+		5B4466AB1708B12A00A42D7C /* LocalStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4466AA1708B12A00A42D7C /* LocalStorage.m */; };
+		5B4466AE1708B20500A42D7C /* DropboxStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4466AD1708B20500A42D7C /* DropboxStorage.m */; };
 		5B59E1FB170830F900AEC98D /* Dropbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B59E1FA170830F900AEC98D /* Dropbox.framework */; };
 		5B59E1FE1708311400AEC98D /* DatabasesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B59E1FD1708311400AEC98D /* DatabasesViewController.m */; };
 		5B59E2101708338F00AEC98D /* PTC75F.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B59E2011708338F00AEC98D /* PTC75F.ttf */; };
@@ -64,6 +66,11 @@
 
 /* Begin PBXFileReference section */
 		5B4466A517089FC000A42D7C /* Dropbox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Dropbox@2x.png"; sourceTree = "<group>"; };
+		5B4466A81708AEF600A42D7C /* Storage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Storage.h; sourceTree = "<group>"; };
+		5B4466A91708B12A00A42D7C /* LocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalStorage.h; sourceTree = "<group>"; };
+		5B4466AA1708B12A00A42D7C /* LocalStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalStorage.m; sourceTree = "<group>"; };
+		5B4466AC1708B20500A42D7C /* DropboxStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropboxStorage.h; sourceTree = "<group>"; };
+		5B4466AD1708B20500A42D7C /* DropboxStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropboxStorage.m; sourceTree = "<group>"; };
 		5B59E1FA170830F900AEC98D /* Dropbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Dropbox.framework; path = Sherlock/Dropbox.framework; sourceTree = "<group>"; };
 		5B59E1FC1708311400AEC98D /* DatabasesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabasesViewController.h; sourceTree = "<group>"; };
 		5B59E1FD1708311400AEC98D /* DatabasesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabasesViewController.m; sourceTree = "<group>"; };
@@ -163,6 +170,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5B4466A71708AEBD00A42D7C /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				5B4466A81708AEF600A42D7C /* Storage.h */,
+				5B4466A91708B12A00A42D7C /* LocalStorage.h */,
+				5B4466AA1708B12A00A42D7C /* LocalStorage.m */,
+				5B4466AC1708B20500A42D7C /* DropboxStorage.h */,
+				5B4466AD1708B20500A42D7C /* DropboxStorage.m */,
+			);
+			name = Storage;
+			sourceTree = "<group>";
+		};
 		5B59E1FF1708337600AEC98D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -260,6 +279,7 @@
 			isa = PBXGroup;
 			children = (
 				5BF8130A1706FEBD00039E45 /* Database */,
+				5B4466A71708AEBD00A42D7C /* Storage */,
 				5BF813091706FE8800039E45 /* UI */,
 				5BF812B31706E83E00039E45 /* AppDelegate.h */,
 				5BF812B41706E83E00039E45 /* AppDelegate.m */,
@@ -454,6 +474,8 @@
 				5B59E23B1708409E00AEC98D /* ThemedTextView.m in Sources */,
 				5B59E23E1708433400AEC98D /* ThemedPanel.m in Sources */,
 				5B59E2421708596400AEC98D /* MBProgressHUD.m in Sources */,
+				5B4466AB1708B12A00A42D7C /* LocalStorage.m in Sources */,
+				5B4466AE1708B20500A42D7C /* DropboxStorage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -6,19 +6,18 @@
 //  Copyright (c) 2013 Softtool. All rights reserved.
 //
 
+#import <Dropbox/Dropbox.h>
 #import "DatabasesViewController.h"
 #import "PasswordViewController.h"
-#import <Dropbox/Dropbox.h>
 #import "MBProgressHUD.h"
 #import "Theme.h"
-
-#define SECTION_LOCAL 0
-#define SECTION_DROPBOX 1
+#import "Storage.h"
+#import "LocalStorage.h"
+#import "DropboxStorage.h"
 
 @interface DatabasesViewController ()
 
-@property (nonatomic, strong) NSArray* localDatabaseFiles;
-@property (nonatomic, strong) NSArray* dropboxDatabaseFiles;
+@property (nonatomic, strong) NSArray* storages;
 
 @end
 
@@ -28,15 +27,17 @@
 {
     [super viewDidLoad];
     
+    self.storages = @[
+        [[LocalStorage alloc] init],
+        [[DropboxStorage alloc] init]
+    ];
+    
+    [self refreshFiles];
+    
     [[DBAccountManager sharedManager] addObserver:self block:^(DBAccount* account)
     {
         [self refreshFiles];
     }];
-    
-    self.localDatabaseFiles = @[];
-    self.dropboxDatabaseFiles = @[];
-    
-    [self refreshFiles];
 }
 
 - (void)refreshFiles
@@ -45,8 +46,8 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
     {
-        self.localDatabaseFiles = [self getListOfLocalDatabaseFiles];
-        self.dropboxDatabaseFiles = [self getListOfDropboxDatabaseFiles];
+        for (id<Storage> storage in self.storages)
+            [storage fetchListOfDatabaseFiles];
         
         dispatch_async(dispatch_get_main_queue(), ^
         {
@@ -55,35 +56,6 @@
             [self.tableView reloadData];
         });
     });
-}
-
-- (NSArray*)getListOfLocalDatabaseFiles
-{
-    NSString* documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSMutableArray* files = [NSMutableArray array];
-    
-    for (NSString* file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentDirectory error:nil])
-        [files addObject:[documentDirectory stringByAppendingPathComponent:file]];
-    
-    return files;
-}
-
-- (NSArray*)getListOfDropboxDatabaseFiles
-{
-    DBAccount* account = [DBAccountManager sharedManager].linkedAccount;
-    
-    if (account == nil)
-        return [NSArray array];
-    
-    if ([DBFilesystem sharedFilesystem] == nil)
-        [DBFilesystem setSharedFilesystem:[[DBFilesystem alloc] initWithAccount:account]];
-
-    NSMutableArray* files = [NSMutableArray array];
-    
-    for (DBFileInfo* file in [[DBFilesystem sharedFilesystem] listFolder:[DBPath root] error:nil])
-        [files addObject:[file.path stringValue]];
-    
-    return files;
 }
 
 - (MBProgressHUD*)showHUDWithText:(NSString*)text
@@ -113,74 +85,47 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
 {
-    return 2;
+    return self.storages.count;
 }
 
 - (NSString*)tableView:(UITableView*)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if (section == SECTION_LOCAL)
-        return self.localDatabaseFiles.count > 0 ? @"Local" : nil;
+    id<Storage> storage = [self.storages objectAtIndex:section];
     
-    if (section == SECTION_DROPBOX)
-        return self.dropboxDatabaseFiles.count > 0 ? @"Dropbox" : nil;
-    
-    return nil;
+    return [storage databaseFiles].count > 0 ? [storage name] : nil;
 }
 
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == SECTION_LOCAL)
-        return self.localDatabaseFiles.count;
+    id<Storage> storage = [self.storages objectAtIndex:section];
     
-    if (section == SECTION_DROPBOX)
-        return self.dropboxDatabaseFiles.count;
-    
-    return 0;
+    return [storage databaseFiles].count;
 }
 
 - (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    NSString* file;
-    
-    if (indexPath.section == SECTION_LOCAL)
-    {
-        file = [self.localDatabaseFiles objectAtIndex:indexPath.row];
-    }
-    else if (indexPath.section == SECTION_DROPBOX)
-    {
-        file = [self.dropboxDatabaseFiles objectAtIndex:indexPath.row];
-    }
+    id<Storage> storage = [self.storages objectAtIndex:indexPath.section];
+    NSString* databaseFile = [[storage databaseFiles] objectAtIndex:indexPath.row];
     
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"DatabaseCell"];
-    cell.textLabel.text = [[file lastPathComponent] stringByDeletingPathExtension];
+    cell.textLabel.text = [[databaseFile lastPathComponent] stringByDeletingPathExtension];
     
     return cell;
 }
 
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    __block NSString* databaseFile;
     __block NSData* datanaseFileData;
     
     MBProgressHUD* hud = [self showHUDWithText:@"Loading database"];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
     {
-        if (indexPath.section == SECTION_LOCAL)
-        {
-            databaseFile = [self.localDatabaseFiles objectAtIndex:indexPath.row];            
-            datanaseFileData = [NSData dataWithContentsOfFile:databaseFile];
-        }
-        else if (indexPath.section == SECTION_DROPBOX)
-        {
-            databaseFile = [self.dropboxDatabaseFiles objectAtIndex:indexPath.row];
-            
-            DBPath* dbPath = [[DBPath alloc] initWithString:databaseFile];
-            DBFile* dbFile = [[DBFilesystem sharedFilesystem] openFile:dbPath error:nil];
+        id<Storage> storage = [self.storages objectAtIndex:indexPath.section];
+        NSString* databaseFile = [[storage databaseFiles] objectAtIndex:indexPath.row];
 
-            datanaseFileData = [dbFile readData:nil];
-        }
-
+        datanaseFileData = [storage readDatabaseFile:databaseFile];
+        
         dispatch_async(dispatch_get_main_queue(), ^
         {
             [hud hide:YES];
