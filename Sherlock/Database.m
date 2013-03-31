@@ -12,15 +12,15 @@
 
 @implementation Database
 
-+ (Database*)openDatabaseNamed:(NSString*)name fromData:(NSData*)data withPassword:(NSString*)password;
++ (Database*)openDatabaseNamed:(NSString*)name fromData:(NSData*)encryptedData withPassword:(NSString*)password;
 {
-    NSData* decryptedData = [self tripleDESDecryptData:data withPassword:password];
+    NSData* xmlData = [self tripleDESTransformData:encryptedData operation:kCCDecrypt withPassword:password];
     
-    if (decryptedData == nil)
+    if (xmlData == nil)
         return nil;
     
     NSError* error;
-    GDataXMLDocument* document = [[GDataXMLDocument alloc] initWithData:decryptedData options:0 error:&error];
+    GDataXMLDocument* document = [[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
     
     if (error != nil)
         return nil;
@@ -71,14 +71,14 @@
     return item;
 }
 
-+ (NSData*)tripleDESDecryptData:(NSData*)inputData withPassword:(NSString*)password
++ (NSData*)tripleDESTransformData:(NSData*)inputData operation:(CCOperation)operation withPassword:(NSString*)password
 {
     NSData* key = [self tripleDESKeyFromPassword:password];
     NSData* iv = [self tripleDESIVFromPassword:password];
     NSMutableData* outputData = [NSMutableData dataWithLength:(inputData.length + kCCBlockSize3DES)];
     
     size_t outLength;
-    CCCryptorStatus result = CCCrypt(kCCDecrypt, kCCAlgorithm3DES, kCCOptionPKCS7Padding, key.bytes, key.length, iv.bytes, inputData.bytes, inputData.length, outputData.mutableBytes, outputData.length, &outLength);
+    CCCryptorStatus result = CCCrypt(operation, kCCAlgorithm3DES, kCCOptionPKCS7Padding, key.bytes, key.length, iv.bytes, inputData.bytes, inputData.length, outputData.mutableBytes, outputData.length, &outLength);
     
     if (result != kCCSuccess)
         return nil;
@@ -114,6 +114,68 @@
         key = [key substringToIndex:length];
     
     return [key dataUsingEncoding:NSASCIIStringEncoding];
+}
+
+- (id)init
+{
+    self = [super init];
+    
+    if (self)
+    {
+        self.root = [[Folder alloc] init];
+        self.root.parent = nil;
+        self.root.database = self;
+    }
+    
+    return self;
+}
+
+- (NSData*)save
+{
+    GDataXMLElement* rootElement = [self rootElementFromFolder:self.root];
+    GDataXMLDocument* document = [[GDataXMLDocument alloc] initWithRootElement:rootElement];
+    
+    NSData* xmlData = [document XMLData];
+    NSData* encryptedData = [[self class] tripleDESTransformData:xmlData operation:kCCEncrypt withPassword:self.password];
+    
+    return encryptedData;
+}
+
+- (GDataXMLElement*)rootElementFromFolder:(Folder*)folder
+{
+    GDataXMLElement* element = [GDataXMLElement elementWithName:@"data"];
+    
+    for (Folder* subFolder in folder.folders)
+        [element addChild:[self elementFromFolder:subFolder]];
+    
+    for (Item* item in folder.items)
+        [element addChild:[self elementFromItem:item]];
+    
+    return element;
+}
+
+- (GDataXMLElement*)elementFromFolder:(Folder*)folder
+{
+    GDataXMLElement* element = [GDataXMLElement elementWithName:@"category"];
+    [element addAttribute:[GDataXMLNode attributeWithName:@"name" stringValue:folder.name]];
+    
+    for (Folder* subFolder in folder.folders)
+        [element addChild:[self elementFromFolder:subFolder]];
+
+    for (Item* item in folder.items)
+        [element addChild:[self elementFromItem:item]];
+
+    return element;
+}
+
+- (GDataXMLElement*)elementFromItem:(Item*)item
+{
+    GDataXMLElement* element = [GDataXMLElement elementWithName:@"item"];
+    [element addAttribute:[GDataXMLNode attributeWithName:@"name" stringValue:item.name]];
+    [element addAttribute:[GDataXMLNode attributeWithName:@"type" stringValue:item.isSecret ? @"password" : @"text"]];
+    [element setStringValue:item.value];
+    
+    return element;
 }
 
 @end

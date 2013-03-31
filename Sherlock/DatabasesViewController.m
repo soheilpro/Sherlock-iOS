@@ -6,7 +6,6 @@
 //  Copyright (c) 2013 Softtool. All rights reserved.
 //
 
-#import <Dropbox/Dropbox.h>
 #import "DatabasesViewController.h"
 #import "PasswordViewController.h"
 #import "MBProgressHUD.h"
@@ -14,6 +13,8 @@
 #import "Storage.h"
 #import "LocalStorage.h"
 #import "DropboxStorage.h"
+#import "Database.h"
+#import "NewDatabaseViewController.h"
 
 @interface DatabasesViewController ()
 
@@ -32,12 +33,14 @@
         [[DropboxStorage alloc] init]
     ];
     
-    [self refreshFiles];
-    
-    [[DBAccountManager sharedManager] addObserver:self block:^(DBAccount* account)
+    for (id<Storage> storage in self.storages)
     {
-        [self refreshFiles];
-    }];
+        [storage addObserverBlock:^{
+            [self refreshFiles];
+        }];
+    }
+
+    [self refreshFiles];
 }
 
 - (void)refreshFiles
@@ -79,6 +82,21 @@
     UIViewController* settingsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Settings"];
 
     [self presentModalViewController:settingsViewController animated:YES];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue*)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"NewDatabaseSegue"])
+    {
+        NSMutableArray* availableStorages = [NSMutableArray array];
+        
+        for (id<Storage> storage in self.storages)
+            if ([storage isAvailable])
+                [availableStorages addObject:storage];
+        
+        NewDatabaseViewController* newDatabaseViewController = segue.destinationViewController;
+        newDatabaseViewController.storages = availableStorages;
+    }
 }
 
 #pragma mark - Table view data source

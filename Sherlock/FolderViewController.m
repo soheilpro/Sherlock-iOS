@@ -57,7 +57,7 @@
     
     if (self.folder.parent == nil)
     {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void)
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void)
         {
             self.navigationItem.leftBarButtonItem.enabled = YES;
         });

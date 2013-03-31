@@ -17,9 +17,10 @@
     [super viewDidLoad];
     
     self.passwordTextField.delegate = self;
-    [self passwordTextFieldDidChange];
+    
+    [self toggleOpenButton];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(passwordTextFieldDidChange) name:UITextFieldTextDidChangeNotification object:self.passwordTextField];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toggleOpenButton) name:UITextFieldTextDidChangeNotification object:self.passwordTextField];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -37,7 +38,7 @@
     return YES;
 }
 
-- (void)passwordTextFieldDidChange
+- (void)toggleOpenButton
 {
     self.navigationItem.rightBarButtonItem.enabled = self.passwordTextField.text.length > 0;
 }
@@ -52,6 +53,8 @@
         [self shakeView:self.passwordTextField];
         return;
     }
+    
+    database.password = self.passwordTextField.text;
     
     [((AppDelegate*)[UIApplication sharedApplication].delegate) didOpenDatabase:database];
     

@@ -14,8 +14,11 @@
 @interface Database : NSObject
 
 @property (nonatomic, strong) NSString* name;
+@property (nonatomic, strong) NSString* password;
 @property (nonatomic, strong) Folder* root;
 
-+ (Database*)openDatabaseNamed:(NSString*)name fromData:(NSData*)data withPassword:(NSString*)password;
++ (Database*)openDatabaseNamed:(NSString*)name fromData:(NSData*)encryptedData withPassword:(NSString*)password;
+
+- (NSData*)save;
 
 @end

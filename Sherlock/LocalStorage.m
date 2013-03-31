@@ -11,6 +11,7 @@
 @interface LocalStorage ()
 
 @property (nonatomic, strong) NSArray* files;
+@property (nonatomic, strong) NSMutableArray* observerBlocks;
 
 @end
 
@@ -23,6 +24,7 @@
     if (self)
     {
         self.files = @[];
+        self.observerBlocks = [NSMutableArray array];
     }
     
     return self;
@@ -31,6 +33,11 @@
 - (NSString*)name
 {
     return @"Local";
+}
+
+- (BOOL)isAvailable
+{
+    return YES;
 }
 
 - (NSArray*)databaseFiles
@@ -58,6 +65,27 @@
 - (NSData*)readDatabaseFile:(NSString*)file
 {
     return [NSData dataWithContentsOfFile:file];
+}
+
+- (void)saveDatabaseData:(NSData*)data withName:(NSString*)name;
+{
+    NSString* documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString* file = [documentDirectory stringByAppendingPathComponent:[name stringByAppendingPathExtension:@"sdb"]];
+    
+    [data writeToFile:file atomically:YES];
+    
+    [self notifyObservers];
+}
+
+- (void)addObserverBlock:(observerBlock)block
+{
+    [self.observerBlocks addObject:block];
+}
+
+- (void)notifyObservers
+{
+    for (observerBlock block in self.observerBlocks)
+        block();
 }
 
 @end
