@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5B8942C017076DB800A618C7 /* Dropbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B8942BF17076DB800A618C7 /* Dropbox.framework */; };
+		5B59E1FB170830F900AEC98D /* Dropbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B59E1FA170830F900AEC98D /* Dropbox.framework */; };
+		5B59E1FE1708311400AEC98D /* DatabasesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B59E1FD1708311400AEC98D /* DatabasesViewController.m */; };
 		5B8942C317076DD600A618C7 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B8942C217076DD600A618C7 /* CFNetwork.framework */; };
 		5B8942C517076DDE00A618C7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B8942C417076DDE00A618C7 /* Security.framework */; };
 		5B8942C717076DE600A618C7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B8942C617076DE600A618C7 /* SystemConfiguration.framework */; };
 		5B8942C917076DEC00A618C7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B8942C817076DEC00A618C7 /* QuartzCore.framework */; };
-		5B8942CF1707704D00A618C7 /* DatabasesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8942CE1707704D00A618C7 /* DatabasesViewController.m */; };
 		5B8942D2170773EC00A618C7 /* PasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8942D1170773EC00A618C7 /* PasswordViewController.m */; };
 		5B8942D51707837800A618C7 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8942D41707837800A618C7 /* SettingsViewController.m */; };
 		5B8942DF17079A3F00A618C7 /* ActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8942DE17079A3F00A618C7 /* ActionSheet.m */; };
@@ -37,13 +37,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5B8942BF17076DB800A618C7 /* Dropbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Dropbox.framework; sourceTree = "<group>"; };
+		5B59E1FA170830F900AEC98D /* Dropbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Dropbox.framework; path = Sherlock/Dropbox.framework; sourceTree = "<group>"; };
+		5B59E1FC1708311400AEC98D /* DatabasesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabasesViewController.h; sourceTree = "<group>"; };
+		5B59E1FD1708311400AEC98D /* DatabasesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabasesViewController.m; sourceTree = "<group>"; };
 		5B8942C217076DD600A618C7 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		5B8942C417076DDE00A618C7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		5B8942C617076DE600A618C7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		5B8942C817076DEC00A618C7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		5B8942CD1707704D00A618C7 /* DatabasesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DatabasesViewController.h; path = ../DatabasesViewController.h; sourceTree = "<group>"; };
-		5B8942CE1707704D00A618C7 /* DatabasesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DatabasesViewController.m; path = ../DatabasesViewController.m; sourceTree = "<group>"; };
 		5B8942D0170773EC00A618C7 /* PasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasswordViewController.h; sourceTree = "<group>"; };
 		5B8942D1170773EC00A618C7 /* PasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordViewController.m; sourceTree = "<group>"; };
 		5B8942D31707837800A618C7 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -93,7 +93,7 @@
 				5BF812A51706E83E00039E45 /* UIKit.framework in Frameworks */,
 				5BF812A71706E83E00039E45 /* Foundation.framework in Frameworks */,
 				5BF812A91706E83E00039E45 /* CoreGraphics.framework in Frameworks */,
-				5B8942C017076DB800A618C7 /* Dropbox.framework in Frameworks */,
+				5B59E1FB170830F900AEC98D /* Dropbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,7 +124,7 @@
 			children = (
 				5B8942C217076DD600A618C7 /* CFNetwork.framework */,
 				5BF812A81706E83E00039E45 /* CoreGraphics.framework */,
-				5B8942BF17076DB800A618C7 /* Dropbox.framework */,
+				5B59E1FA170830F900AEC98D /* Dropbox.framework */,
 				5BF812A61706E83E00039E45 /* Foundation.framework */,
 				5B8942C817076DEC00A618C7 /* QuartzCore.framework */,
 				5B8942C417076DDE00A618C7 /* Security.framework */,
@@ -165,8 +165,8 @@
 			children = (
 				5BF812BC1706E83E00039E45 /* MainStoryboard_iPhone.storyboard */,
 				5BF812BF1706E83E00039E45 /* MainStoryboard_iPad.storyboard */,
-				5B8942CD1707704D00A618C7 /* DatabasesViewController.h */,
-				5B8942CE1707704D00A618C7 /* DatabasesViewController.m */,
+				5B59E1FC1708311400AEC98D /* DatabasesViewController.h */,
+				5B59E1FD1708311400AEC98D /* DatabasesViewController.m */,
 				5B8942D0170773EC00A618C7 /* PasswordViewController.h */,
 				5B8942D1170773EC00A618C7 /* PasswordViewController.m */,
 				5BF812C21706E83E00039E45 /* MainViewController.h */,
@@ -282,10 +282,10 @@
 				5BF8131E1707145C00039E45 /* ItemViewController.m in Sources */,
 				5BF8132217071CED00039E45 /* GDataXMLNode.m in Sources */,
 				5BF8132A1707543E00039E45 /* Database.m in Sources */,
-				5B8942CF1707704D00A618C7 /* DatabasesViewController.m in Sources */,
 				5B8942D2170773EC00A618C7 /* PasswordViewController.m in Sources */,
 				5B8942D51707837800A618C7 /* SettingsViewController.m in Sources */,
 				5B8942DF17079A3F00A618C7 /* ActionSheet.m in Sources */,
+				5B59E1FE1708311400AEC98D /* DatabasesViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,6 +380,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/Sherlock\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sherlock/Sherlock-Prefix.pch";
@@ -396,6 +397,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/Sherlock\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sherlock/Sherlock-Prefix.pch";
