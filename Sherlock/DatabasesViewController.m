@@ -97,10 +97,10 @@
 - (NSString*)tableView:(UITableView*)tableView titleForHeaderInSection:(NSInteger)section
 {
     if (section == SECTION_LOCAL)
-        return @"Local";
+        return self.localFiles.count > 0 ? @"Local" : nil;
     
     if (section == SECTION_DROPBOX)
-        return @"Dropbox";
+        return self.dropboxFiles.count > 0 ? @"Dropbox" : nil;
     
     return nil;
 }

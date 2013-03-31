@@ -1,6 +1,6 @@
 //
 //  ActionSheet.h
-//  Stereoten
+//  Sherlock
 //
 //  Created by Soheil Rashidi on 6/19/12.
 //  Copyright (c) 2012 Radset. All rights reserved.

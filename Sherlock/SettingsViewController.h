@@ -13,7 +13,6 @@
 @property (nonatomic, weak) IBOutlet UIButton* linkDropboxButton;
 @property (nonatomic, weak) IBOutlet UIButton* unlinkDropboxButton;
 @property (nonatomic, weak) IBOutlet UILabel* dropboxDislpayNameLabel;
-@property (nonatomic, weak) IBOutlet UILabel* dropboxEMailLabel;
 
 - (IBAction)close:(id)sender;
 - (IBAction)linkDropbox:(id)sender;

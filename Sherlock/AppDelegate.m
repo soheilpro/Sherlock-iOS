@@ -9,6 +9,7 @@
 #import <Dropbox/Dropbox.h>
 #import "AppDelegate.h"
 #import "MainViewController.h"
+#import "Theme.h"
 
 @interface AppDelegate ()
 
@@ -42,6 +43,8 @@
         splitViewController.viewControllers = @[masterViewController, detailViewController];
         splitViewController.delegate = detailMainViewController;
     }
+    
+    [[Theme defaultTheme] apply];
     
     [self setupDropbox];
     

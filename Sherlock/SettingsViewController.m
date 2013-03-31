@@ -46,14 +46,12 @@
         self.linkDropboxButton.hidden = NO;
         self.unlinkDropboxButton.hidden = YES;
         self.dropboxDislpayNameLabel.text = @"";
-        self.dropboxEMailLabel.text = @"";
     }
     else
     {
         self.linkDropboxButton.hidden = YES;
         self.unlinkDropboxButton.hidden = NO;
         self.dropboxDislpayNameLabel.text = account.info.displayName;
-        self.dropboxEMailLabel.text = account.info.email;
     }
 }
 
