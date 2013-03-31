@@ -9,6 +9,7 @@
 #import <Dropbox/Dropbox.h>
 #import "SettingsViewController.h"
 #import "ActionSheet.h"
+#import "Theme.h"
 
 @implementation SettingsViewController
 
@@ -41,6 +42,7 @@
     [actionSheet addDestructiveButtonWithTitle:@"Unlink" selectBlock:^
     {
         [[DBAccountManager sharedManager].linkedAccount unlink];
+        [DBFilesystem setSharedFilesystem:nil];
     }];
     
     [actionSheet addCancelButtonWithTitle:@"Cancel"];
@@ -57,12 +59,14 @@
         self.linkDropboxButton.hidden = NO;
         self.unlinkDropboxButton.hidden = YES;
         self.dropboxDislpayNameLabel.text = @"no linked account";
+        self.dropboxDislpayNameLabel.textColor = [self.dropboxDislpayNameLabel.textColor colorWithAlphaComponent:.5];
     }
     else
     {
         self.linkDropboxButton.hidden = YES;
         self.unlinkDropboxButton.hidden = NO;
         self.dropboxDislpayNameLabel.text = account.info.displayName;
+        self.dropboxDislpayNameLabel.textColor = [self.dropboxDislpayNameLabel.textColor colorWithAlphaComponent:1];
     }
 }
 
