@@ -14,6 +14,8 @@
 @property (nonatomic, strong) NSMutableArray* folders;
 @property (nonatomic, strong) NSMutableArray* items;
 
++ (NSComparator)sortingComparator;
+
 - (id)initWithName:(NSString*)name;
 
 @end

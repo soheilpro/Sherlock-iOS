@@ -10,13 +10,15 @@
 #import "ItemViewController.h"
 #import "ActionSheet.h"
 #import "AppDelegate.h"
+#import "NewFolderViewController.h"
 
 #define SECTION_FOLDERS 0
 #define SECTION_ITEMS 1
 
 @interface FolderViewController ()
 
-@property (strong, nonatomic) UIPopoverController* masterPopoverController;
+@property (nonatomic, strong) UIPopoverController* masterPopoverController;
+@property (nonatomic, strong) UIBarButtonItem* unloadBarButtonItem;
 
 @end
 
@@ -42,14 +44,17 @@
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
     if (self.folder.parent == nil)
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Unload" style:UIBarButtonItemStylePlain target:self action:@selector(unloadDatabase)];
+    {
+        self.unloadBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Unload" style:UIBarButtonItemStylePlain target:self action:@selector(unloadDatabase)];
+        self.navigationItem.leftBarButtonItem = self.unloadBarButtonItem;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
-    if (self.folder.parent == nil)
+    if (self.navigationItem.leftBarButtonItem == self.unloadBarButtonItem)
         self.navigationItem.leftBarButtonItem.enabled = NO;
 }
 
@@ -57,7 +62,7 @@
 {
     [super viewDidAppear:animated];
     
-    if (self.folder.parent == nil)
+    if (self.navigationItem.leftBarButtonItem == self.unloadBarButtonItem)
     {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void)
         {
@@ -72,6 +77,25 @@
         FolderViewController* detailMainViewController = [detailViewController.viewControllers objectAtIndex:0];
         detailMainViewController.folder = self.folder;
         [detailMainViewController refresh];
+    }
+}
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated
+{
+    [super setEditing:editing animated:animated];
+
+    static UIBarButtonItem* originalLeftBarButtonItem = nil;
+    
+    if (editing)
+    {
+        originalLeftBarButtonItem = self.navigationItem.leftBarButtonItem;
+        UIBarButtonItem* addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addFolderOrItem)];
+        
+        [self.navigationItem setLeftBarButtonItem:addButton animated:YES];
+    }
+    else
+    {
+        [self.navigationItem setLeftBarButtonItem: originalLeftBarButtonItem animated:YES];
     }
 }
 
@@ -101,6 +125,42 @@
     
     [self.tableView reloadData];
     [self.tableView setContentOffset:CGPointZero animated:NO];
+}
+
+- (void)addFolderOrItem
+{
+    ActionSheet* actionSheet = [ActionSheet actionSheet];
+    
+    [actionSheet addButtonWithTitle:@"Folder" selectBlock:^
+    {
+        NewFolderViewController* newFolderViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NewFolder"];
+        newFolderViewController.delegate = self;
+        
+        [self presentModalViewController:newFolderViewController animated:YES];
+    }];
+
+    [actionSheet addCancelButtonWithTitle:@"Cancel"];
+    
+    [actionSheet presentInView:self.view];
+}
+
+- (void)didCreateNewFolder:(Folder*)folder
+{
+    folder.parent = self.folder;
+    folder.database = self.folder.database;
+    
+    [self.folder.folders addObject:folder];
+    [self.folder.folders sortUsingComparator:[Folder sortingComparator]];
+    
+    [self.folder.database save];
+    
+    NSInteger folderIndex = [self.folder.folders indexOfObject:folder];
+    
+    [self setEditing:NO];
+    [self.tableView reloadData];
+    [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:folderIndex inSection:SECTION_FOLDERS] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+    
+    [self performSegueWithIdentifier:@"FolderSegue" sender:self.tableView];
 }
 
 - (void)unloadDatabase

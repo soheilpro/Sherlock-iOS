@@ -10,6 +10,17 @@
 
 @implementation Folder
 
++ (NSComparator)sortingComparator
+{
+    return ^NSComparisonResult(id obj1, id obj2)
+    {
+        Folder* folder1 = (Folder*)obj1;
+        Folder* folder2 = (Folder*)obj2;
+        
+        return [folder1.name compare:folder2.name options:NSCaseInsensitiveSearch];
+    };
+}
+
 - (id)init
 {
     self = [super init];

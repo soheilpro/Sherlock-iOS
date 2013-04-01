@@ -14,6 +14,8 @@
 @property (nonatomic, strong) NSString* value;
 @property (nonatomic) BOOL isSecret;
 
++ (NSComparator)sortingComparator;
+
 - (id)initWithName:(NSString*)name andValue:(NSString*)value;
 
 @end

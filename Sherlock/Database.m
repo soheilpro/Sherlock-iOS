@@ -45,16 +45,8 @@
     for (GDataXMLElement* itemElement in [element elementsForName:@"item"])
         [folder.items addObject:[self itemFromElement:itemElement withParent:folder inDatabase:database]];
     
-    id nodeComparer = ^NSComparisonResult(id obj1, id obj2)
-    {
-        Item* item1 = (Item*)obj1;
-        Item* item2 = (Item*)obj2;
-        
-        return [item1.name compare:item2.name options:NSCaseInsensitiveSearch];
-    };
-    
-    [folder.folders sortUsingComparator:nodeComparer];
-    [folder.items sortUsingComparator:nodeComparer];
+    [folder.folders sortUsingComparator:[Folder sortingComparator]];
+    [folder.items sortUsingComparator:[Item sortingComparator]];
 
     return folder;
 }
