@@ -6,15 +6,18 @@
 //  Copyright (c) 2013 Softtool. All rights reserved.
 //
 
-#import "NewItemViewController.h"
+#import "EditItemViewController.h"
 
-@implementation NewItemViewController
+@implementation EditItemViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
+    self.nameTextField.text = self.item.name;
     self.nameTextField.delegate = self;
+    self.valueTextView.text = self.item.value;
+    [self.isSecretSwitch setOn:self.item.isSecret];
 
     [self toggleCreateButton];
     
@@ -38,15 +41,16 @@
 
 - (void)toggleCreateButton
 {
-    self.createBarButtonItem.enabled = self.nameTextField.text.length > 0;
+    self.doneBarButtonItem.enabled = self.nameTextField.text.length > 0;
 }
 
-- (void)create:(id)sender
+- (void)done:(id)sender
 {
-    Item* item = [[Item alloc] initWithName:self.nameTextField.text andValue:self.valueTextView.text];
-    item.isSecret = [self.isSecretSwitch isOn];
+    self.item.name = self.nameTextField.text;
+    self.item.value = self.valueTextView.text;
+    self.item.isSecret = [self.isSecretSwitch isOn];
     
-    [self.delegate didCreateNewItem:item];
+    [self.delegate didUpdateItem:self.item];
     
     [self dismissModalViewControllerAnimated:YES];
 }

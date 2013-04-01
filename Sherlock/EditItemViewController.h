@@ -9,22 +9,23 @@
 #import <UIKit/UIKit.h>
 #import "Database.h"
 
-@protocol NewItemDelegate<NSObject>
+@protocol EditItemDelegate<NSObject>
 
 @required
-- (void)didCreateNewItem:(Item*)item;
+- (void)didUpdateItem:(Item*)item;
 
 @end
 
-@interface NewItemViewController : UIViewController<UITextFieldDelegate>
+@interface EditItemViewController : UIViewController<UITextFieldDelegate>
 
-@property (nonatomic, weak) id<NewItemDelegate> delegate;
-@property (nonatomic, weak) IBOutlet UIBarButtonItem* createBarButtonItem;
+@property (nonatomic, strong) Item* item;
+@property (nonatomic, weak) id<EditItemDelegate> delegate;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem* doneBarButtonItem;
 @property (nonatomic, weak) IBOutlet UITextField* nameTextField;
 @property (nonatomic, weak) IBOutlet UITextView* valueTextView;
 @property (nonatomic, weak) IBOutlet UISwitch* isSecretSwitch;
 
-- (IBAction)create:(id)sender;
+- (IBAction)done:(id)sender;
 - (IBAction)cancel:(id)sender;
 
 @end

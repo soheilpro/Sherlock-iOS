@@ -11,7 +11,7 @@
 #import "ActionSheet.h"
 #import "AppDelegate.h"
 #import "EditFolderViewController.h"
-#import "NewItemViewController.h"
+#import "EditItemViewController.h"
 
 #define SECTION_FOLDERS 0
 #define SECTION_ITEMS 1
@@ -145,7 +145,10 @@
 
     [actionSheet addButtonWithTitle:@"Item" selectBlock:^
     {
-        NewItemViewController* newItemViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NewItem"];
+        EditItemViewController* newItemViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NewItem"];
+        newItemViewController.item = [[Item alloc] init];
+        newItemViewController.item.parent = self.folder;
+        newItemViewController.item.database = self.folder.database;
         newItemViewController.delegate = self;
         
         [self presentModalViewController:newItemViewController animated:YES];
@@ -167,16 +170,13 @@
     
     [self setEditing:NO];
     [self.tableView reloadData];
-    [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:folderIndex inSection:SECTION_FOLDERS] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+    [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:folderIndex inSection:SECTION_FOLDERS] animated:NO scrollPosition:UITableViewScrollPositionMiddle];
     
     [self performSegueWithIdentifier:@"FolderSegue" sender:self.tableView];
 }
 
-- (void)didCreateNewItem:(Item*)item
-{
-    item.parent = self.folder;
-    item.database = self.folder.database;
-    
+- (void)didUpdateItem:(Item*)item
+{    
     [self.folder.items addObject:item];
     [self.folder.items sortUsingComparator:[Item sortingComparator]];
     
@@ -184,8 +184,8 @@
     
     NSInteger itemIndex = [self.folder.items indexOfObject:item];
     
-    [self.tableView reloadData];
-    [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:itemIndex inSection:SECTION_ITEMS] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+    [self.tableView reloadData];    
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:itemIndex inSection:SECTION_ITEMS] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
 }
 
 - (void)unloadDatabase
