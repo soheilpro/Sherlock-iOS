@@ -99,7 +99,7 @@
     if (key.length > length)
         key = [key substringToIndex:length];
     
-    return [key dataUsingEncoding:NSASCIIStringEncoding];
+    return [key dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 + (NSData*)tripleDESIVFromPassword:(NSString*)password
@@ -113,7 +113,7 @@
     if (key.length > length)
         key = [key substringToIndex:length];
     
-    return [key dataUsingEncoding:NSASCIIStringEncoding];
+    return [key dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 - (id)init
