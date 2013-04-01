@@ -10,7 +10,7 @@
 #import "ItemViewController.h"
 #import "ActionSheet.h"
 #import "AppDelegate.h"
-#import "NewFolderViewController.h"
+#import "EditFolderViewController.h"
 #import "NewItemViewController.h"
 
 #define SECTION_FOLDERS 0
@@ -134,10 +134,13 @@
     
     [actionSheet addButtonWithTitle:@"Folder" selectBlock:^
     {
-        NewFolderViewController* newFolderViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NewFolder"];
-        newFolderViewController.delegate = self;
+        EditFolderViewController* editFolderViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NewFolder"];
+        editFolderViewController.folder = [[Folder alloc] init];
+        editFolderViewController.folder.parent = self.folder;
+        editFolderViewController.folder.database = self.folder.database;
+        editFolderViewController.delegate = self;
         
-        [self presentModalViewController:newFolderViewController animated:YES];
+        [self presentModalViewController:editFolderViewController animated:YES];
     }];
 
     [actionSheet addButtonWithTitle:@"Item" selectBlock:^
@@ -153,11 +156,8 @@
     [actionSheet presentInView:self.view];
 }
 
-- (void)didCreateNewFolder:(Folder*)folder
+- (void)didUpdateFolder:(Folder*)folder
 {
-    folder.parent = self.folder;
-    folder.database = self.folder.database;
-    
     [self.folder.folders addObject:folder];
     [self.folder.folders sortUsingComparator:[Folder sortingComparator]];
     

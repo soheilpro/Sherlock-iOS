@@ -6,14 +6,15 @@
 //  Copyright (c) 2013 Softtool. All rights reserved.
 //
 
-#import "NewFolderViewController.h"
+#import "EditFolderViewController.h"
 
-@implementation NewFolderViewController
+@implementation EditFolderViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    self.nameTextField.text = self.folder.name;
     self.nameTextField.delegate = self;
     
     [self toggleCreateButton];
@@ -31,21 +32,21 @@
 - (BOOL)textFieldShouldReturn:(UITextField*)textField
 {
     if (textField == self.nameTextField)
-        [self create:textField];
+        [self done:textField];
     
     return YES;
 }
 
 - (void)toggleCreateButton
 {
-    self.createBarButtonItem.enabled = self.nameTextField.text.length > 0;
+    self.doneBarButtonItem.enabled = self.nameTextField.text.length > 0;
 }
 
-- (void)create:(id)sender
+- (void)done:(id)sender
 {
-    Folder* folder = [[Folder alloc] initWithName:self.nameTextField.text];
+    self.folder.name = self.nameTextField.text;
     
-    [self.delegate didCreateNewFolder:folder];
+    [self.delegate didUpdateFolder:self.folder];
     
     [self dismissModalViewControllerAnimated:YES];
 }
