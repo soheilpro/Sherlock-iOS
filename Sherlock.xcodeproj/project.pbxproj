@@ -64,6 +64,7 @@
 		5BF8132217071CED00039E45 /* GDataXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF8132117071CED00039E45 /* GDataXMLNode.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5BF8132A1707543E00039E45 /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF813291707543E00039E45 /* Database.m */; };
 		5BFB94CC170A138200459F8E /* NewFolderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFB94CB170A138200459F8E /* NewFolderViewController.m */; };
+		5BFB94D0170A279600459F8E /* NewItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFB94CF170A279600459F8E /* NewItemViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -155,6 +156,8 @@
 		5BF813291707543E00039E45 /* Database.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Database.m; sourceTree = "<group>"; };
 		5BFB94CA170A138200459F8E /* NewFolderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewFolderViewController.h; sourceTree = "<group>"; };
 		5BFB94CB170A138200459F8E /* NewFolderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFolderViewController.m; sourceTree = "<group>"; };
+		5BFB94CE170A279500459F8E /* NewItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewItemViewController.h; sourceTree = "<group>"; };
+		5BFB94CF170A279600459F8E /* NewItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewItemViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -325,6 +328,8 @@
 				5BF8131D1707145C00039E45 /* ItemViewController.m */,
 				5BFB94CA170A138200459F8E /* NewFolderViewController.h */,
 				5BFB94CB170A138200459F8E /* NewFolderViewController.m */,
+				5BFB94CE170A279500459F8E /* NewItemViewController.h */,
+				5BFB94CF170A279600459F8E /* NewItemViewController.m */,
 				5B8942D31707837800A618C7 /* SettingsViewController.h */,
 				5B8942D41707837800A618C7 /* SettingsViewController.m */,
 				5B8942DD17079A3F00A618C7 /* ActionSheet.h */,
@@ -488,6 +493,7 @@
 				5B4466AE1708B20500A42D7C /* DropboxStorage.m in Sources */,
 				5B4466B11708C05D00A42D7C /* NewDatabaseViewController.m in Sources */,
 				5BFB94CC170A138200459F8E /* NewFolderViewController.m in Sources */,
+				5BFB94D0170A279600459F8E /* NewItemViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

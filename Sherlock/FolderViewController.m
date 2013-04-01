@@ -11,6 +11,7 @@
 #import "ActionSheet.h"
 #import "AppDelegate.h"
 #import "NewFolderViewController.h"
+#import "NewItemViewController.h"
 
 #define SECTION_FOLDERS 0
 #define SECTION_ITEMS 1
@@ -139,6 +140,14 @@
         [self presentModalViewController:newFolderViewController animated:YES];
     }];
 
+    [actionSheet addButtonWithTitle:@"Item" selectBlock:^
+    {
+        NewItemViewController* newItemViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NewItem"];
+        newItemViewController.delegate = self;
+        
+        [self presentModalViewController:newItemViewController animated:YES];
+    }];
+
     [actionSheet addCancelButtonWithTitle:@"Cancel"];
     
     [actionSheet presentInView:self.view];
@@ -161,6 +170,22 @@
     [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:folderIndex inSection:SECTION_FOLDERS] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
     
     [self performSegueWithIdentifier:@"FolderSegue" sender:self.tableView];
+}
+
+- (void)didCreateNewItem:(Item*)item
+{
+    item.parent = self.folder;
+    item.database = self.folder.database;
+    
+    [self.folder.items addObject:item];
+    [self.folder.items sortUsingComparator:[Item sortingComparator]];
+    
+    [self.folder.database save];
+    
+    NSInteger itemIndex = [self.folder.items indexOfObject:item];
+    
+    [self.tableView reloadData];
+    [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:itemIndex inSection:SECTION_ITEMS] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
 }
 
 - (void)unloadDatabase

@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "Database.h"
 #import "NewFolderViewController.h"
+#import "NewItemViewController.h"
 
-@interface FolderViewController : UITableViewController<UISplitViewControllerDelegate, NewFolderDelegate>
+@interface FolderViewController : UITableViewController<UISplitViewControllerDelegate, NewFolderDelegate, NewItemDelegate>
 
 @property (nonatomic, strong) Folder* folder;
 @property (nonatomic) BOOL showCategories;

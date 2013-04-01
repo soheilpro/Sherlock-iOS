@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Folder.h"
+#import "Database.h"
 
 @protocol NewFolderDelegate<NSObject>
 
