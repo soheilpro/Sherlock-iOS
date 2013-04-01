@@ -80,6 +80,14 @@
         if ([[[file.path stringValue] pathExtension] isEqualToString:@"sdb"])
             [files addObject:[file.path stringValue]];
     
+    [files sortUsingComparator:^NSComparisonResult(id obj1, id obj2)
+    {
+        NSString* file1 = obj1;
+        NSString* file2 = obj2;
+        
+        return [file1 compare:file2 options:NSCaseInsensitiveSearch];
+    }];
+
     return files;
 }
 
