@@ -149,6 +149,7 @@
             [hud hide:YES];
 
             PasswordViewController* passwordViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Password"];
+            passwordViewController.storage = storage;
             passwordViewController.databaseFile = databaseFile;
             passwordViewController.databaseFileData = datanaseFileData;
             

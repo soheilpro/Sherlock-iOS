@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Storage.h"
 
 @interface PasswordViewController : UIViewController<UITextFieldDelegate>
 
+@property (nonatomic, strong) id<Storage> storage;
 @property (nonatomic, strong) NSString* databaseFile;
 @property (nonatomic, strong) NSData* databaseFileData;
 @property (nonatomic, weak) IBOutlet UITextField* passwordTextField;

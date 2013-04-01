@@ -62,14 +62,10 @@
 {
     Database* database = [[Database alloc] init];
     database.password = self.passwordTextField.text;
-    [database.root.folders addObject:[[Folder alloc] initWithName:@"test"]];
-    [database.root.items addObject:[[Item alloc] initWithName:@"test" andValue:@"test"]];
-    
-    NSData* data = [database save];
-    
-    id<Storage> storage = [self.storages objectAtIndex:self.selectedStorageIndex];
-    [storage saveDatabaseData:data withName:self.nameTextField.text];
-    
+    database.storage = [self.storages objectAtIndex:self.selectedStorageIndex];
+
+    [database saveWithName:self.nameTextField.text];
+
     [self dismissModalViewControllerAnimated:YES];
 }
 

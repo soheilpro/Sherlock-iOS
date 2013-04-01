@@ -94,7 +94,13 @@
 - (void)saveDatabaseData:(NSData*)data withName:(NSString*)name;
 {
     DBPath* dbPath = [[DBPath root] childPath:[name stringByAppendingPathExtension:@"sdb"]];
-    DBFile* dbFile = [[DBFilesystem sharedFilesystem] createFile:dbPath error:nil];
+    DBFile* dbFile;
+    
+    DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
+    dbFile = [filesystem openFile:dbPath error:nil];
+    
+    if (dbFile == nil)
+        dbFile = [filesystem createFile:dbPath error:nil];
     
     [dbFile writeData:data error:nil];
 }

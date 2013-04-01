@@ -11,7 +11,7 @@
 
 typedef void (^observerBlock)();
 
-@protocol Storage <NSObject>
+@protocol Storage<NSObject>
 
 @required
 

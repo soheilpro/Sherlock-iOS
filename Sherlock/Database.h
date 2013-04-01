@@ -10,15 +10,18 @@
 #import "Node.h"
 #import "Folder.h"
 #import "Item.h"
+#import "Storage.h"
 
 @interface Database : NSObject
 
 @property (nonatomic, strong) NSString* name;
 @property (nonatomic, strong) NSString* password;
+@property (nonatomic, strong) id storage;
 @property (nonatomic, strong) Folder* root;
 
 + (Database*)openDatabaseNamed:(NSString*)name fromData:(NSData*)encryptedData withPassword:(NSString*)password;
 
-- (NSData*)save;
+- (void)save;
+- (void)saveWithName:(NSString*)name;
 
 @end

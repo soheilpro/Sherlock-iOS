@@ -11,7 +11,7 @@
 #import "ActionSheet.h"
 #import "AppDelegate.h"
 
-#define SECTION_CATEGORIES 0
+#define SECTION_FOLDERS 0
 #define SECTION_ITEMS 1
 
 @interface FolderViewController ()
@@ -39,6 +39,8 @@
     
     [self refresh];
     
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
     if (self.folder.parent == nil)
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Unload" style:UIBarButtonItemStylePlain target:self action:@selector(unloadDatabase)];
 }
@@ -115,7 +117,7 @@
 
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == SECTION_CATEGORIES)
+    if (section == SECTION_FOLDERS)
         return self.showCategories ? self.folder.folders.count : 0;
 
     if (section == SECTION_ITEMS)
@@ -126,7 +128,7 @@
 
 - (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    if (indexPath.section == SECTION_CATEGORIES)
+    if (indexPath.section == SECTION_FOLDERS)
     {
         Folder* folder = [self.folder.folders objectAtIndex:indexPath.row];
         
@@ -152,7 +154,7 @@
 
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    if (indexPath.section == SECTION_CATEGORIES)
+    if (indexPath.section == SECTION_FOLDERS)
         [self performSegueWithIdentifier:@"FolderSegue" sender:tableView];
     
     if (indexPath.section == SECTION_ITEMS)
@@ -193,6 +195,25 @@
         }];
          
         [actionSheet presentInView:self.view];
+    }
+}
+
+- (void)tableView:(UITableView*)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        if (indexPath.section == SECTION_FOLDERS)
+        {
+            [self.folder.folders removeObjectAtIndex:indexPath.row];
+        }
+        else if (indexPath.section == SECTION_ITEMS)
+        {
+            [self.folder.items removeObjectAtIndex:indexPath.row];
+        }
+        
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+        [self.folder.database save];
     }
 }
 

@@ -54,6 +54,7 @@
         return;
     }
     
+    database.storage = self.storage;
     database.password = self.passwordTextField.text;
     
     [((AppDelegate*)[UIApplication sharedApplication].delegate) didOpenDatabase:database];

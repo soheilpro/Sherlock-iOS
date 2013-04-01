@@ -130,7 +130,19 @@
     return self;
 }
 
-- (NSData*)save
+- (void)save
+{
+    [self saveWithName:self.name];
+}
+
+- (void)saveWithName:(NSString*)name
+{
+    NSData* data = [self data];
+
+    [self.storage saveDatabaseData:data withName:name];
+}
+
+- (NSData*)data
 {
     GDataXMLElement* rootElement = [self rootElementFromFolder:self.root];
     GDataXMLDocument* document = [[GDataXMLDocument alloc] initWithRootElement:rootElement];
