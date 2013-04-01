@@ -134,10 +134,8 @@
     
     [actionSheet addButtonWithTitle:@"Folder" selectBlock:^
     {
-        EditFolderViewController* editFolderViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NewFolder"];
+        EditFolderViewController* editFolderViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"EditFolder"];
         editFolderViewController.folder = [[Folder alloc] init];
-        editFolderViewController.folder.parent = self.folder;
-        editFolderViewController.folder.database = self.folder.database;
         editFolderViewController.delegate = self;
         
         [self presentModalViewController:editFolderViewController animated:YES];
@@ -145,10 +143,8 @@
 
     [actionSheet addButtonWithTitle:@"Item" selectBlock:^
     {
-        EditItemViewController* newItemViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NewItem"];
+        EditItemViewController* newItemViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"EditItem"];
         newItemViewController.item = [[Item alloc] init];
-        newItemViewController.item.parent = self.folder;
-        newItemViewController.item.database = self.folder.database;
         newItemViewController.delegate = self;
         
         [self presentModalViewController:newItemViewController animated:YES];
@@ -161,30 +157,49 @@
 
 - (void)didUpdateFolder:(Folder*)folder
 {
-    [self.folder.folders addObject:folder];
-    [self.folder.folders sortUsingComparator:[Folder sortingComparator]];
+    BOOL isNewFolder = NO;
     
+    if (folder.parent == nil)
+    {
+        isNewFolder = YES;
+        
+        folder.parent = self.folder;
+        folder.database = self.folder.database;
+
+        [self.folder.folders addObject:folder];
+    }
+    
+    [self.folder.folders sortUsingComparator:[Folder sortingComparator]];   
     [self.folder.database save];
     
     NSInteger folderIndex = [self.folder.folders indexOfObject:folder];
-    
-    [self setEditing:NO];
+
+    if (isNewFolder)
+        [self setEditing:NO];
+
     [self.tableView reloadData];
     [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:folderIndex inSection:SECTION_FOLDERS] animated:NO scrollPosition:UITableViewScrollPositionMiddle];
-    
-    [self performSegueWithIdentifier:@"FolderSegue" sender:self.tableView];
+
+    if (isNewFolder)
+        [self performSegueWithIdentifier:@"FolderSegue" sender:self.tableView];
 }
 
 - (void)didUpdateItem:(Item*)item
-{    
-    [self.folder.items addObject:item];
-    [self.folder.items sortUsingComparator:[Item sortingComparator]];
+{
+    if (item.parent == nil)
+    {
+        item.parent = self.folder;
+        item.database = self.folder.database;
+
+        [self.folder.items addObject:item];
+    }
     
+    [self.folder.items sortUsingComparator:[Item sortingComparator]];
     [self.folder.database save];
     
     NSInteger itemIndex = [self.folder.items indexOfObject:item];
     
-    [self.tableView reloadData];    
+    [self.tableView reloadData];
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:itemIndex inSection:SECTION_ITEMS] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
 }
 
@@ -240,46 +255,73 @@
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
     if (indexPath.section == SECTION_FOLDERS)
-        [self performSegueWithIdentifier:@"FolderSegue" sender:tableView];
-    
-    if (indexPath.section == SECTION_ITEMS)
     {
-        Item* item = [self.folder.items objectAtIndex:indexPath.row];
-        
-        ActionSheet* actionSheet = [ActionSheet actionSheet];
-        [actionSheet addButtonWithTitle:@"View" selectBlock:^
+        if (!self.tableView.isEditing)
         {
-            [self performSegueWithIdentifier:@"ItemSegue" sender:tableView];
+            [self performSegueWithIdentifier:@"FolderSegue" sender:tableView];
+        }
+        else
+        {
+            Folder* folder = [self.folder.folders objectAtIndex:indexPath.row];
             
-            [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
-        }];
-
-        [actionSheet addButtonWithTitle:@"Copy" selectBlock:^
-        {
-            UIPasteboard* pasteboard = [UIPasteboard generalPasteboard];
-            pasteboard.string = item.value;
+            EditFolderViewController* editFolderViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"EditFolder"];
+            editFolderViewController.folder = folder;
+            editFolderViewController.delegate = self;
             
-            [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
-        }];
-
-        NSURL* url = [NSURL URLWithString:item.value];
-        
-        if (url != nil && url.scheme != nil)
+            [self presentModalViewController:editFolderViewController animated:YES];
+        }
+    }
+    else if (indexPath.section == SECTION_ITEMS)
+    {
+        if (!self.tableView.isEditing)
         {
-            [actionSheet addButtonWithTitle:@"Open" selectBlock:^
+            Item* item = [self.folder.items objectAtIndex:indexPath.row];
+            
+            ActionSheet* actionSheet = [ActionSheet actionSheet];
+            [actionSheet addButtonWithTitle:@"View" selectBlock:^
             {
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:item.value]];
+                [self performSegueWithIdentifier:@"ItemSegue" sender:tableView];
                 
                 [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
             }];
+
+            [actionSheet addButtonWithTitle:@"Copy" selectBlock:^
+            {
+                UIPasteboard* pasteboard = [UIPasteboard generalPasteboard];
+                pasteboard.string = item.value;
+                
+                [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+            }];
+
+            NSURL* url = [NSURL URLWithString:item.value];
+            
+            if (url != nil && url.scheme != nil)
+            {
+                [actionSheet addButtonWithTitle:@"Open" selectBlock:^
+                {
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:item.value]];
+                    
+                    [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+                }];
+            }
+            
+            [actionSheet addCancelButtonWithTitle:@"Cancel" selectBlock:^
+            {
+                [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+            }];
+             
+            [actionSheet presentInView:self.view];
         }
-        
-        [actionSheet addCancelButtonWithTitle:@"Cancel" selectBlock:^
+        else
         {
-            [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
-        }];
-         
-        [actionSheet presentInView:self.view];
+            Item* item = [self.folder.items objectAtIndex:indexPath.row];
+            
+            EditItemViewController* editItemViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"EditItem"];
+            editItemViewController.item = item;
+            editItemViewController.delegate = self;
+            
+            [self presentModalViewController:editItemViewController animated:YES];
+        }
     }
 }
 
