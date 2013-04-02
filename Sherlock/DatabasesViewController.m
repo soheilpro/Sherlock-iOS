@@ -38,11 +38,11 @@
     for (id<Storage> storage in self.storages)
     {
         [storage addObserverBlock:^{
-            [self refreshFiles];
+            [self refreshDatabases];
         }];
     }
 
-    [self refreshFiles];
+    [self refreshDatabases];
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
@@ -64,14 +64,14 @@
     }
 }
 
-- (void)refreshFiles
+- (void)refreshDatabases
 {
     MBProgressHUD* hud = [self showHUDWithText:@"Loading list of databases"];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
     {
         for (id<Storage> storage in self.storages)
-            [storage fetchListOfDatabaseFiles];
+            [storage fetchDatabases];
         
         dispatch_async(dispatch_get_main_queue(), ^
         {
@@ -138,23 +138,23 @@
 {
     id<Storage> storage = [self.storages objectAtIndex:section];
     
-    return [storage databaseFiles].count > 0 ? [storage name] : nil;
+    return [storage databases].count > 0 ? [storage name] : nil;
 }
 
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
     id<Storage> storage = [self.storages objectAtIndex:section];
     
-    return [storage databaseFiles].count;
+    return [storage databases].count;
 }
 
 - (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
     id<Storage> storage = [self.storages objectAtIndex:indexPath.section];
-    NSString* databaseFile = [[storage databaseFiles] objectAtIndex:indexPath.row];
+    Database* database = [[storage databases] objectAtIndex:indexPath.row];
     
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"DatabaseCell"];
-    cell.textLabel.text = [[databaseFile lastPathComponent] stringByDeletingPathExtension];
+    cell.textLabel.text = database.name;
     
     return cell;
 }
@@ -168,9 +168,9 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
     {
         id<Storage> storage = [self.storages objectAtIndex:indexPath.section];
-        NSString* databaseFile = [[storage databaseFiles] objectAtIndex:indexPath.row];
+        Database* database = [[storage databases] objectAtIndex:indexPath.row];
 
-        datanaseFileData = [storage readDatabaseFile:databaseFile];
+        datanaseFileData = [storage readDatabase:database];
         
         dispatch_async(dispatch_get_main_queue(), ^
         {
@@ -178,7 +178,7 @@
 
             PasswordViewController* passwordViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Password"];
             passwordViewController.storage = storage;
-            passwordViewController.databaseFile = databaseFile;
+            passwordViewController.databaseFile = database.name;
             passwordViewController.databaseFileData = datanaseFileData;
             
             [self.navigationController pushViewController:passwordViewController animated:YES];
@@ -191,9 +191,9 @@
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
         id<Storage> storage = [self.storages objectAtIndex:indexPath.section];
-        NSString* databaseFile = [[storage databaseFiles] objectAtIndex:indexPath.row];
+        Database* database = [[storage databases] objectAtIndex:indexPath.row];
         
-        [storage deleteDatabaseFile:databaseFile];
+        [storage deleteDatabase:database];
     }
 }
 

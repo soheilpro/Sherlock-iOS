@@ -9,9 +9,11 @@
 #import <Dropbox/Dropbox.h>
 #import "DropboxStorage.h"
 
+#define DB_FILE_EXTENSION @"sdb"
+
 @interface DropboxStorage ()
 
-@property (nonatomic, strong) NSArray* files;
+@property (nonatomic, strong) NSArray* databases;
 @property (nonatomic, strong) NSMutableArray* observerBlocks;
 
 @end
@@ -24,7 +26,7 @@
     
     if (self)
     {
-        self.files = @[];
+        self.databases = @[];
         self.observerBlocks = [NSMutableArray array];
         
         [self ensureSharedFilesystem];
@@ -55,70 +57,79 @@
     return account != nil;
 }
 
-- (NSArray*)databaseFiles
+- (NSArray*)databases
 {
-    return self.files;
+    return _databases;
 }
 
-- (void)fetchListOfDatabaseFiles
+- (void)fetchDatabases
 {
-    self.files = [self fetchListOfDatabaseFilesInternal];
+    self.databases = [self fetchDatabasesInternal];
 }
 
-- (NSArray*)fetchListOfDatabaseFilesInternal
+- (NSArray*)fetchDatabasesInternal
 {
     DBAccount* account = [DBAccountManager sharedManager].linkedAccount;
     
     if (account == nil)
         return @[];
-    
-    [self ensureSharedFilesystem];
 
-    DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
-    NSMutableArray* files = [NSMutableArray array];
+    NSMutableArray* databases = [NSMutableArray array];
+
+    [self ensureSharedFilesystem];
     
-    for (DBFileInfo* file in [filesystem listFolder:[DBPath root] error:nil])
-        if ([[[file.path stringValue] pathExtension] isEqualToString:@"sdb"])
-            [files addObject:[file.path stringValue]];
-    
-    [files sortUsingComparator:^NSComparisonResult(id obj1, id obj2)
+    for (DBFileInfo* file in [[DBFilesystem sharedFilesystem] listFolder:[DBPath root] error:nil])
     {
-        NSString* file1 = obj1;
-        NSString* file2 = obj2;
+        if ([[[file.path stringValue] pathExtension] isEqualToString:DB_FILE_EXTENSION])
+        {
+            Database* database = [[Database alloc] init];
+            database.storage = self;
+            database.name = [[file.path.stringValue stringByDeletingPathExtension] substringFromIndex:1];
+            
+            [databases addObject:database];
+        }
+    }
+    
+    [databases sortUsingComparator:^NSComparisonResult(id obj1, id obj2)
+    {
+        Database* database1 = obj1;
+        Database* database2 = obj2;
         
-        return [file1 compare:file2 options:NSCaseInsensitiveSearch];
+        return [database1.name compare:database2.name options:NSCaseInsensitiveSearch];
     }];
 
-    return files;
+    return databases;
 }
 
-- (NSData*)readDatabaseFile:(NSString*)file
+- (NSData*)readDatabase:(Database*)database
 {
-    DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
-    DBPath* dbPath = [[DBPath alloc] initWithString:file];
-    DBFile* dbFile = [filesystem openFile:dbPath error:nil];
-    
-    return [dbFile readData:nil];
+    DBPath* path = [self pathForDatabase:database];
+    DBFile* file = [[DBFilesystem sharedFilesystem] openFile:path error:nil];
+
+    return [file readData:nil];
 }
 
-- (void)saveDatabaseData:(NSData*)data withName:(NSString*)name;
+- (void)saveDatabase:(Database*)database withData:(NSData*)data;
 {
-    DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
-    DBPath* dbPath = [[DBPath root] childPath:[name stringByAppendingPathExtension:@"sdb"]];
-    DBFile* dbFile = [filesystem openFile:dbPath error:nil];
+    DBPath* path = [self pathForDatabase:database];
+    DBFile* file = [[DBFilesystem sharedFilesystem] openFile:path error:nil];
     
-    if (dbFile == nil)
-        dbFile = [filesystem createFile:dbPath error:nil];
+    if (file == nil)
+        file = [[DBFilesystem sharedFilesystem] createFile:path error:nil];
     
-    [dbFile writeData:data error:nil];
+    [file writeData:data error:nil];
 }
 
-- (void)deleteDatabaseFile:(NSString*)file
+- (void)deleteDatabase:(Database*)database
 {
-    DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
-    DBPath* dbPath = [[DBPath alloc] initWithString:file];
+    DBPath* path = [self pathForDatabase:database];
     
-    [filesystem deletePath:dbPath error:nil];
+    [[DBFilesystem sharedFilesystem] deletePath:path error:nil];
+}
+
+- (DBPath*)pathForDatabase:(Database*)database
+{
+    return [[DBPath root] childPath:[database.name stringByAppendingPathExtension:DB_FILE_EXTENSION]];
 }
 
 - (void)addObserverBlock:(observerBlock)block

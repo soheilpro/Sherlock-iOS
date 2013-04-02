@@ -126,7 +126,7 @@
 {
     NSData* data = [self data];
     
-    [self.storage saveDatabaseData:data withName:self.name];
+    [self.storage saveDatabase:self withData:data];
 }
 
 - (NSData*)data

@@ -14,14 +14,13 @@ typedef void (^observerBlock)();
 @protocol Storage<NSObject>
 
 @required
-
 - (NSString*)name;
 - (BOOL)isAvailable;
-- (NSArray*)databaseFiles;
-- (void)fetchListOfDatabaseFiles;
-- (NSData*)readDatabaseFile:(NSString*)file;
-- (void)saveDatabaseData:(NSData*)data withName:(NSString*)name;
-- (void)deleteDatabaseFile:(NSString*)file;
+- (NSArray*)databases;
+- (void)fetchDatabases;
+- (NSData*)readDatabase:(Database*)database;
+- (void)saveDatabase:(Database*)data withData:(NSData*)data;
+- (void)deleteDatabase:(Database*)database;
 - (void)addObserverBlock:(observerBlock)block;
 
 @end

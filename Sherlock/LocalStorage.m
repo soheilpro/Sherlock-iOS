@@ -8,9 +8,11 @@
 
 #import "LocalStorage.h"
 
+#define DB_FILE_EXTENSION @"sdb"
+
 @interface LocalStorage ()
 
-@property (nonatomic, strong) NSArray* files;
+@property (nonatomic, strong) NSArray* databases;
 @property (nonatomic, strong) NSMutableArray* observerBlocks;
 
 @end
@@ -23,7 +25,7 @@
     
     if (self)
     {
-        self.files = @[];
+        self.databases = @[];
         self.observerBlocks = [NSMutableArray array];
     }
     
@@ -40,56 +42,75 @@
     return YES;
 }
 
-- (NSArray*)databaseFiles
+- (NSArray*)databases
 {
-    return self.files;
+    return _databases;
 }
 
-- (void)fetchListOfDatabaseFiles
+- (void)fetchDatabases
 {
-    self.files = [self fetchListOfDatabaseFilesInternal];
+    self.databases = [self fetchDatabaseInternal];
 }
 
-- (NSArray*)fetchListOfDatabaseFilesInternal
+- (NSArray*)fetchDatabaseInternal
 {
+    NSMutableArray* databases = [NSMutableArray array];
     NSString* documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSMutableArray* files = [NSMutableArray array];
     
     for (NSString* file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentDirectory error:nil])
-        if ([[file pathExtension] isEqualToString:@"sdb"])
-            [files addObject:[documentDirectory stringByAppendingPathComponent:file]];
-    
-    [files sortUsingComparator:^NSComparisonResult(id obj1, id obj2)
     {
-        NSString* file1 = obj1;
-        NSString* file2 = obj2;
+        if ([[file pathExtension] isEqualToString:DB_FILE_EXTENSION])
+        {
+            Database* database = [[Database alloc] init];
+            database.storage = self;
+            database.name = [file stringByDeletingPathExtension];
+            
+            [databases addObject:database];
+        }
+    }
     
-        return [file1 compare:file2 options:NSCaseInsensitiveSearch];
+    [databases sortUsingComparator:^NSComparisonResult(id obj1, id obj2)
+    {
+        Database* database1 = obj1;
+        Database* database2 = obj2;
+    
+        return [database1.name compare:database2.name options:NSCaseInsensitiveSearch];
     }];
     
-    return files;
+    return databases;
 }
 
-- (NSData*)readDatabaseFile:(NSString*)file
+- (NSData*)readDatabase:(Database*)database
 {
+    NSString* file = [self fileForDatabase:database];
+    
     return [NSData dataWithContentsOfFile:file];
 }
 
-- (void)saveDatabaseData:(NSData*)data withName:(NSString*)name;
+- (void)saveDatabase:(Database*)database withData:(NSData*)data;
 {
-    NSString* documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString* file = [documentDirectory stringByAppendingPathComponent:[name stringByAppendingPathExtension:@"sdb"]];
+    NSString* file = [self fileForDatabase:database];
     
     [data writeToFile:file atomically:YES];
     
     [self notifyObservers];
 }
 
-- (void)deleteDatabaseFile:(NSString*)file
+- (void)deleteDatabase:(Database*)database
 {
+    NSString* file = [self fileForDatabase:database];
+    
     [[NSFileManager defaultManager] removeItemAtPath:file error:nil];
     
     [self notifyObservers];
+}
+
+- (NSString*)fileForDatabase:(Database*)database
+{
+    NSString* documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString* file = [[documentDirectory stringByAppendingPathComponent:database.name] stringByAppendingPathExtension:DB_FILE_EXTENSION];
+    
+    return file;
 }
 
 - (void)addObserverBlock:(observerBlock)block
