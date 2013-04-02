@@ -203,19 +203,13 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" minimumFontSize="17" id="ztT-A2-hUp" customClass="ThemedTextField">
-                                <rect key="frame" x="30" y="58" width="260" height="30"/>
+                                <rect key="frame" x="30" y="75" width="260" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" id="ndj-dx-XZc" customClass="ThemedTextField">
-                                <rect key="frame" x="30" y="101" width="260" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                             </textField>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="im0-fo-Hwe" customClass="ThemedTableView">
-                                <rect key="frame" x="20" y="135" width="280" height="305"/>
+                                <rect key="frame" x="20" y="115" width="280" height="325"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
@@ -238,15 +232,15 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
-                                    <navigationItem title="New database" id="jaP-tp-PIo">
+                                    <navigationItem title="New Database" id="jaP-tp-PIo">
                                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="xg0-FO-LrS">
                                             <connections>
                                                 <action selector="cancel:" destination="2Tv-U8-Jsf" id="PKd-h0-kca"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="Create" id="lnf-h8-54u">
+                                        <barButtonItem key="rightBarButtonItem" title="Done" id="lnf-h8-54u">
                                             <connections>
-                                                <action selector="create:" destination="2Tv-U8-Jsf" id="tid-eY-OhR"/>
+                                                <action selector="done:" destination="2Tv-U8-Jsf" id="xso-AD-ceg"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -258,7 +252,7 @@
                     <connections>
                         <outlet property="createButtonItem" destination="lnf-h8-54u" id="O8o-bY-7HO"/>
                         <outlet property="nameTextField" destination="ztT-A2-hUp" id="Zsp-zk-5At"/>
-                        <outlet property="passwordTextField" destination="ndj-dx-XZc" id="Gku-cx-R7p"/>
+                        <outlet property="storageTableView" destination="im0-fo-Hwe" id="ziG-24-2tZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IFu-Yk-zAS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -635,10 +629,9 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NewDatabaseViewController.h"/>
             <relationships>
                 <relationship kind="action" name="cancel:"/>
-                <relationship kind="action" name="create:"/>
+                <relationship kind="action" name="done:"/>
                 <relationship kind="outlet" name="createButtonItem" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="nameTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="passwordTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="storageTableView" candidateClass="UITableView"/>
             </relationships>
         </class>

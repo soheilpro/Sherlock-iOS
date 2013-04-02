@@ -24,12 +24,10 @@
     [super viewDidLoad];
     
     self.nameTextField.delegate = self;
-    self.passwordTextField.delegate = self;
 
     [self toggleCreateButton];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toggleCreateButton) name:UITextFieldTextDidChangeNotification object:self.nameTextField];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toggleCreateButton) name:UITextFieldTextDidChangeNotification object:self.passwordTextField];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -42,27 +40,20 @@
 - (BOOL)textFieldShouldReturn:(UITextField*)textField
 {
     if (textField == self.nameTextField)
-    {
-        [self.passwordTextField becomeFirstResponder];
-    }
-    else if (textField == self.passwordTextField)
-    {
-        [self create:textField];
-    }
+        [self done:textField];
     
     return YES;
 }
 
 - (void)toggleCreateButton
 {
-    self.createButtonItem.enabled = self.nameTextField.text.length > 0 && self.passwordTextField.text.length > 0;
+    self.createButtonItem.enabled = self.nameTextField.text.length > 0;
 }
 
--(void)create:(id)sender
+-(void)done:(id)sender
 {
     Database* database = [[Database alloc] init];
     database.name = self.nameTextField.text;
-    database.password = self.passwordTextField.text;
     database.storage = [self.storages objectAtIndex:self.selectedStorageIndex];
 
     [self.delegate didCreateDatabase:database];

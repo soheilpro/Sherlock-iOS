@@ -21,11 +21,10 @@
 @property (nonatomic, strong) NSArray* storages;
 @property (nonatomic, weak) id<NewDatabaseDelegate> delegate;
 @property (nonatomic, weak) IBOutlet UITextField* nameTextField;
-@property (nonatomic, weak) IBOutlet UITextField* passwordTextField;
 @property (nonatomic, weak) IBOutlet UITableView* storageTableView;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem* createButtonItem;
 
-- (IBAction)create:(id)sender;
+- (IBAction)done:(id)sender;
 - (IBAction)cancel:(id)sender;
 
 @end
