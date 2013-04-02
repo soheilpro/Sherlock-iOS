@@ -74,21 +74,11 @@
     if (account == nil)
         return @[];
 
+    [self ensureSharedFilesystem];
+
     NSMutableArray* databases = [NSMutableArray array];
 
-    [self ensureSharedFilesystem];
-    
-    for (DBFileInfo* file in [[DBFilesystem sharedFilesystem] listFolder:[DBPath root] error:nil])
-    {
-        if ([[[file.path stringValue] pathExtension] isEqualToString:DB_FILE_EXTENSION])
-        {
-            Database* database = [[Database alloc] init];
-            database.storage = self;
-            database.name = [[file.path.stringValue stringByDeletingPathExtension] substringFromIndex:1];
-            
-            [databases addObject:database];
-        }
-    }
+    [self addDatabasesInPath:[DBPath root] toArray:databases];
     
     [databases sortUsingComparator:^NSComparisonResult(id obj1, id obj2)
     {
@@ -99,6 +89,25 @@
     }];
 
     return databases;
+}
+
+- (void)addDatabasesInPath:(DBPath*)path toArray:(NSMutableArray*)databases
+{
+    for (DBFileInfo* file in [[DBFilesystem sharedFilesystem] listFolder:path error:nil])
+    {
+        if (file.isFolder)
+        {
+            [self addDatabasesInPath:file.path toArray:databases];
+        }
+        else if ([[[file.path stringValue] pathExtension] isEqualToString:DB_FILE_EXTENSION])
+        {
+            Database* database = [[Database alloc] init];
+            database.storage = self;
+            database.name = [[file.path.stringValue stringByDeletingPathExtension] substringFromIndex:1];
+            
+            [databases addObject:database];
+        }
+    }
 }
 
 - (NSData*)readDatabase:(Database*)database

@@ -34,7 +34,7 @@
     self.folders = self.folder.folders;
     self.items = self.folder.items;
     
-    self.navigationItem.title = self.folder.parent != nil ? self.folder.name : self.folder.database.name;
+    self.navigationItem.title = self.folder.parent != nil ? self.folder.name : [self.folder.database.name stringByReplacingOccurrencesOfString:@"/" withString:@" / "];
     
     self.searchBar.text = nil;
     [self.searchBar resignFirstResponder];

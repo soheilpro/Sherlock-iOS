@@ -54,20 +54,10 @@
 
 - (NSArray*)fetchDatabaseInternal
 {
-    NSMutableArray* databases = [NSMutableArray array];
     NSString* documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSMutableArray* databases = [NSMutableArray array];
     
-    for (NSString* file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentDirectory error:nil])
-    {
-        if ([[file pathExtension] isEqualToString:DB_FILE_EXTENSION])
-        {
-            Database* database = [[Database alloc] init];
-            database.storage = self;
-            database.name = [file stringByDeletingPathExtension];
-            
-            [databases addObject:database];
-        }
-    }
+    [self addDatabasesInPath:documentDirectory relativeTo:@"" toArray:databases];
     
     [databases sortUsingComparator:^NSComparisonResult(id obj1, id obj2)
     {
@@ -78,6 +68,27 @@
     }];
     
     return databases;
+}
+
+- (void)addDatabasesInPath:(NSString*)path relativeTo:(NSString*)relativePath toArray:(NSMutableArray*)databases
+{
+    for (NSString* file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil])
+    {
+        NSDictionary* attributres = [[NSFileManager defaultManager] attributesOfItemAtPath:[path stringByAppendingPathComponent:file] error:nil];
+        
+        if ([attributres objectForKey:NSFileType] == NSFileTypeDirectory)
+        {
+            [self addDatabasesInPath:[path stringByAppendingPathComponent:file] relativeTo:[relativePath stringByAppendingPathComponent:file] toArray:databases];
+        }
+        else if ([[file pathExtension] isEqualToString:DB_FILE_EXTENSION])
+        {
+            Database* database = [[Database alloc] init];
+            database.storage = self;
+            database.name = [[relativePath stringByAppendingPathComponent:file] stringByDeletingPathExtension];
+            
+            [databases addObject:database];
+        }
+    }
 }
 
 - (NSData*)readDatabase:(Database*)database

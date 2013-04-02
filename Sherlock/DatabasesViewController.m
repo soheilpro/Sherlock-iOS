@@ -154,7 +154,7 @@
     Database* database = [[storage databases] objectAtIndex:indexPath.row];
     
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"DatabaseCell"];
-    cell.textLabel.text = database.name;
+    cell.textLabel.text = [database.name stringByReplacingOccurrencesOfString:@"/" withString:@" / "];
     
     return cell;
 }
