@@ -61,11 +61,12 @@
 -(void)create:(id)sender
 {
     Database* database = [[Database alloc] init];
+    database.name = self.nameTextField.text;
     database.password = self.passwordTextField.text;
     database.storage = [self.storages objectAtIndex:self.selectedStorageIndex];
 
-    [database saveWithName:self.nameTextField.text];
-
+    [self.delegate didCreateDatabase:database];
+    
     [self dismissModalViewControllerAnimated:YES];
 }
 

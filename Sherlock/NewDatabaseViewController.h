@@ -7,10 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Database.h"
+
+@protocol NewDatabaseDelegate<NSObject>
+
+@required
+- (void)didCreateDatabase:(Database*)database;
+
+@end
 
 @interface NewDatabaseViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
 @property (nonatomic, strong) NSArray* storages;
+@property (nonatomic, weak) id<NewDatabaseDelegate> delegate;
 @property (nonatomic, weak) IBOutlet UITextField* nameTextField;
 @property (nonatomic, weak) IBOutlet UITextField* passwordTextField;
 @property (nonatomic, weak) IBOutlet UITableView* storageTableView;

@@ -28,6 +28,8 @@
 {
     [super viewDidLoad];
     
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
     self.storages = @[
         [[LocalStorage alloc] init],
         [[DropboxStorage alloc] init]
@@ -41,6 +43,25 @@
     }
 
     [self refreshFiles];
+}
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated
+{
+    [super setEditing:editing animated:animated];
+    
+    static UIBarButtonItem* originalLeftBarButtonItem = nil;
+    
+    if (editing)
+    {
+        originalLeftBarButtonItem = self.navigationItem.leftBarButtonItem;
+        UIBarButtonItem* addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(newDatabase)];
+        
+        [self.navigationItem setLeftBarButtonItem:addButton animated:YES];
+    }
+    else
+    {
+        [self.navigationItem setLeftBarButtonItem: originalLeftBarButtonItem animated:YES];
+    }
 }
 
 - (void)refreshFiles
@@ -59,6 +80,28 @@
             [self.tableView reloadData];
         });
     });
+}
+
+- (void)newDatabase
+{
+    NSMutableArray* availableStorages = [NSMutableArray array];
+    
+    for (id<Storage> storage in self.storages)
+        if ([storage isAvailable])
+            [availableStorages addObject:storage];
+    
+    NewDatabaseViewController* newDatabaseViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NewDatabase"];
+    newDatabaseViewController.storages = availableStorages;
+    newDatabaseViewController.delegate = self;
+
+    [self presentModalViewController:newDatabaseViewController animated:YES];
+}
+
+- (void)didCreateDatabase:(Database*)database
+{
+    [database save];
+    
+    [self setEditing:NO];
 }
 
 - (MBProgressHUD*)showHUDWithText:(NSString*)text
@@ -82,21 +125,6 @@
     UIViewController* settingsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Settings"];
 
     [self presentModalViewController:settingsViewController animated:YES];
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue*)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"NewDatabaseSegue"])
-    {
-        NSMutableArray* availableStorages = [NSMutableArray array];
-        
-        for (id<Storage> storage in self.storages)
-            if ([storage isAvailable])
-                [availableStorages addObject:storage];
-        
-        NewDatabaseViewController* newDatabaseViewController = segue.destinationViewController;
-        newDatabaseViewController.storages = availableStorages;
-    }
 }
 
 #pragma mark - Table view data source

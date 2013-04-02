@@ -22,6 +22,5 @@
 + (Database*)openDatabaseNamed:(NSString*)name fromData:(NSData*)encryptedData withPassword:(NSString*)password;
 
 - (void)save;
-- (void)saveWithName:(NSString*)name;
 
 @end

@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NewDatabaseViewController.h"
 
-@interface DatabasesViewController : UITableViewController
+@interface DatabasesViewController : UITableViewController<NewDatabaseDelegate>
 
 - (IBAction)openSettings:(id)sender;
 

@@ -124,14 +124,9 @@
 
 - (void)save
 {
-    [self saveWithName:self.name];
-}
-
-- (void)saveWithName:(NSString*)name
-{
     NSData* data = [self data];
-
-    [self.storage saveDatabaseData:data withName:name];
+    
+    [self.storage saveDatabaseData:data withName:self.name];
 }
 
 - (NSData*)data
