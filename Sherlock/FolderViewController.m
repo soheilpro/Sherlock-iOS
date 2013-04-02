@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "EditFolderViewController.h"
 #import "EditItemViewController.h"
+#import "Database+Display.h"
 
 #define SECTION_FOLDERS 0
 #define SECTION_ITEMS 1
@@ -34,7 +35,7 @@
     self.folders = self.folder.folders;
     self.items = self.folder.items;
     
-    self.navigationItem.title = self.folder.parent != nil ? self.folder.name : [self.folder.database.name stringByReplacingOccurrencesOfString:@"/" withString:@" / "];
+    self.navigationItem.title = self.folder.parent != nil ? self.folder.name : [self.folder.database displayName];
     
     self.searchBar.text = nil;
     [self.searchBar resignFirstResponder];

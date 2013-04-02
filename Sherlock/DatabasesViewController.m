@@ -14,6 +14,7 @@
 #import "DropboxStorage.h"
 #import "Database.h"
 #import "AppDelegate.h"
+#import "Database+Display.h"
 
 @interface DatabasesViewController ()
 
@@ -170,7 +171,7 @@
     Database* database = [[storage databases] objectAtIndex:indexPath.row];
     
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"DatabaseCell"];
-    cell.textLabel.text = [database.name stringByReplacingOccurrencesOfString:@"/" withString:@" / "];
+    cell.textLabel.text = [database displayName];
     
     return cell;
 }

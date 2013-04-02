@@ -8,6 +8,8 @@
 
 #import "PasswordViewController.h"
 #import "Database.h"
+#import "Database+Display.h"
+#import "UIView+Animation.h"
 
 @implementation PasswordViewController
 
@@ -15,7 +17,7 @@
 {
     [super viewDidLoad];
     
-    self.navigationItem2.title = [self.database.name stringByReplacingOccurrencesOfString:@"/" withString:@" / "];
+    self.navigationItem2.title = [self.database displayName];
     self.passwordTextField.delegate = self;
     
     [self toggleOpenButton];
@@ -48,47 +50,12 @@
     BOOL isPasswordCorrect = [self.delegate didEnterPassword:self.passwordTextField.text inViewController:self];
 
     if (!isPasswordCorrect)
-        [self shakeView:self.passwordTextField];
+        [self.passwordTextField shake];
 }
 
 - (void)cancel:(id)sender
 {
     [self dismissModalViewControllerAnimated:YES];
-}
-
--(void)shakeView:(UIView*)view
-{
-    const int reset = 5;
-    const int maxShakes = 6;
-    
-    static int shakes = 0;
-    static int translate = reset;
-    
-    [UIView animateWithDuration:0.09 - (shakes * .01) delay:0.01f options:(enum UIViewAnimationOptions) UIViewAnimationCurveEaseInOut animations:^
-    {
-        view.transform = CGAffineTransformMakeTranslation(translate, 0);
-    }
-    completion:^(BOOL finished)
-    {
-        if (shakes < maxShakes)
-        {
-            shakes++;
-
-            if (translate > 0)
-                translate--;
-
-            translate *= -1;
-            
-            [self shakeView:view];
-        }
-        else
-        {
-            view.transform = CGAffineTransformIdentity;
-            shakes = 0;
-            translate = reset;
-            return;
-        }
-    }];
 }
 
 @end
