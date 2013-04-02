@@ -47,6 +47,7 @@
 		5B8942DF17079A3F00A618C7 /* ActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8942DE17079A3F00A618C7 /* ActionSheet.m */; };
 		5BBDB012170B8A8900439235 /* Database+Display.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBDB011170B8A8900439235 /* Database+Display.m */; };
 		5BBDB016170B8B6100439235 /* UIView+Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBDB015170B8B6100439235 /* UIView+Animation.m */; };
+		5BBDB01A170B8C6800439235 /* TripleDES.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBDB019170B8C6800439235 /* TripleDES.m */; };
 		5BF812A51706E83E00039E45 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF812A41706E83E00039E45 /* UIKit.framework */; };
 		5BF812A71706E83E00039E45 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF812A61706E83E00039E45 /* Foundation.framework */; };
 		5BF812A91706E83E00039E45 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF812A81706E83E00039E45 /* CoreGraphics.framework */; };
@@ -131,6 +132,8 @@
 		5BBDB011170B8A8900439235 /* Database+Display.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Database+Display.m"; sourceTree = "<group>"; };
 		5BBDB014170B8B6100439235 /* UIView+Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Animation.h"; sourceTree = "<group>"; };
 		5BBDB015170B8B6100439235 /* UIView+Animation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Animation.m"; sourceTree = "<group>"; };
+		5BBDB018170B8C6800439235 /* TripleDES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TripleDES.h; sourceTree = "<group>"; };
+		5BBDB019170B8C6800439235 /* TripleDES.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TripleDES.m; sourceTree = "<group>"; };
 		5BF812A01706E83E00039E45 /* Sherlock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sherlock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BF812A41706E83E00039E45 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5BF812A61706E83E00039E45 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -255,6 +258,15 @@
 			name = GDataXML;
 			sourceTree = "<group>";
 		};
+		5BBDB017170B8C4A00439235 /* Crypto */ = {
+			isa = PBXGroup;
+			children = (
+				5BBDB018170B8C6800439235 /* TripleDES.h */,
+				5BBDB019170B8C6800439235 /* TripleDES.m */,
+			);
+			name = Crypto;
+			sourceTree = "<group>";
+		};
 		5BF812951706E83E00039E45 = {
 			isa = PBXGroup;
 			children = (
@@ -295,6 +307,7 @@
 			children = (
 				5BF8130A1706FEBD00039E45 /* Database */,
 				5B4466A71708AEBD00A42D7C /* Storage */,
+				5BBDB017170B8C4A00439235 /* Crypto */,
 				5BF813091706FE8800039E45 /* UI */,
 				5BF812B31706E83E00039E45 /* AppDelegate.h */,
 				5BF812B41706E83E00039E45 /* AppDelegate.m */,
@@ -506,6 +519,7 @@
 				5BFB94D0170A279600459F8E /* EditItemViewController.m in Sources */,
 				5BBDB012170B8A8900439235 /* Database+Display.m in Sources */,
 				5BBDB016170B8B6100439235 /* UIView+Animation.m in Sources */,
+				5BBDB01A170B8C6800439235 /* TripleDES.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
