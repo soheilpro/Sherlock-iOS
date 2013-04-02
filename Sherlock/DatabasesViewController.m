@@ -192,11 +192,21 @@
         {
             [hud hide:YES];
 
-            PasswordViewController* passwordViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Password"];
-            passwordViewController.database = database;
-            passwordViewController.delegate = self;
+            BOOL didOpenDatabase = [self.selectedDatabase openWithData:self.selectedDatabaseData andPassword:nil];
             
-            [self presentModalViewController:passwordViewController animated:YES];
+            if (didOpenDatabase)
+            {
+                [((AppDelegate*)[UIApplication sharedApplication].delegate) didOpenDatabase:self.selectedDatabase];
+                [self dismissModalViewControllerAnimated:YES];
+            }
+            else
+            {
+                PasswordViewController* passwordViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Password"];
+                passwordViewController.database = database;
+                passwordViewController.delegate = self;
+            
+                [self presentModalViewController:passwordViewController animated:YES];
+            }
         });
     });
 }

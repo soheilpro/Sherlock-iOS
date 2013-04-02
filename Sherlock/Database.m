@@ -28,13 +28,11 @@
 
 - (BOOL)openWithData:(NSData*)data andPassword:(NSString*)password;
 {
-    NSData* xmlData = [TripleDES transformData:data operation:kCCDecrypt withPassword:password];
-    
-    if (xmlData == nil)
-        return NO;
+    if (password != nil)
+        data = [TripleDES transformData:data operation:kCCDecrypt withPassword:password];
     
     NSError* error;
-    GDataXMLDocument* document = [[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
+    GDataXMLDocument* document = [[GDataXMLDocument alloc] initWithData:data options:0 error:&error];
     
     if (error != nil)
         return NO;
@@ -80,6 +78,9 @@
 {
     NSData* data = [self data];
     
+    if (self.password != nil)
+        data = [TripleDES transformData:data operation:kCCEncrypt withPassword:self.password];
+    
     [self.storage saveDatabase:self withData:data];
 }
 
@@ -88,10 +89,7 @@
     GDataXMLElement* rootElement = [self rootElementFromFolder:self.root];
     GDataXMLDocument* document = [[GDataXMLDocument alloc] initWithRootElement:rootElement];
     
-    NSData* xmlData = [document XMLData];
-    NSData* encryptedData = [TripleDES transformData:xmlData operation:kCCEncrypt withPassword:self.password];
-    
-    return encryptedData;
+    return [document XMLData];
 }
 
 - (GDataXMLElement*)rootElementFromFolder:(Folder*)folder
