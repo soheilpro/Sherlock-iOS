@@ -11,12 +11,11 @@
 #import "EditFolderViewController.h"
 #import "EditItemViewController.h"
 
-@interface FolderViewController : UITableViewController<UISplitViewControllerDelegate, EditFolderDelegate, EditItemDelegate>
+@interface FolderViewController : UITableViewController<UISplitViewControllerDelegate, UISearchBarDelegate, EditFolderDelegate, EditItemDelegate>
 
-@property (nonatomic, strong) Folder* folder;
 @property (nonatomic) BOOL showCategories;
 @property (nonatomic) BOOL showItems;
-
-- (void)refresh;
+@property (nonatomic, strong) Folder* folder;
+@property (nonatomic, weak) IBOutlet UISearchBar* searchBar;
 
 @end

@@ -84,7 +84,6 @@
     
     FolderViewController* mainViewController = [((UINavigationController*)self.window.rootViewController).viewControllers objectAtIndex:0];
     mainViewController.folder = database.root;
-    [mainViewController refresh];
 }
 
 - (void)unloadCurrentDatabase

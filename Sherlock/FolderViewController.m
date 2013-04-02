@@ -20,10 +20,28 @@
 
 @property (nonatomic, strong) UIPopoverController* masterPopoverController;
 @property (nonatomic, strong) UIBarButtonItem* unloadBarButtonItem;
+@property (nonatomic, strong) NSMutableArray* folders;
+@property (nonatomic, strong) NSMutableArray* items;
 
 @end
 
 @implementation FolderViewController
+
+- (void)setFolder:(Folder*)folder
+{
+    _folder = folder;
+    
+    self.folders = self.folder.folders;
+    self.items = self.folder.items;
+    
+    self.navigationItem.title = self.folder.parent != nil ? self.folder.name : self.folder.database.name;
+    
+    self.searchBar.text = nil;
+    [self.searchBar resignFirstResponder];
+    
+    [self.tableView reloadData];
+    [self.tableView setContentOffset:CGPointZero animated:NO];
+}
 
 - (void)awakeFromNib
 {
@@ -40,10 +58,8 @@
 {
     [super viewDidLoad];
     
-    [self refresh];
-    
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
-
+    
     if (self.folder.parent == nil)
     {
         self.unloadBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Unload" style:UIBarButtonItemStylePlain target:self action:@selector(unloadDatabase)];
@@ -54,7 +70,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+
     if (self.navigationItem.leftBarButtonItem == self.unloadBarButtonItem)
         self.navigationItem.leftBarButtonItem.enabled = NO;
 }
@@ -62,7 +78,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
+
     if (self.navigationItem.leftBarButtonItem == self.unloadBarButtonItem)
     {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void)
@@ -77,7 +93,6 @@
         UINavigationController* detailViewController = [self.splitViewController.viewControllers lastObject];
         FolderViewController* detailMainViewController = [detailViewController.viewControllers objectAtIndex:0];
         detailMainViewController.folder = self.folder;
-        [detailMainViewController refresh];
     }
 }
 
@@ -100,32 +115,52 @@
     }
 }
 
+- (void)searchBar:(UISearchBar*)searchBar textDidChange:(NSString*)searchText
+{
+    [self filterFoldersAndItemsUsingText:searchText];
+}
+
+- (void)filterFoldersAndItemsUsingText:(NSString*)searchText
+{
+    if (searchText != nil && searchText.length > 0)
+    {
+        NSPredicate* predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"SELF.name contains[c] '%@'", searchText]];
+        
+        self.folders = [[self.folder.folders filteredArrayUsingPredicate:predicate] mutableCopy];
+        self.items = [[self.folder.items filteredArrayUsingPredicate:predicate] mutableCopy];
+    }
+    else
+    {
+        self.folders = self.folder.folders;
+        self.items = self.folder.items;
+    }
+    
+    [self.tableView reloadData];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar*)searchBar
+{
+    [searchBar resignFirstResponder];
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue*)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"FolderSegue"])
     {
-        Folder* folder = [self.folder.folders objectAtIndex:[self.tableView indexPathForSelectedRow].row];
+        Folder* folder = [self.folders objectAtIndex:[self.tableView indexPathForSelectedRow].row];
 
         FolderViewController* destinationViewController = segue.destinationViewController;
-        destinationViewController.folder = folder;
         destinationViewController.showCategories = self.showCategories;
         destinationViewController.showItems = self.showItems;
+        destinationViewController.folder = folder;
     }
     else if ([segue.identifier isEqualToString:@"ItemSegue"])
     {
-        Item* item = [self.folder.items objectAtIndex:[self.tableView indexPathForSelectedRow].row];
+        Item* item = [self.items objectAtIndex:[self.tableView indexPathForSelectedRow].row];
         
         ItemViewController* itemViewController = segue.destinationViewController;
         itemViewController.item = item;
     }
-}
-
-- (void)refresh
-{
-    self.navigationItem.title = self.folder.parent != nil ? self.folder.name : self.folder.database.name;
-    
-    [self.tableView reloadData];
-    [self.tableView setContentOffset:CGPointZero animated:NO];
 }
 
 - (void)addFolderOrItem
@@ -172,7 +207,9 @@
     [self.folder.folders sortUsingComparator:[Folder sortingComparator]];   
     [self.folder.database save];
     
-    NSInteger folderIndex = [self.folder.folders indexOfObject:folder];
+    [self filterFoldersAndItemsUsingText:self.searchBar.text];
+    
+    NSInteger folderIndex = [self.folders indexOfObject:folder];
 
     if (isNewFolder)
         [self setEditing:NO];
@@ -196,8 +233,10 @@
     
     [self.folder.items sortUsingComparator:[Item sortingComparator]];
     [self.folder.database save];
-    
-    NSInteger itemIndex = [self.folder.items indexOfObject:item];
+
+    [self filterFoldersAndItemsUsingText:self.searchBar.text];
+
+    NSInteger itemIndex = [self.items indexOfObject:item];
     
     [self.tableView reloadData];
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:itemIndex inSection:SECTION_ITEMS] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
@@ -206,6 +245,11 @@
 - (void)unloadDatabase
 {
     [((AppDelegate*)[UIApplication sharedApplication].delegate) unloadCurrentDatabase];
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView*)scrollView
+{
+    [self.searchBar resignFirstResponder];
 }
 
 #pragma mark - Table View
@@ -218,10 +262,10 @@
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == SECTION_FOLDERS)
-        return self.showCategories ? self.folder.folders.count : 0;
+        return self.showCategories ? self.folders.count : 0;
 
     if (section == SECTION_ITEMS)
-        return self.showItems ? self.folder.items.count : 0;
+        return self.showItems ? self.items.count : 0;
     
     return 0;
 }
@@ -230,7 +274,7 @@
 {
     if (indexPath.section == SECTION_FOLDERS)
     {
-        Folder* folder = [self.folder.folders objectAtIndex:indexPath.row];
+        Folder* folder = [self.folders objectAtIndex:indexPath.row];
         
         UITableViewCell* cell = [self.tableView dequeueReusableCellWithIdentifier:@"FolderCell"];
         cell.textLabel.text = folder.name;
@@ -240,7 +284,7 @@
 
     if (indexPath.section == SECTION_ITEMS)
     {
-        Item* item = [self.folder.items objectAtIndex:indexPath.row];
+        Item* item = [self.items objectAtIndex:indexPath.row];
         
         UITableViewCell* cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItemCell"];
         cell.textLabel.text = item.name;
@@ -262,7 +306,7 @@
         }
         else
         {
-            Folder* folder = [self.folder.folders objectAtIndex:indexPath.row];
+            Folder* folder = [self.folders objectAtIndex:indexPath.row];
             
             EditFolderViewController* editFolderViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"EditFolder"];
             editFolderViewController.folder = folder;
@@ -275,7 +319,7 @@
     {
         if (!self.tableView.isEditing)
         {
-            Item* item = [self.folder.items objectAtIndex:indexPath.row];
+            Item* item = [self.items objectAtIndex:indexPath.row];
             
             ActionSheet* actionSheet = [ActionSheet actionSheet];
             [actionSheet addButtonWithTitle:@"View" selectBlock:^
@@ -314,7 +358,7 @@
         }
         else
         {
-            Item* item = [self.folder.items objectAtIndex:indexPath.row];
+            Item* item = [self.items objectAtIndex:indexPath.row];
             
             EditItemViewController* editItemViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"EditItem"];
             editItemViewController.item = item;
@@ -331,11 +375,17 @@
     {
         if (indexPath.section == SECTION_FOLDERS)
         {
-            [self.folder.folders removeObjectAtIndex:indexPath.row];
+            Folder* folder = [self.folders objectAtIndex:indexPath.row];
+            
+            [self.folder.folders removeObject:folder];
+            [self.folders removeObject:folder];
         }
         else if (indexPath.section == SECTION_ITEMS)
         {
-            [self.folder.items removeObjectAtIndex:indexPath.row];
+            Item* item = [self.items objectAtIndex:indexPath.row];
+            
+            [self.folder.items removeObject:item];
+            [self.items removeObject:item];
         }
         
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];

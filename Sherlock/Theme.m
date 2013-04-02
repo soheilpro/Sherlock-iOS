@@ -118,6 +118,8 @@
     [[UIBarButtonItem appearance] setBackgroundImage:self.barButtonItemBackgroundImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [[UIBarButtonItem appearance] setBackButtonBackgroundImage:self.barButtonItemBackButtonBackgroundImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [[UIBarButtonItem appearance] setTitleTextAttributes:barButtonItemTitleTextAttributes forState:UIControlStateNormal];
+    
+    [[UISearchBar appearance] setTintColor:self.navigationBarColor];
 }
 
 - (UIFont*)textFontOfSizePlus:(NSInteger)size
