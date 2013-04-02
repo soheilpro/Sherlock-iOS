@@ -48,6 +48,7 @@
 		5BBDB012170B8A8900439235 /* Database+Display.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBDB011170B8A8900439235 /* Database+Display.m */; };
 		5BBDB016170B8B6100439235 /* UIView+Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBDB015170B8B6100439235 /* UIView+Animation.m */; };
 		5BBDB01A170B8C6800439235 /* TripleDES.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBDB019170B8C6800439235 /* TripleDES.m */; };
+		5BBDB01D170B95C100439235 /* NewPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBDB01C170B95C100439235 /* NewPasswordViewController.m */; };
 		5BF812A51706E83E00039E45 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF812A41706E83E00039E45 /* UIKit.framework */; };
 		5BF812A71706E83E00039E45 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF812A61706E83E00039E45 /* Foundation.framework */; };
 		5BF812A91706E83E00039E45 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF812A81706E83E00039E45 /* CoreGraphics.framework */; };
@@ -134,6 +135,8 @@
 		5BBDB015170B8B6100439235 /* UIView+Animation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Animation.m"; sourceTree = "<group>"; };
 		5BBDB018170B8C6800439235 /* TripleDES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TripleDES.h; sourceTree = "<group>"; };
 		5BBDB019170B8C6800439235 /* TripleDES.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TripleDES.m; sourceTree = "<group>"; };
+		5BBDB01B170B95C100439235 /* NewPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPasswordViewController.h; sourceTree = "<group>"; };
+		5BBDB01C170B95C100439235 /* NewPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPasswordViewController.m; sourceTree = "<group>"; };
 		5BF812A01706E83E00039E45 /* Sherlock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sherlock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BF812A41706E83E00039E45 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5BF812A61706E83E00039E45 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -349,6 +352,8 @@
 				5BFB94CB170A138200459F8E /* EditFolderViewController.m */,
 				5BFB94CE170A279500459F8E /* EditItemViewController.h */,
 				5BFB94CF170A279600459F8E /* EditItemViewController.m */,
+				5BBDB01B170B95C100439235 /* NewPasswordViewController.h */,
+				5BBDB01C170B95C100439235 /* NewPasswordViewController.m */,
 				5B8942D31707837800A618C7 /* SettingsViewController.h */,
 				5B8942D41707837800A618C7 /* SettingsViewController.m */,
 				5B8942DD17079A3F00A618C7 /* ActionSheet.h */,
@@ -520,6 +525,7 @@
 				5BBDB012170B8A8900439235 /* Database+Display.m in Sources */,
 				5BBDB016170B8B6100439235 /* UIView+Animation.m in Sources */,
 				5BBDB01A170B8C6800439235 /* TripleDES.m in Sources */,
+				5BBDB01D170B95C100439235 /* NewPasswordViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

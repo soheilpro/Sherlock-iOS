@@ -13,6 +13,7 @@
 #import "EditFolderViewController.h"
 #import "EditItemViewController.h"
 #import "Database+Display.h"
+#import "NewPasswordViewController.h"
 
 #define SECTION_FOLDERS 0
 #define SECTION_ITEMS 1
@@ -107,12 +108,13 @@
     {
         originalLeftBarButtonItem = self.navigationItem.leftBarButtonItem;
         UIBarButtonItem* addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addFolderOrItem)];
+        UIBarButtonItem* changePasswordButton = [[UIBarButtonItem alloc] initWithTitle:@"Password" style:UIBarButtonItemStylePlain target:self action:@selector(changePassword)];
         
-        [self.navigationItem setLeftBarButtonItem:addButton animated:YES];
+        [self.navigationItem setLeftBarButtonItems:@[addButton, changePasswordButton] animated:YES];
     }
     else
     {
-        [self.navigationItem setLeftBarButtonItem: originalLeftBarButtonItem animated:YES];
+        [self.navigationItem setLeftBarButtonItems: @[originalLeftBarButtonItem] animated:YES];
     }
 }
 
@@ -191,6 +193,15 @@
     [actionSheet presentInView:self.view];
 }
 
+- (void)changePassword
+{
+    NewPasswordViewController* newPasswordViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NewPassword"];
+    newPasswordViewController.database = self.folder.database;
+    newPasswordViewController.delegate = self;
+    
+    [self presentModalViewController:newPasswordViewController animated:YES];
+}
+
 - (void)didUpdateFolder:(Folder*)folder
 {
     BOOL isNewFolder = NO;
@@ -241,6 +252,15 @@
     
     [self.tableView reloadData];
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:itemIndex inSection:SECTION_ITEMS] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+}
+
+- (void)didChooseNewPassword:(NSString*)password
+{
+    self.folder.database.password = password;
+    
+    [self.folder.database save];
+    
+    [self setEditing:NO];
 }
 
 - (void)unloadDatabase
