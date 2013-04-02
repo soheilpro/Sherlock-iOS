@@ -8,14 +8,23 @@
 
 #import <UIKit/UIKit.h>
 #import "Storage.h"
+#import "Database.h"
+
+@protocol PasswordDelegate<NSObject>
+
+@required
+- (BOOL)didEnterPassword:(NSString*)password inViewController:(UIViewController*)viewController;
+
+@end
 
 @interface PasswordViewController : UIViewController<UITextFieldDelegate>
 
-@property (nonatomic, strong) id<Storage> storage;
-@property (nonatomic, strong) NSString* databaseFile;
-@property (nonatomic, strong) NSData* databaseFileData;
+@property (nonatomic, strong) Database* database;
+@property (nonatomic, weak) id<PasswordDelegate> delegate;
+@property (nonatomic, weak) IBOutlet UINavigationItem* navigationItem2;
 @property (nonatomic, weak) IBOutlet UITextField* passwordTextField;
 
-- (IBAction)open:(id)sender;
+- (IBAction)go:(id)sender;
+- (IBAction)cancel:(id)sender;
 
 @end

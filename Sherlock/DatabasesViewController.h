@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PasswordViewController.h"
 #import "NewDatabaseViewController.h"
 
-@interface DatabasesViewController : UITableViewController<NewDatabaseDelegate>
+@interface DatabasesViewController : UITableViewController<PasswordDelegate, NewDatabaseDelegate>
 
 - (IBAction)openSettings:(id)sender;
 

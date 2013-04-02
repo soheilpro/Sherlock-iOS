@@ -12,27 +12,40 @@
 
 @implementation Database
 
-+ (Database*)openDatabaseNamed:(NSString*)name fromData:(NSData*)encryptedData withPassword:(NSString*)password;
+- (id)init
 {
-    NSData* xmlData = [self tripleDESTransformData:encryptedData operation:kCCDecrypt withPassword:password];
+    self = [super init];
+    
+    if (self)
+    {
+        self.root = [[Folder alloc] init];
+        self.root.parent = nil;
+        self.root.database = self;
+    }
+    
+    return self;
+}
+
+- (BOOL)openWithData:(NSData*)data andPassword:(NSString*)password;
+{
+    NSData* xmlData = [self tripleDESTransformData:data operation:kCCDecrypt withPassword:password];
     
     if (xmlData == nil)
-        return nil;
+        return NO;
     
     NSError* error;
     GDataXMLDocument* document = [[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
     
     if (error != nil)
-        return nil;
+        return NO;
     
-    Database* database = [[Database alloc] init];
-    database.name = name;
-    database.root = [self folderFromElement:document.rootElement withParent:nil inDatabase:database];
+    self.password = password;
+    self.root = [self folderFromElement:document.rootElement withParent:nil inDatabase:self];
     
-    return database;
+    return YES;
 }
 
-+ (Folder*)folderFromElement:(GDataXMLElement*)element withParent:(Folder*)parent inDatabase:(Database*)database;
+- (Folder*)folderFromElement:(GDataXMLElement*)element withParent:(Folder*)parent inDatabase:(Database*)database;
 {
     Folder* folder = [[Folder alloc] init];
     folder.name = [[element attributeForName:@"name"] stringValue];
@@ -51,7 +64,7 @@
     return folder;
 }
 
-+ (Item*)itemFromElement:(GDataXMLElement*)element withParent:(Folder*)parent inDatabase:(Database*)database;
+- (Item*)itemFromElement:(GDataXMLElement*)element withParent:(Folder*)parent inDatabase:(Database*)database;
 {
     Item* item = [[Item alloc] init];
     item.name = [[element attributeForName:@"name"] stringValue];
@@ -61,65 +74,6 @@
     item.database = database;
     
     return item;
-}
-
-+ (NSData*)tripleDESTransformData:(NSData*)inputData operation:(CCOperation)operation withPassword:(NSString*)password
-{
-    NSData* key = [self tripleDESKeyFromPassword:password];
-    NSData* iv = [self tripleDESIVFromPassword:password];
-    NSMutableData* outputData = [NSMutableData dataWithLength:(inputData.length + kCCBlockSize3DES)];
-    
-    size_t outLength;
-    CCCryptorStatus result = CCCrypt(operation, kCCAlgorithm3DES, kCCOptionPKCS7Padding, key.bytes, key.length, iv.bytes, inputData.bytes, inputData.length, outputData.mutableBytes, outputData.length, &outLength);
-    
-    if (result != kCCSuccess)
-        return nil;
-    
-    [outputData setLength:outLength];
-    
-    return outputData;
-}
-
-+ (NSData*)tripleDESKeyFromPassword:(NSString*)password
-{
-    NSString* key = [password copy];
-    int length = kCCKeySize3DES;
-    
-    while (key.length < length)
-        key = [key stringByAppendingString:password];
-    
-    if (key.length > length)
-        key = [key substringToIndex:length];
-    
-    return [key dataUsingEncoding:NSUTF8StringEncoding];
-}
-
-+ (NSData*)tripleDESIVFromPassword:(NSString*)password
-{
-    NSString* key = [password copy];
-    int length = 8;
-    
-    while (key.length < length)
-        key = [key stringByAppendingString:password];
-    
-    if (key.length > length)
-        key = [key substringToIndex:length];
-    
-    return [key dataUsingEncoding:NSUTF8StringEncoding];
-}
-
-- (id)init
-{
-    self = [super init];
-    
-    if (self)
-    {
-        self.root = [[Folder alloc] init];
-        self.root.parent = nil;
-        self.root.database = self;
-    }
-    
-    return self;
 }
 
 - (void)save
@@ -175,6 +129,51 @@
     [element setStringValue:item.value];
     
     return element;
+}
+
+- (NSData*)tripleDESTransformData:(NSData*)inputData operation:(CCOperation)operation withPassword:(NSString*)password
+{
+    NSData* key = [self tripleDESKeyFromPassword:password];
+    NSData* iv = [self tripleDESIVFromPassword:password];
+    NSMutableData* outputData = [NSMutableData dataWithLength:(inputData.length + kCCBlockSize3DES)];
+    
+    size_t outLength;
+    CCCryptorStatus result = CCCrypt(operation, kCCAlgorithm3DES, kCCOptionPKCS7Padding, key.bytes, key.length, iv.bytes, inputData.bytes, inputData.length, outputData.mutableBytes, outputData.length, &outLength);
+    
+    if (result != kCCSuccess)
+        return nil;
+    
+    [outputData setLength:outLength];
+    
+    return outputData;
+}
+
+- (NSData*)tripleDESKeyFromPassword:(NSString*)password
+{
+    NSString* key = [password copy];
+    int length = kCCKeySize3DES;
+    
+    while (key.length < length)
+        key = [key stringByAppendingString:password];
+    
+    if (key.length > length)
+        key = [key substringToIndex:length];
+    
+    return [key dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+- (NSData*)tripleDESIVFromPassword:(NSString*)password
+{
+    NSString* key = [password copy];
+    int length = 8;
+    
+    while (key.length < length)
+        key = [key stringByAppendingString:password];
+    
+    if (key.length > length)
+        key = [key substringToIndex:length];
+    
+    return [key dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 @end

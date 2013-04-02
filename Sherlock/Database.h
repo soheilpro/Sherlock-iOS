@@ -19,8 +19,7 @@
 @property (nonatomic, strong) NSString* password;
 @property (nonatomic, strong) Folder* root;
 
-+ (Database*)openDatabaseNamed:(NSString*)name fromData:(NSData*)encryptedData withPassword:(NSString*)password;
-
+- (BOOL)openWithData:(NSData*)data andPassword:(NSString*)password;
 - (void)save;
 
 @end

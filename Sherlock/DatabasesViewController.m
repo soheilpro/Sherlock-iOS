@@ -7,18 +7,19 @@
 //
 
 #import "DatabasesViewController.h"
-#import "PasswordViewController.h"
 #import "MBProgressHUD.h"
 #import "Theme.h"
 #import "Storage.h"
 #import "LocalStorage.h"
 #import "DropboxStorage.h"
 #import "Database.h"
-#import "NewDatabaseViewController.h"
+#import "AppDelegate.h"
 
 @interface DatabasesViewController ()
 
 @property (nonatomic, strong) NSArray* storages;
+@property (nonatomic, strong) Database* selectedDatabase;
+@property (nonatomic, strong) NSData* selectedDatabaseData;
 
 @end
 
@@ -80,6 +81,21 @@
             [self.tableView reloadData];
         });
     });
+}
+
+- (BOOL)didEnterPassword:(NSString*)password inViewController:(UIViewController*)viewController;
+{
+    BOOL didOpenDatabase = [self.selectedDatabase openWithData:self.selectedDatabaseData andPassword:password];
+     
+    if (!didOpenDatabase)
+        return NO;
+    
+    [((AppDelegate*)[UIApplication sharedApplication].delegate) didOpenDatabase:self.selectedDatabase];
+    
+    [viewController dismissModalViewControllerAnimated:NO];
+    [self dismissModalViewControllerAnimated:YES];
+    
+    return YES;
 }
 
 - (void)newDatabase
@@ -161,8 +177,6 @@
 
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    __block NSData* datanaseFileData;
-    
     MBProgressHUD* hud = [self showHUDWithText:@"Loading database"];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
@@ -170,18 +184,18 @@
         id<Storage> storage = [self.storages objectAtIndex:indexPath.section];
         Database* database = [[storage databases] objectAtIndex:indexPath.row];
 
-        datanaseFileData = [storage readDatabase:database];
+        self.selectedDatabase = database;
+        self.selectedDatabaseData = [storage readDatabase:database];
         
         dispatch_async(dispatch_get_main_queue(), ^
         {
             [hud hide:YES];
 
             PasswordViewController* passwordViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Password"];
-            passwordViewController.storage = storage;
-            passwordViewController.databaseFile = database.name;
-            passwordViewController.databaseFileData = datanaseFileData;
+            passwordViewController.database = database;
+            passwordViewController.delegate = self;
             
-            [self.navigationController pushViewController:passwordViewController animated:YES];
+            [self presentModalViewController:passwordViewController animated:YES];
         });
     });
 }

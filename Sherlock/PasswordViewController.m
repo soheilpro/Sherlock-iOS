@@ -8,7 +8,6 @@
 
 #import "PasswordViewController.h"
 #import "Database.h"
-#import "AppDelegate.h"
 
 @implementation PasswordViewController
 
@@ -16,6 +15,7 @@
 {
     [super viewDidLoad];
     
+    self.navigationItem2.title = [self.database.name stringByReplacingOccurrencesOfString:@"/" withString:@" / "];
     self.passwordTextField.delegate = self;
     
     [self toggleOpenButton];
@@ -33,7 +33,7 @@
 - (BOOL)textFieldShouldReturn:(UITextField*)textField
 {
     if (textField == self.passwordTextField)
-        [self open:textField];
+        [self go:textField];
     
     return YES;
 }
@@ -43,22 +43,16 @@
     self.navigationItem.rightBarButtonItem.enabled = self.passwordTextField.text.length > 0;
 }
 
-- (void)open:(id)sender
+- (void)go:(id)sender
 {
-    NSString* databaseFileName = [[self.databaseFile lastPathComponent] stringByDeletingPathExtension];
-    Database* database = [Database openDatabaseNamed:databaseFileName fromData:self.databaseFileData withPassword:self.passwordTextField.text];
-    
-    if (database == nil)
-    {
+    BOOL isPasswordCorrect = [self.delegate didEnterPassword:self.passwordTextField.text inViewController:self];
+
+    if (!isPasswordCorrect)
         [self shakeView:self.passwordTextField];
-        return;
-    }
-    
-    database.storage = self.storage;
-    database.password = self.passwordTextField.text;
-    
-    [((AppDelegate*)[UIApplication sharedApplication].delegate) didOpenDatabase:database];
-    
+}
+
+- (void)cancel:(id)sender
+{
     [self dismissModalViewControllerAnimated:YES];
 }
 
