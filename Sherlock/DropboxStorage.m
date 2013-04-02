@@ -73,10 +73,11 @@
         return @[];
     
     [self ensureSharedFilesystem];
-    
+
+    DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
     NSMutableArray* files = [NSMutableArray array];
     
-    for (DBFileInfo* file in [[DBFilesystem sharedFilesystem] listFolder:[DBPath root] error:nil])
+    for (DBFileInfo* file in [filesystem listFolder:[DBPath root] error:nil])
         if ([[[file.path stringValue] pathExtension] isEqualToString:@"sdb"])
             [files addObject:[file.path stringValue]];
     
@@ -93,24 +94,31 @@
 
 - (NSData*)readDatabaseFile:(NSString*)file
 {
+    DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
     DBPath* dbPath = [[DBPath alloc] initWithString:file];
-    DBFile* dbFile = [[DBFilesystem sharedFilesystem] openFile:dbPath error:nil];
+    DBFile* dbFile = [filesystem openFile:dbPath error:nil];
     
     return [dbFile readData:nil];
 }
 
 - (void)saveDatabaseData:(NSData*)data withName:(NSString*)name;
 {
-    DBPath* dbPath = [[DBPath root] childPath:[name stringByAppendingPathExtension:@"sdb"]];
-    DBFile* dbFile;
-    
     DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
-    dbFile = [filesystem openFile:dbPath error:nil];
+    DBPath* dbPath = [[DBPath root] childPath:[name stringByAppendingPathExtension:@"sdb"]];
+    DBFile* dbFile = [filesystem openFile:dbPath error:nil];
     
     if (dbFile == nil)
         dbFile = [filesystem createFile:dbPath error:nil];
     
     [dbFile writeData:data error:nil];
+}
+
+- (void)deleteDatabaseFile:(NSString*)file
+{
+    DBFilesystem* filesystem = [DBFilesystem sharedFilesystem];
+    DBPath* dbPath = [[DBPath alloc] initWithString:file];
+    
+    [filesystem deletePath:dbPath error:nil];
 }
 
 - (void)addObserverBlock:(observerBlock)block

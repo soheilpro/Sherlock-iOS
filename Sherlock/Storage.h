@@ -21,6 +21,7 @@ typedef void (^observerBlock)();
 - (void)fetchListOfDatabaseFiles;
 - (NSData*)readDatabaseFile:(NSString*)file;
 - (void)saveDatabaseData:(NSData*)data withName:(NSString*)name;
+- (void)deleteDatabaseFile:(NSString*)file;
 - (void)addObserverBlock:(observerBlock)block;
 
 @end

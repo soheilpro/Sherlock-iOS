@@ -186,4 +186,15 @@
     });
 }
 
+- (void)tableView:(UITableView*)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        id<Storage> storage = [self.storages objectAtIndex:indexPath.section];
+        NSString* databaseFile = [[storage databaseFiles] objectAtIndex:indexPath.row];
+        
+        [storage deleteDatabaseFile:databaseFile];
+    }
+}
+
 @end

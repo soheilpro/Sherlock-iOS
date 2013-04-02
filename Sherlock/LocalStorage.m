@@ -85,6 +85,13 @@
     [self notifyObservers];
 }
 
+- (void)deleteDatabaseFile:(NSString*)file
+{
+    [[NSFileManager defaultManager] removeItemAtPath:file error:nil];
+    
+    [self notifyObservers];
+}
+
 - (void)addObserverBlock:(observerBlock)block
 {
     [self.observerBlocks addObject:block];
