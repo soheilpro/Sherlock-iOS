@@ -101,7 +101,9 @@
 - (void)saveDatabase:(Database*)database withData:(NSData*)data;
 {
     NSString* file = [self fileForDatabase:database];
+    NSString* diretory = [file stringByDeletingLastPathComponent];
     
+    [[NSFileManager defaultManager] createDirectoryAtPath:diretory withIntermediateDirectories:YES attributes:nil error:nil];
     [data writeToFile:file atomically:YES];
     
     [self notifyObservers];
