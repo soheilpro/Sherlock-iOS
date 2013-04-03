@@ -13,7 +13,7 @@ Sherlock is a very simple password and personal information manager for iOS. All
 + Adding support for iPad
 + Adding support for stronger encryption algorithms
 + Adding support for iCloud and Google Drive
-+ Adding support for storing non-texcual data like images
++ Adding support for storing non-textual data like images
 
 ## Developers
 To build and run this app on your iDevices you need to have an Apple Developer account.
