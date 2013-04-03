@@ -51,18 +51,18 @@
 {
     [super setEditing:editing animated:animated];
     
-    static UIBarButtonItem* originalLeftBarButtonItem = nil;
+    static NSArray* originalLeftBarButtonItems;
     
     if (editing)
     {
-        originalLeftBarButtonItem = self.navigationItem.leftBarButtonItem;
+        originalLeftBarButtonItems = self.navigationItem.leftBarButtonItems;
         UIBarButtonItem* addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(newDatabase)];
         
         [self.navigationItem setLeftBarButtonItem:addButton animated:YES];
     }
     else
     {
-        [self.navigationItem setLeftBarButtonItem: originalLeftBarButtonItem animated:YES];
+        [self.navigationItem setLeftBarButtonItems:originalLeftBarButtonItems animated:YES];
     }
 }
 

@@ -102,11 +102,11 @@
 {
     [super setEditing:editing animated:animated];
 
-    static UIBarButtonItem* originalLeftBarButtonItem = nil;
+    static NSArray* originalLeftBarButtonItems;
     
     if (editing)
     {
-        originalLeftBarButtonItem = self.navigationItem.leftBarButtonItem;
+        originalLeftBarButtonItems = self.navigationItem.leftBarButtonItems;
         UIBarButtonItem* addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addFolderOrItem)];
         UIBarButtonItem* changePasswordButton = [[UIBarButtonItem alloc] initWithTitle:@"Password" style:UIBarButtonItemStylePlain target:self action:@selector(changePassword)];
         
@@ -114,7 +114,7 @@
     }
     else
     {
-        [self.navigationItem setLeftBarButtonItems: @[originalLeftBarButtonItem] animated:YES];
+        [self.navigationItem setLeftBarButtonItems:originalLeftBarButtonItems animated:YES];
     }
 }
 
