@@ -8,6 +8,7 @@
 
 #import "LocalStorage.h"
 
+#define DB_ROOT_DIRECTORY @"Local"
 #define DB_FILE_EXTENSION @"sdb"
 
 @interface LocalStorage ()
@@ -55,9 +56,10 @@
 - (NSArray*)fetchDatabaseInternal
 {
     NSString* documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString* localDirectory = [documentDirectory stringByAppendingPathComponent:DB_ROOT_DIRECTORY];
     NSMutableArray* databases = [NSMutableArray array];
     
-    [self addDatabasesInPath:documentDirectory relativeTo:@"" toArray:databases];
+    [self addDatabasesInPath:localDirectory relativeTo:@"" toArray:databases];
     
     [databases sortUsingComparator:^NSComparisonResult(id obj1, id obj2)
     {
@@ -121,7 +123,8 @@
 - (NSString*)fileForDatabase:(Database*)database
 {
     NSString* documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString* file = [[documentDirectory stringByAppendingPathComponent:database.name] stringByAppendingPathExtension:DB_FILE_EXTENSION];
+    NSString* localDirectory = [documentDirectory stringByAppendingPathComponent:DB_ROOT_DIRECTORY];
+    NSString* file = [[localDirectory stringByAppendingPathComponent:database.name] stringByAppendingPathExtension:DB_FILE_EXTENSION];
     
     return file;
 }
