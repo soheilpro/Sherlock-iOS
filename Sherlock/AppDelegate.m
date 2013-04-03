@@ -11,6 +11,8 @@
 #import "FolderViewController.h"
 #import "Theme.h"
 
+NSString* const NSURLIsExcludedFromBackupKey = @"NSURLIsExcludedFromBackupKey";
+
 @interface AppDelegate ()
 
 @property (nonatomic, strong) Database* database;
