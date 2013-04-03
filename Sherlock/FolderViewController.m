@@ -146,26 +146,6 @@
     [searchBar resignFirstResponder];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue*)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"FolderSegue"])
-    {
-        Folder* folder = [self.folders objectAtIndex:[self.tableView indexPathForSelectedRow].row];
-
-        FolderViewController* destinationViewController = segue.destinationViewController;
-        destinationViewController.showCategories = self.showCategories;
-        destinationViewController.showItems = self.showItems;
-        destinationViewController.folder = folder;
-    }
-    else if ([segue.identifier isEqualToString:@"ItemSegue"])
-    {
-        Item* item = [self.items objectAtIndex:[self.tableView indexPathForSelectedRow].row];
-        
-        ItemViewController* itemViewController = segue.destinationViewController;
-        itemViewController.item = item;
-    }
-}
-
 - (void)addFolderOrItem
 {
     ActionSheet* actionSheet = [ActionSheet actionSheet];
@@ -226,11 +206,13 @@
     if (isNewFolder)
         [self setEditing:NO];
 
+    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:folderIndex inSection:SECTION_FOLDERS];
+    
     [self.tableView reloadData];
-    [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:folderIndex inSection:SECTION_FOLDERS] animated:NO scrollPosition:UITableViewScrollPositionMiddle];
+    [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
 
     if (isNewFolder)
-        [self performSegueWithIdentifier:@"FolderSegue" sender:self.tableView];
+        [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
 }
 
 - (void)didUpdateItem:(Item*)item
@@ -321,14 +303,19 @@
 {
     if (indexPath.section == SECTION_FOLDERS)
     {
+        Folder* folder = [self.folders objectAtIndex:indexPath.row];
+
         if (!self.tableView.isEditing)
         {
-            [self performSegueWithIdentifier:@"FolderSegue" sender:tableView];
+            FolderViewController* folderViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Folder"];
+            folderViewController.showCategories = self.showCategories;
+            folderViewController.showItems = self.showItems;
+            folderViewController.folder = folder;
+            
+            [self.navigationController pushViewController:folderViewController animated:YES];
         }
         else
         {
-            Folder* folder = [self.folders objectAtIndex:indexPath.row];
-            
             EditFolderViewController* editFolderViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"EditFolder"];
             editFolderViewController.folder = folder;
             editFolderViewController.delegate = self;
@@ -345,7 +332,10 @@
             ActionSheet* actionSheet = [ActionSheet actionSheet];
             [actionSheet addButtonWithTitle:@"View" selectBlock:^
             {
-                [self performSegueWithIdentifier:@"ItemSegue" sender:tableView];
+                ItemViewController* itemViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Item"];
+                itemViewController.item = item;
+                
+                [self presentModalViewController:itemViewController animated:YES];
                 
                 [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
             }];
