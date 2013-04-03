@@ -23,7 +23,7 @@ If you want the Dropbox support as well, you need to create a Dropbox App and up
 ## Contributing
 Please report issues or better yet, fork, fix and send a pull request.
 
-## Other platforms
+## Other Platforms
 Please help port this application to other platforms like Android, Mac and Linux. I'll release the Windows version soon.
 
 ## Author
