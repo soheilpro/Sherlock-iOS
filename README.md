@@ -1,4 +1,4 @@
-# Rhapsody
+# Sherlock
 Sherlock is a very simple password and personal information manager for iOS. All data is encrypted using 3DES algorithm and is stored locally or on Dropbox.
 
 ## Screenshots
