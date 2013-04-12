@@ -48,9 +48,17 @@
     return _databases;
 }
 
-- (void)fetchDatabases
+- (void)fetchDatabasesWithCallback:(void (^) (NSArray* databases, NSError* error))callback;
 {
-    self.databases = [self fetchDatabaseInternal];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+    {
+        self.databases = [self fetchDatabaseInternal];
+
+        dispatch_async(dispatch_get_main_queue(), ^
+        {
+            callback(self.databases, nil);
+        });
+    });
 }
 
 - (NSArray*)fetchDatabaseInternal
@@ -93,31 +101,52 @@
     }
 }
 
-- (NSData*)readDatabase:(Database*)database
+- (void)readDatabase:(Database*)database callback:(void (^) (NSData* data, NSError* error))callback;
 {
-    NSString* file = [self fileForDatabase:database];
-    
-    return [NSData dataWithContentsOfFile:file];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+    {
+        NSString* file = [self fileForDatabase:database];
+        NSData* data = [NSData dataWithContentsOfFile:file];
+        
+        dispatch_async(dispatch_get_main_queue(), ^
+        {
+            callback(data, nil);
+        });
+    });
 }
 
-- (void)saveDatabase:(Database*)database withData:(NSData*)data;
+- (void)saveDatabase:(Database*)database withData:(NSData*)data callback:(void (^) (NSError* error))callback;
 {
-    NSString* file = [self fileForDatabase:database];
-    NSString* diretory = [file stringByDeletingLastPathComponent];
-    
-    [[NSFileManager defaultManager] createDirectoryAtPath:diretory withIntermediateDirectories:YES attributes:nil error:nil];
-    [data writeToFile:file atomically:YES];
-    
-    [self notifyObservers];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+    {
+        NSString* file = [self fileForDatabase:database];
+        NSString* diretory = [file stringByDeletingLastPathComponent];
+        
+        [[NSFileManager defaultManager] createDirectoryAtPath:diretory withIntermediateDirectories:YES attributes:nil error:nil];
+        [data writeToFile:file atomically:YES];
+        
+        dispatch_async(dispatch_get_main_queue(), ^
+        {
+            callback(nil);
+        });
+    });
 }
 
-- (void)deleteDatabase:(Database*)database
+- (void)deleteDatabase:(Database*)database callback:(void (^) (NSError* error))callback
 {
-    NSString* file = [self fileForDatabase:database];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+    {
+        NSString* file = [self fileForDatabase:database];
     
-    [[NSFileManager defaultManager] removeItemAtPath:file error:nil];
+        [[NSFileManager defaultManager] removeItemAtPath:file error:nil];
     
-    [self notifyObservers];
+        dispatch_async(dispatch_get_main_queue(), ^
+        {
+            callback(nil);
+            
+            [self notifyObservers];
+        });
+    });
 }
 
 - (NSString*)fileForDatabase:(Database*)database

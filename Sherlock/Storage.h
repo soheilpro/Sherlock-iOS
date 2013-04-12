@@ -17,10 +17,10 @@ typedef void (^observerBlock)();
 - (NSString*)name;
 - (BOOL)isAvailable;
 - (NSArray*)databases;
-- (void)fetchDatabases;
-- (NSData*)readDatabase:(Database*)database;
-- (void)saveDatabase:(Database*)data withData:(NSData*)data;
-- (void)deleteDatabase:(Database*)database;
+- (void)fetchDatabasesWithCallback:(void (^) (NSArray* databases, NSError* error))callback;
+- (void)readDatabase:(Database*)database callback:(void (^) (NSData* data, NSError* error))callback;
+- (void)saveDatabase:(Database*)database withData:(NSData*)data callback:(void (^) (NSError* error))callback;
+- (void)deleteDatabase:(Database*)database callback:(void (^) (NSError* error))callback;
 - (void)addObserverBlock:(observerBlock)block;
 
 @end

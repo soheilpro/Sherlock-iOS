@@ -81,7 +81,7 @@
     if (self.password != nil)
         data = [TripleDES transformData:data operation:kCCEncrypt withPassword:self.password];
     
-    [self.storage saveDatabase:self withData:data];
+    [self.storage saveDatabase:self withData:data callback:^(NSError* error) {}];
 }
 
 - (NSData*)data

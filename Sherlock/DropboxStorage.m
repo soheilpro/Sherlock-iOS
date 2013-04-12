@@ -16,6 +16,7 @@
 @interface DropboxStorage ()
 
 @property (nonatomic, strong) NSArray* databases;
+@property (nonatomic, strong) Dropbox* dropbox;
 @property (nonatomic, strong) NSMutableArray* observerBlocks;
 
 @end
@@ -29,6 +30,7 @@
     if (self)
     {
         self.databases = @[];
+        self.dropbox = [[Dropbox alloc] initWithSession:[DBSession sharedSession]];
         self.observerBlocks = [NSMutableArray array];
     }
     
@@ -50,151 +52,103 @@
     return _databases;
 }
 
-- (void)fetchDatabases
+- (void)fetchDatabasesWithCallback:(void (^) (NSArray* databases, NSError* error))callback;
 {
-    NSMutableArray* databases = [[self fetchRemoteDatabases] mutableCopy];
-    
-    [databases sortUsingComparator:^NSComparisonResult(id obj1, id obj2)
+    [self fetchRemoteDatabasesWithCallback:^(NSArray* databases, NSError* error)
     {
-        Database* database1 = obj1;
-        Database* database2 = obj2;
+        NSMutableArray* mutableDatabases = [databases mutableCopy];
         
-        return [database1.name compare:database2.name options:NSCaseInsensitiveSearch];
+        [mutableDatabases sortUsingComparator:^NSComparisonResult(id obj1, id obj2)
+         {
+             Database* database1 = obj1;
+             Database* database2 = obj2;
+             
+             return [database1.name compare:database2.name options:NSCaseInsensitiveSearch];
+         }];
+        
+        self.databases = mutableDatabases;
+        
+        callback(mutableDatabases, nil);
     }];
-
-    self.databases = databases;
 }
 
-- (NSArray*)fetchRemoteDatabases
+- (void)fetchRemoteDatabasesWithCallback:(void (^) (NSArray* database, NSError* error))callback;
 {
     NSMutableArray* databases = [NSMutableArray array];
 
-    [self addDropboxDatabasesInPath:@"/" relativeTo:@"" toArray:databases];
-    
-    return databases;
-}
-
-- (void)addDropboxDatabasesInPath:(NSString*)path relativeTo:(NSString*)relativePath toArray:(NSMutableArray*)databases
-{
-    Dropbox* dropbox = [[Dropbox alloc] initWithSession:[DBSession sharedSession]];
-    DBMetadata* rootMetadata = [dropbox loadMetadataForPath:path];
-
-    for (DBMetadata* childMetadata in rootMetadata.contents)
+    [self addDropboxDatabasesInPath:@"/" relativeTo:@"" toArray:databases withCallback:^(NSArray* database, NSError* error)
     {
-        if (childMetadata.isDirectory)
-        {
-            [self addDropboxDatabasesInPath:[path stringByAppendingPathComponent:childMetadata.path] relativeTo:[relativePath stringByAppendingPathComponent:childMetadata.path] toArray:databases];
-            continue;
-        }
-        
-        if (![[childMetadata.filename pathExtension] isEqualToString:DB_FILE_EXTENSION])
-            continue;
-        
-        Database* database = [[Database alloc] init];
-        database.storage = self;
-        database.name = [[relativePath stringByAppendingPathComponent:childMetadata.filename] stringByDeletingPathExtension];
-        
-        [databases addObject:database];
-    }
+        callback(database, error);
+    }];
 }
 
-- (NSArray*)fetchLocalDatabases
+- (void)addDropboxDatabasesInPath:(NSString*)path relativeTo:(NSString*)relativePath toArray:(NSMutableArray*)databases withCallback:(void (^) (NSArray* database, NSError* error))callback;
 {
-    NSString* documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString* localDirectory = [documentDirectory stringByAppendingPathComponent:DB_ROOT_DIRECTORY];
-    NSMutableArray* databases = [NSMutableArray array];
-    
-    [self addCachedDatabasesInPath:localDirectory relativeTo:@"" toArray:databases];
-    
-    return databases;
-}
-
-- (void)addCachedDatabasesInPath:(NSString*)path relativeTo:(NSString*)relativePath toArray:(NSMutableArray*)databases
-{
-    for (NSString* file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil])
+    [self.dropbox loadMetadataForPath:path callback:^(DBMetadata* metadata, NSError* error)
     {
-        NSDictionary* attributres = [[NSFileManager defaultManager] attributesOfItemAtPath:[path stringByAppendingPathComponent:file] error:nil];
-        
-        if ([attributres objectForKey:NSFileType] == NSFileTypeDirectory)
+        for (DBMetadata* childMetadata in metadata.contents)
         {
-            [self addCachedDatabasesInPath:[path stringByAppendingPathComponent:file] relativeTo:[relativePath stringByAppendingPathComponent:file] toArray:databases];
-        }
-        else if ([[file pathExtension] isEqualToString:DB_FILE_EXTENSION])
-        {
+            if (childMetadata.isDirectory)
+            {
+                [self addDropboxDatabasesInPath:[path stringByAppendingPathComponent:childMetadata.path] relativeTo:[relativePath stringByAppendingPathComponent:childMetadata.path] toArray:databases withCallback:callback];
+                continue;
+            }
+            
+            if (![[childMetadata.filename pathExtension] isEqualToString:DB_FILE_EXTENSION])
+                continue;
+            
             Database* database = [[Database alloc] init];
             database.storage = self;
-            database.name = [[relativePath stringByAppendingPathComponent:file] stringByDeletingPathExtension];
+            database.name = [[relativePath stringByAppendingPathComponent:childMetadata.filename] stringByDeletingPathExtension];
             
             [databases addObject:database];
+            
+            callback(databases, nil);
         }
-    }
+    }];
 }
 
-- (NSData*)readDatabase:(Database*)database
+- (void)readDatabase:(Database*)database callback:(void (^) (NSData* data, NSError* error))callback;
 {
-    return [self readRemoteDatabase:database];
+    [self readRemoteDatabase:database callback:callback];
 }
 
-- (NSData*)readRemoteDatabase:(Database*)database
+- (void)readRemoteDatabase:(Database*)database callback:(void (^) (NSData* data, NSError* error))callback;
 {
-    Dropbox* dropbox = [[Dropbox alloc] initWithSession:[DBSession sharedSession]];
-    
-    return [dropbox loadFileAtPath:[self pathForDatabase:database]];
+    [self.dropbox loadFileAtPath:[self pathForDatabase:database] callback:^(NSData* data, DBMetadata* metadata, NSError* error)
+    {
+        callback(data, error);
+    }];
 }
 
-- (NSData*)readCachedDatabase:(Database*)database
+- (void)saveDatabase:(Database*)database withData:(NSData*)data callback:(void (^) (NSError* error))callback
 {
-    NSString* file = [self fileForDatabase:database];
-    
-    return [NSData dataWithContentsOfFile:file];
+    [self saveRemoteDatabase:database withData:data callback:^(NSError* error) {
+        
+        callback(error);
+        
+        [self notifyObservers];
+    }];
 }
 
-- (void)saveDatabase:(Database*)database withData:(NSData*)data;
+- (void)saveRemoteDatabase:(Database*)database withData:(NSData*)data callback:(void (^) (NSError* error))callback
 {
-    [self saveRemoteDatabase:database withData:data];
-    
-    [self notifyObservers];
+    [self.dropbox uploadFileToPath:[self pathForDatabase:database] withData:data withRevision:nil callback:^(NSError* error)
+    {
+        callback(error);
+    }];
 }
 
-- (BOOL)saveRemoteDatabase:(Database*)database withData:(NSData*)data
+- (void)deleteDatabase:(Database*)database callback:(void (^) (NSError* error))callback;
 {
-    Dropbox* dropbox = [[Dropbox alloc] initWithSession:[DBSession sharedSession]];
-    
-    return [dropbox uploadFileToPath:[self pathForDatabase:database] withData:data withRevision:nil];
+    [self deleteRemoteDatabase:database callback:^(NSError* error) {
+        [self notifyObservers];
+    }];
 }
 
-- (BOOL)saveCachedDatabase:(Database*)database withData:(NSData*)data
+- (void)deleteRemoteDatabase:(Database*)database callback:(void (^) (NSError* error))callback
 {
-    NSString* file = [self fileForDatabase:database];
-    NSString* diretory = [file stringByDeletingLastPathComponent];
-    
-    [[NSFileManager defaultManager] createDirectoryAtPath:diretory withIntermediateDirectories:YES attributes:nil error:nil];
-    [data writeToFile:file atomically:YES];
-    
-    return YES;
-}
-
-- (void)deleteDatabase:(Database*)database
-{
-    [self deleteRemoteDatabase:database];
-    [self deleteCachedDatabase:database];
-    
-    [self notifyObservers];
-}
-
-- (void)deleteRemoteDatabase:(Database*)database
-{
-    Dropbox* dropbox = [[Dropbox alloc] initWithSession:[DBSession sharedSession]];
-    
-    [dropbox deleteFileAtPath:[self pathForDatabase:database]];
-}
-
-- (void)deleteCachedDatabase:(Database*)database
-{
-    NSString* file = [self fileForDatabase:database];
-    
-    [[NSFileManager defaultManager] removeItemAtPath:file error:nil];
-    
+    [self.dropbox deleteFileAtPath:[self pathForDatabase:database] callback:callback];
 }
 
 - (NSString*)pathForDatabase:(Database*)database
@@ -202,15 +156,6 @@
     NSString* documentDirectory = @"/";
     
     return [documentDirectory stringByAppendingPathComponent:[database.name stringByAppendingPathExtension:DB_FILE_EXTENSION]];
-}
-
-- (NSString*)fileForDatabase:(Database*)database
-{
-    NSString* documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString* localDirectory = [documentDirectory stringByAppendingPathComponent:DB_ROOT_DIRECTORY];
-    NSString* file = [[localDirectory stringByAppendingPathComponent:database.name] stringByAppendingPathExtension:DB_FILE_EXTENSION];
-    
-    return file;
 }
 
 - (void)addObserverBlock:(observerBlock)block

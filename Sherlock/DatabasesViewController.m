@@ -69,19 +69,20 @@
 - (void)refreshDatabases
 {
     MBProgressHUD* hud = [self showHUDWithText:@"Loading list of databases"];
+    __block NSInteger fetchedStorageDatabases = 0;
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+    for (id<Storage> storage in self.storages)
     {
-        for (id<Storage> storage in self.storages)
-            [storage fetchDatabases];
-        
-        dispatch_async(dispatch_get_main_queue(), ^
+        [storage fetchDatabasesWithCallback:^(NSArray* databases, NSError* error)
         {
-            [hud hide:YES];
-            
             [self.tableView reloadData];
-        });
-    });
+
+            fetchedStorageDatabases++;
+            
+            if (fetchedStorageDatabases == self.storages.count)
+                [hud hide:YES];
+        }];
+    }
 }
 
 - (BOOL)didEnterPassword:(NSString*)password inViewController:(UIViewController*)viewController;
@@ -179,36 +180,33 @@
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
     MBProgressHUD* hud = [self showHUDWithText:@"Loading database"];
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+
+    id<Storage> storage = [self.storages objectAtIndex:indexPath.section];
+    Database* database = [[storage databases] objectAtIndex:indexPath.row];
+
+    [storage readDatabase:database callback:^(NSData* data, NSError* error)
     {
-        id<Storage> storage = [self.storages objectAtIndex:indexPath.section];
-        Database* database = [[storage databases] objectAtIndex:indexPath.row];
-
         self.selectedDatabase = database;
-        self.selectedDatabaseData = [storage readDatabase:database];
+        self.selectedDatabaseData = data;
         
-        dispatch_async(dispatch_get_main_queue(), ^
-        {
-            [hud hide:YES];
+        [hud hide:YES];
 
-            BOOL didOpenDatabase = [self.selectedDatabase openWithData:self.selectedDatabaseData andPassword:nil];
-            
-            if (didOpenDatabase)
-            {
-                [((AppDelegate*)[UIApplication sharedApplication].delegate) didOpenDatabase:self.selectedDatabase];
-                [self dismissModalViewControllerAnimated:YES];
-            }
-            else
-            {
-                PasswordViewController* passwordViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Password"];
-                passwordViewController.database = database;
-                passwordViewController.delegate = self;
-            
-                [self presentModalViewController:passwordViewController animated:YES];
-            }
-        });
-    });
+        BOOL didOpenDatabase = [self.selectedDatabase openWithData:self.selectedDatabaseData andPassword:nil];
+        
+        if (didOpenDatabase)
+        {
+            [((AppDelegate*)[UIApplication sharedApplication].delegate) didOpenDatabase:self.selectedDatabase];
+            [self dismissModalViewControllerAnimated:YES];
+        }
+        else
+        {
+            PasswordViewController* passwordViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Password"];
+            passwordViewController.database = database;
+            passwordViewController.delegate = self;
+        
+            [self presentModalViewController:passwordViewController animated:YES];
+        }
+    }];
 }
 
 - (void)tableView:(UITableView*)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath*)indexPath
@@ -218,7 +216,7 @@
         id<Storage> storage = [self.storages objectAtIndex:indexPath.section];
         Database* database = [[storage databases] objectAtIndex:indexPath.row];
         
-        [storage deleteDatabase:database];
+        [storage deleteDatabase:database callback:^(NSError* error) {}];
     }
 }
 

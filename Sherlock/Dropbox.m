@@ -11,14 +11,10 @@
 @interface Dropbox ()
 
 @property (nonatomic, strong) DBRestClient* client;
-@property (nonatomic, strong) DBMetadata* metadata;
-@property (nonatomic, strong) NSError* metadataError;
-@property (nonatomic, strong) NSData* loadFileData;
-@property (nonatomic, strong) NSError* loadFileError;
-@property (nonatomic) BOOL didUploadFile;
-@property (nonatomic, strong) NSError* uploadFileError;
-@property (nonatomic) BOOL didDeleteFile;
-@property (nonatomic, strong) NSError* deleteFileError;
+@property (nonatomic, strong) LoadMetadataCallback loadMetadataCallback;
+@property (nonatomic, strong) LoadFileCallback loadFileCallback;
+@property (nonatomic, strong) UploadFileCallback uploadFileCallback;
+@property (nonatomic, strong) DeleteFileCallback deleteFileCallback;
 
 @end
 
@@ -37,106 +33,83 @@
     return self;
 }
 
-- (DBMetadata*)loadMetadataForPath:(NSString*)path;
+- (void)loadMetadataForPath:(NSString*)path callback:(LoadMetadataCallback)callback;
 {
-    self.metadata = nil;
-    self.metadataError = nil;
-
+    self.loadMetadataCallback = callback;
+    
     [self.client loadMetadata:path];
-    
-    while (self.metadata == nil && self.metadataError == nil)
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
-    
-    return self.metadata;
 }
 
 - (void)restClient:(DBRestClient*)client loadedMetadata:(DBMetadata*)metadata
 {
-    self.metadata = metadata;
+    self.loadMetadataCallback(metadata, nil);
 }
 
 - (void)restClient:(DBRestClient*)client loadMetadataFailedWithError:(NSError*)error
 {
-    self.metadataError = error;
+    self.loadMetadataCallback(nil, error);
 }
 
-- (NSData*)loadFileAtPath:(NSString*)path
+- (void)loadFileAtPath:(NSString*)path callback:(LoadFileCallback)callback;
 {
-    self.loadFileData = nil;
-    self.loadFileError = nil;
+    self.loadFileCallback = callback;
 
     NSString* tempFile = [NSTemporaryDirectory() stringByAppendingPathExtension:[[NSProcessInfo processInfo] globallyUniqueString]];
     
     [self.client loadFile:path intoPath:tempFile];
-    
-    while (self.loadFileData == nil && self.loadFileError == nil)
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
-
-    if (self.loadFileData != nil)
-        [[NSFileManager defaultManager] removeItemAtPath:tempFile error:nil];
-
-    return self.loadFileData;
 }
 
-- (void)restClient:(DBRestClient*)client loadedFile:(NSString*)destPath
+-(void)restClient:(DBRestClient*)client loadedFile:(NSString*)destPath contentType:(NSString*)contentType metadata:(DBMetadata*)metadata
 {
-    self.loadFileData = [NSData dataWithContentsOfFile:destPath];
+    NSData* data = [NSData dataWithContentsOfFile:destPath];
+
+    [[NSFileManager defaultManager] removeItemAtPath:destPath error:nil];
+    
+    self.loadFileCallback(data, metadata, nil);
 }
 
 - (void)restClient:(DBRestClient*)client loadFileFailedWithError:(NSError*)error
 {
-    self.loadFileError = error;
+    self.loadFileCallback(nil, nil, error);
 }
 
-- (BOOL)uploadFileToPath:(NSString*)path withData:(NSData*)data withRevision:(NSString*)revision;
+- (void)uploadFileToPath:(NSString*)path withData:(NSData*)data withRevision:(NSString*)revision callback:(UploadFileCallback)callback
 {
-    self.didUploadFile = NO;
-    self.uploadFileError = nil;
-
+    self.uploadFileCallback = callback;
+    
     NSString* tempFile = [NSTemporaryDirectory() stringByAppendingPathExtension:[[NSProcessInfo processInfo] globallyUniqueString]];
     [data writeToFile:tempFile atomically:YES];
 
     [self.client uploadFile:[path lastPathComponent] toPath:[path stringByDeletingLastPathComponent] withParentRev:revision fromPath:tempFile];
-    
-    while (!self.didUploadFile && self.uploadFileError == nil)
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
-   
-    [[NSFileManager defaultManager] removeItemAtPath:tempFile error:nil];
-
-    return self.didUploadFile;
 }
 
 - (void)restClient:(DBRestClient*)client uploadedFile:(NSString*)destPath from:(NSString*)srcPath
 {
-    self.didUploadFile = YES;
+    [[NSFileManager defaultManager] removeItemAtPath:srcPath error:nil];
+    
+    self.uploadFileCallback(nil);
 }
 
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error
 {
-    self.uploadFileError = error;
+    self.uploadFileCallback(error);
 }
 
--(BOOL)deleteFileAtPath:(NSString*)path
+- (void)deleteFileAtPath:(NSString*)path callback:(DeleteFileCallback)callback;
 {
-    self.didDeleteFile = NO;
-    self.deleteFileError = nil;
+    self.deleteFileCallback = callback;
     
     [self.client deletePath:path];
-    
-    while (!self.didDeleteFile && self.deleteFileError == nil)
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
-    
-    return self.didUploadFile;
 }
 
 - (void)restClient:(DBRestClient*)client deletedPath:(NSString*)path
 {
-    self.didDeleteFile = YES;
+    self.deleteFileCallback(nil);
 }
 
 - (void)restClient:(DBRestClient*)client deletePathFailedWithError:(NSError*)error
 {
-    self.deleteFileError = error;
+    self.deleteFileCallback(error);
 }
 
 @end

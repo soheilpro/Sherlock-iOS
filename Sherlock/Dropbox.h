@@ -9,12 +9,17 @@
 #import <DropboxSDK/DropboxSDK.h>
 #import <Foundation/Foundation.h>
 
+typedef void (^LoadMetadataCallback)(DBMetadata* metadata, NSError* error);
+typedef void (^LoadFileCallback)(NSData* data, DBMetadata* metadata, NSError* error);
+typedef void (^UploadFileCallback)(NSError* error);
+typedef void (^DeleteFileCallback)(NSError* error);
+
 @interface Dropbox : NSObject<DBRestClientDelegate>
 
 - initWithSession:(DBSession*)session;
-- (DBMetadata*)loadMetadataForPath:(NSString*)path;
-- (NSData*)loadFileAtPath:(NSString*)path;
-- (BOOL)uploadFileToPath:(NSString*)path withData:(NSData*)data withRevision:(NSString*)revision;
-- (BOOL)deleteFileAtPath:(NSString*)path;
+- (void)loadMetadataForPath:(NSString*)path callback:(LoadMetadataCallback)callback;
+- (void)loadFileAtPath:(NSString*)path callback:(LoadFileCallback)callback;
+- (void)uploadFileToPath:(NSString*)path withData:(NSData*)data withRevision:(NSString*)revision callback:(UploadFileCallback)callback;
+- (void)deleteFileAtPath:(NSString*)path callback:(DeleteFileCallback)callback;
 
 @end
