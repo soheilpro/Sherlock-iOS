@@ -6,22 +6,17 @@
 //  Copyright (c) 2013 Softtool. All rights reserved.
 //
 
-#import <Dropbox/Dropbox.h>
+#import <DropboxSDK/DropboxSDK.h>
 #import "SettingsViewController.h"
 #import "ActionSheet.h"
 #import "Theme.h"
 
 @implementation SettingsViewController
 
-- (void)viewDidLoad
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidLoad];
+    [super viewWillAppear:animated];
     
-    [[DBAccountManager sharedManager] addObserver:self block:^(DBAccount* account)
-    {
-        [self refreshDropboxStatus];
-    }];
-
     [self refreshDropboxStatus];
 }
 
@@ -32,7 +27,7 @@
 
 - (IBAction)linkDropbox:(id)sender
 {
-    [[DBAccountManager sharedManager] linkFromController:self];
+    [[DBSession sharedSession] linkFromController:self];
 }
 
 - (void)unlinkDropbox:(id)sender
@@ -41,8 +36,9 @@
     
     [actionSheet addDestructiveButtonWithTitle:@"Unlink" selectBlock:^
     {
-        [[DBAccountManager sharedManager].linkedAccount unlink];
-        [DBFilesystem setSharedFilesystem:nil];
+        [[DBSession sharedSession] unlinkAll];
+
+        [self refreshDropboxStatus];
     }];
     
     [actionSheet addCancelButtonWithTitle:@"Cancel"];
@@ -52,21 +48,19 @@
 
 - (void)refreshDropboxStatus
 {
-    DBAccount* account = [DBAccountManager sharedManager].linkedAccount;
-    
-    if (account == nil)
+    if (![DBSession sharedSession].isLinked)
     {
         self.linkDropboxButton.hidden = NO;
         self.unlinkDropboxButton.hidden = YES;
-        self.dropboxDislpayNameLabel.text = @"no linked account";
-        self.dropboxDislpayNameLabel.textColor = [self.dropboxDislpayNameLabel.textColor colorWithAlphaComponent:.5];
+        self.dropboxStatusLabel.text = @"No linked account";
+        self.dropboxStatusLabel.textColor = [UIColor grayColor];
     }
     else
     {
         self.linkDropboxButton.hidden = YES;
         self.unlinkDropboxButton.hidden = NO;
-        self.dropboxDislpayNameLabel.text = account.info.displayName;
-        self.dropboxDislpayNameLabel.textColor = [self.dropboxDislpayNameLabel.textColor colorWithAlphaComponent:1];
+        self.dropboxStatusLabel.text = @"Linked";
+        self.dropboxStatusLabel.textColor = [UIColor colorWithRed:0 green:.5 blue:0 alpha:1];
     }
 }
 

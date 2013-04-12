@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B1A481B170E139900D81762 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1A481A170E139900D81762 /* DropboxSDK.framework */; };
+		5B1A481C170E13C000D81762 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B8942C417076DDE00A618C7 /* Security.framework */; };
+		5B1A481D170E13C600D81762 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B8942C817076DEC00A618C7 /* QuartzCore.framework */; };
 		5B245DA6170C2888000FBDB9 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B245DA5170C2888000FBDB9 /* Icon.png */; };
 		5B245DA8170C288C000FBDB9 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B245DA7170C288C000FBDB9 /* Icon@2x.png */; };
 		5B245DAA170C2891000FBDB9 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B245DA9170C2891000FBDB9 /* Icon-72.png */; };
@@ -15,7 +18,7 @@
 		5B4466AB1708B12A00A42D7C /* LocalStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4466AA1708B12A00A42D7C /* LocalStorage.m */; };
 		5B4466AE1708B20500A42D7C /* DropboxStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4466AD1708B20500A42D7C /* DropboxStorage.m */; };
 		5B4466B11708C05D00A42D7C /* NewDatabaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4466B01708C05D00A42D7C /* NewDatabaseViewController.m */; };
-		5B59E1FB170830F900AEC98D /* Dropbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B59E1FA170830F900AEC98D /* Dropbox.framework */; };
+		5B4F2577170EE67400609904 /* Dropbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4F2576170EE67400609904 /* Dropbox.m */; };
 		5B59E1FE1708311400AEC98D /* DatabasesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B59E1FD1708311400AEC98D /* DatabasesViewController.m */; };
 		5B59E2101708338F00AEC98D /* PTC75F.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B59E2011708338F00AEC98D /* PTC75F.ttf */; };
 		5B59E2111708338F00AEC98D /* PTS75F.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B59E2021708338F00AEC98D /* PTS75F.ttf */; };
@@ -42,10 +45,6 @@
 		5B59E23B1708409E00AEC98D /* ThemedTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B59E23A1708409D00AEC98D /* ThemedTextView.m */; };
 		5B59E23E1708433400AEC98D /* ThemedPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B59E23D1708433400AEC98D /* ThemedPanel.m */; };
 		5B59E2421708596400AEC98D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B59E2411708596400AEC98D /* MBProgressHUD.m */; };
-		5B8942C317076DD600A618C7 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B8942C217076DD600A618C7 /* CFNetwork.framework */; };
-		5B8942C517076DDE00A618C7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B8942C417076DDE00A618C7 /* Security.framework */; };
-		5B8942C717076DE600A618C7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B8942C617076DE600A618C7 /* SystemConfiguration.framework */; };
-		5B8942C917076DEC00A618C7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B8942C817076DEC00A618C7 /* QuartzCore.framework */; };
 		5B8942D2170773EC00A618C7 /* PasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8942D1170773EC00A618C7 /* PasswordViewController.m */; };
 		5B8942D51707837800A618C7 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8942D41707837800A618C7 /* SettingsViewController.m */; };
 		5B8942DF17079A3F00A618C7 /* ActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8942DE17079A3F00A618C7 /* ActionSheet.m */; };
@@ -76,6 +75,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5B1A481A170E139900D81762 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DropboxSDK.framework; path = Sherlock/DropboxSDK.framework; sourceTree = "<group>"; };
 		5B245DA5170C2888000FBDB9 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		5B245DA7170C288C000FBDB9 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		5B245DA9170C2891000FBDB9 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
@@ -88,7 +88,8 @@
 		5B4466AD1708B20500A42D7C /* DropboxStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropboxStorage.m; sourceTree = "<group>"; };
 		5B4466AF1708C05D00A42D7C /* NewDatabaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewDatabaseViewController.h; sourceTree = "<group>"; };
 		5B4466B01708C05D00A42D7C /* NewDatabaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewDatabaseViewController.m; sourceTree = "<group>"; };
-		5B59E1FA170830F900AEC98D /* Dropbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Dropbox.framework; path = Sherlock/Dropbox.framework; sourceTree = "<group>"; };
+		5B4F2575170EE67400609904 /* Dropbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dropbox.h; sourceTree = "<group>"; };
+		5B4F2576170EE67400609904 /* Dropbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Dropbox.m; sourceTree = "<group>"; };
 		5B59E1FC1708311400AEC98D /* DatabasesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabasesViewController.h; sourceTree = "<group>"; };
 		5B59E1FD1708311400AEC98D /* DatabasesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabasesViewController.m; sourceTree = "<group>"; };
 		5B59E2011708338F00AEC98D /* PTC75F.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = PTC75F.ttf; sourceTree = "<group>"; };
@@ -185,14 +186,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B8942C917076DEC00A618C7 /* QuartzCore.framework in Frameworks */,
-				5B8942C717076DE600A618C7 /* SystemConfiguration.framework in Frameworks */,
-				5B8942C517076DDE00A618C7 /* Security.framework in Frameworks */,
-				5B8942C317076DD600A618C7 /* CFNetwork.framework in Frameworks */,
+				5B1A481D170E13C600D81762 /* QuartzCore.framework in Frameworks */,
+				5B1A481C170E13C000D81762 /* Security.framework in Frameworks */,
 				5BF812A51706E83E00039E45 /* UIKit.framework in Frameworks */,
 				5BF812A71706E83E00039E45 /* Foundation.framework in Frameworks */,
 				5BF812A91706E83E00039E45 /* CoreGraphics.framework in Frameworks */,
-				5B59E1FB170830F900AEC98D /* Dropbox.framework in Frameworks */,
+				5B1A481B170E139900D81762 /* DropboxSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,7 +314,7 @@
 			children = (
 				5B8942C217076DD600A618C7 /* CFNetwork.framework */,
 				5BF812A81706E83E00039E45 /* CoreGraphics.framework */,
-				5B59E1FA170830F900AEC98D /* Dropbox.framework */,
+				5B1A481A170E139900D81762 /* DropboxSDK.framework */,
 				5BF812A61706E83E00039E45 /* Foundation.framework */,
 				5B8942C817076DEC00A618C7 /* QuartzCore.framework */,
 				5B8942C417076DDE00A618C7 /* Security.framework */,
@@ -335,6 +334,8 @@
 				5BF812B31706E83E00039E45 /* AppDelegate.h */,
 				5BF812B41706E83E00039E45 /* AppDelegate.m */,
 				5BF812B01706E83E00039E45 /* Main.m */,
+				5B4F2575170EE67400609904 /* Dropbox.h */,
+				5B4F2576170EE67400609904 /* Dropbox.m */,
 			);
 			path = Sherlock;
 			sourceTree = "<group>";
@@ -550,6 +551,7 @@
 				5BBDB016170B8B6100439235 /* UIView+Animation.m in Sources */,
 				5BBDB01A170B8C6800439235 /* TripleDES.m in Sources */,
 				5BBDB01D170B95C100439235 /* NewPasswordViewController.m in Sources */,
+				5B4F2577170EE67400609904 /* Dropbox.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

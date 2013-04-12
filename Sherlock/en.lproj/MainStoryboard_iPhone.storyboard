@@ -44,7 +44,7 @@
                                 <rect key="frame" x="10" y="124" width="301" height="64"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="i12-II-9c7" customClass="ThemedLabel">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="i12-II-9c7" customClass="ThemedLabel">
                                         <rect key="frame" x="15" y="22" width="167" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -93,7 +93,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="vhE-Na-Sp5"/>
                     <connections>
-                        <outlet property="dropboxDislpayNameLabel" destination="i12-II-9c7" id="zOf-ie-Rn3"/>
+                        <outlet property="dropboxStatusLabel" destination="i12-II-9c7" id="GO2-1S-kgK"/>
                         <outlet property="linkDropboxButton" destination="uWT-6i-obU" id="9nl-2v-Zb5"/>
                         <outlet property="unlinkDropboxButton" destination="qdD-5Y-OIe" id="7fy-UW-fcU"/>
                     </connections>

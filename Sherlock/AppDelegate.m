@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Softtool. All rights reserved.
 //
 
-#import <Dropbox/Dropbox.h>
+#import <DropboxSDK/DropboxSDK.h>
 #import "AppDelegate.h"
 #import "FolderViewController.h"
 #import "Theme.h"
@@ -57,10 +57,8 @@ NSString* const NSURLIsExcludedFromBackupKey = @"NSURLIsExcludedFromBackupKey";
 }
 
 - (BOOL)application:(UIApplication*)app openURL:(NSURL*)url sourceApplication:(NSString*)source annotation:(id)annotation
-{    
-    DBAccount* account = [[DBAccountManager sharedManager] handleOpenURL:url];
-    
-    if (account != nil)
+{
+    if ([[DBSession sharedSession] handleOpenURL:url])
         return YES;
     
     return NO;
@@ -68,8 +66,8 @@ NSString* const NSURLIsExcludedFromBackupKey = @"NSURLIsExcludedFromBackupKey";
 
 - (void)setupDropbox
 {
-    DBAccountManager* accountManager = [[DBAccountManager alloc] initWithAppKey:@"YOUR_APP_KEY" secret:@"YOUR_APP_SECRET"];
-    [DBAccountManager setSharedManager:accountManager];
+    DBSession* session = [[DBSession alloc] initWithAppKey:@"YOUR_APP_KEY" appSecret:@"YOUR_APP_SECRET" root:kDBRootAppFolder];
+    [DBSession setSharedSession:session];
 }
 
 - (void)selectDatabase:(BOOL)animated;
