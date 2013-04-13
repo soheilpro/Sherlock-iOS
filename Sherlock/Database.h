@@ -17,6 +17,7 @@
 @property (nonatomic, strong) id storage;
 @property (nonatomic, strong) NSString* name;
 @property (nonatomic, strong) NSString* password;
+@property (nonatomic, strong) NSMutableDictionary* metadata;
 @property (nonatomic, strong) Folder* root;
 
 - (BOOL)openWithData:(NSData*)data andPassword:(NSString*)password;

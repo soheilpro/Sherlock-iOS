@@ -117,6 +117,8 @@
 {
     [self.dropbox loadFileAtPath:[self pathForDatabase:database] callback:^(NSData* data, DBMetadata* metadata, NSError* error)
     {
+        [database.metadata setObject:metadata.rev forKey:@"revision"];
+        
         callback(data, error);
     }];
 }
@@ -133,7 +135,9 @@
 
 - (void)saveRemoteDatabase:(Database*)database withData:(NSData*)data callback:(void (^) (NSError* error))callback
 {
-    [self.dropbox uploadFileToPath:[self pathForDatabase:database] withData:data withRevision:nil callback:^(NSError* error)
+    NSString* revision = [database.metadata objectForKey:@"revision"];
+    
+    [self.dropbox uploadFileToPath:[self pathForDatabase:database] withData:data withRevision:revision callback:^(NSError* error)
     {
         callback(error);
     }];

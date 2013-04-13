@@ -18,6 +18,7 @@
     
     if (self)
     {
+        self.metadata = [NSMutableDictionary dictionary];
         self.root = [[Folder alloc] init];
         self.root.parent = nil;
         self.root.database = self;
