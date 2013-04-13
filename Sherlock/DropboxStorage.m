@@ -83,7 +83,7 @@
 {
     NSMutableArray* databases = [NSMutableArray array];
 
-    [self addDropboxDatabasesInPath:@"/" relativeTo:@"" toArray:databases withCallback:^(NSArray* database, NSError* error)
+    [self addDropboxDatabasesInPath:@"/" basePath:@"/" toArray:databases withCallback:^(NSArray* database, NSError* error)
     {
         if (error != nil)
         {
@@ -95,15 +95,26 @@
     }];
 }
 
-- (void)addDropboxDatabasesInPath:(NSString*)path relativeTo:(NSString*)relativePath toArray:(NSMutableArray*)databases withCallback:(void (^) (NSArray* database, NSError* error))callback;
+- (void)addDropboxDatabasesInPath:(NSString*)path basePath:(NSString*)basePath toArray:(NSMutableArray*)databases withCallback:(void (^) (NSArray* database, NSError* error))callback;
 {
     [self.dropbox loadMetadataForPath:path callback:^(DBMetadata* metadata, NSError* error)
     {
+        __block NSInteger remainingCallbacksToReturn = 0;
+        
         for (DBMetadata* childMetadata in metadata.contents)
         {
             if (childMetadata.isDirectory)
             {
-                [self addDropboxDatabasesInPath:[path stringByAppendingPathComponent:childMetadata.path] relativeTo:[relativePath stringByAppendingPathComponent:childMetadata.path] toArray:databases withCallback:callback];
+                remainingCallbacksToReturn++;
+                
+                [self addDropboxDatabasesInPath:childMetadata.path basePath:basePath toArray:databases withCallback:^(NSArray* database, NSError* error)
+                {
+                    remainingCallbacksToReturn--;
+                    
+                    if (remainingCallbacksToReturn == 0)
+                        callback(database, nil);
+                }];
+                
                 continue;
             }
             
@@ -112,12 +123,13 @@
             
             Database* database = [[Database alloc] init];
             database.storage = self;
-            database.name = [[relativePath stringByAppendingPathComponent:childMetadata.filename] stringByDeletingPathExtension];
+            database.name = [[childMetadata.path stringByReplacingCharactersInRange:NSMakeRange(0, [basePath length]) withString:@""] stringByDeletingPathExtension];
             
             [databases addObject:database];
-            
-            callback(databases, nil);
         }
+
+        if (remainingCallbacksToReturn == 0)
+            callback(databases, nil);
     }];
 }
 
