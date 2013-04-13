@@ -10,7 +10,8 @@
 #import "DropboxStorage.h"
 #import "Dropbox.h"
 
-#define DB_ROOT_DIRECTORY @"Dropbox"
+#define DB_ROOT_DIRECTORY @"/Apps/Sherlock/"
+#define CACHE_ROOT_DIRECTORY @"Dropbox"
 #define DB_FILE_EXTENSION @"sdb"
 #define METADATA_REVISION_KEY @"revision"
 
@@ -83,7 +84,7 @@
 {
     NSMutableArray* databases = [NSMutableArray array];
 
-    [self addDropboxDatabasesInPath:@"/" basePath:@"/" toArray:databases withCallback:^(NSArray* database, NSError* error)
+    [self addDropboxDatabasesInPath:DB_ROOT_DIRECTORY basePath:DB_ROOT_DIRECTORY toArray:databases withCallback:^(NSArray* database, NSError* error)
     {
         if (error != nil)
         {
@@ -189,9 +190,7 @@
 
 - (NSString*)pathForDatabase:(Database*)database
 {
-    NSString* documentDirectory = @"/";
-    
-    return [documentDirectory stringByAppendingPathComponent:[database.name stringByAppendingPathExtension:DB_FILE_EXTENSION]];
+    return [DB_ROOT_DIRECTORY stringByAppendingPathComponent:[database.name stringByAppendingPathExtension:DB_FILE_EXTENSION]];
 }
 
 @end
