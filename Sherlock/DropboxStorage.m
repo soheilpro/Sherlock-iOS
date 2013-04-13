@@ -12,6 +12,7 @@
 
 #define DB_ROOT_DIRECTORY @"Dropbox"
 #define DB_FILE_EXTENSION @"sdb"
+#define METADATA_REVISION_KEY @"revision"
 
 @interface DropboxStorage ()
 
@@ -135,7 +136,7 @@
             return;
         }
 
-        [database.metadata setObject:metadata.rev forKey:@"revision"];
+        [database.metadata setObject:metadata.rev forKey:METADATA_REVISION_KEY];
         
         callback(data, error);
     }];
@@ -148,9 +149,20 @@
 
 - (void)saveRemoteDatabase:(Database*)database withData:(NSData*)data callback:(void (^) (NSError* error))callback
 {
-    NSString* revision = [database.metadata objectForKey:@"revision"];
+    NSString* revision = [database.metadata objectForKey:METADATA_REVISION_KEY];
     
-    [self.dropbox uploadFileToPath:[self pathForDatabase:database] withData:data withRevision:revision callback:callback];
+    [self.dropbox uploadFileToPath:[self pathForDatabase:database] withData:data withRevision:revision callback:^(DBMetadata* metadata, NSError* error)
+    {
+        if (error != nil)
+        {
+            callback(error);
+            return;
+        }
+        
+        [database.metadata setObject:metadata.rev forKey:METADATA_REVISION_KEY];
+        
+        callback(nil);
+    }];
 }
 
 - (void)deleteDatabase:(Database*)database callback:(void (^) (NSError* error))callback;

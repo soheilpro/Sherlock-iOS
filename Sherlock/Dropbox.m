@@ -83,16 +83,16 @@
     [self.client uploadFile:[path lastPathComponent] toPath:[path stringByDeletingLastPathComponent] withParentRev:revision fromPath:tempFile];
 }
 
-- (void)restClient:(DBRestClient*)client uploadedFile:(NSString*)destPath from:(NSString*)srcPath
+- (void)restClient:(DBRestClient*)client uploadedFile:(NSString*)destPath from:(NSString*)srcPath metadata:(DBMetadata*)metadata
 {
     [[NSFileManager defaultManager] removeItemAtPath:srcPath error:nil];
     
-    self.uploadFileCallback(nil);
+    self.uploadFileCallback(metadata, nil);
 }
 
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error
 {
-    self.uploadFileCallback(error);
+    self.uploadFileCallback(nil, error);
 }
 
 - (void)deleteFileAtPath:(NSString*)path callback:(DeleteFileCallback)callback;

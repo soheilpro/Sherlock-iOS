@@ -11,7 +11,7 @@
 
 typedef void (^LoadMetadataCallback)(DBMetadata* metadata, NSError* error);
 typedef void (^LoadFileCallback)(NSData* data, DBMetadata* metadata, NSError* error);
-typedef void (^UploadFileCallback)(NSError* error);
+typedef void (^UploadFileCallback)(DBMetadata* metadata, NSError* error);
 typedef void (^DeleteFileCallback)(NSError* error);
 
 @interface Dropbox : NSObject<DBRestClientDelegate>
