@@ -54,7 +54,7 @@
 {
     self.loadFileCallback = callback;
 
-    NSString* tempFile = [NSTemporaryDirectory() stringByAppendingPathExtension:[[NSProcessInfo processInfo] globallyUniqueString]];
+    NSString* tempFile = [NSTemporaryDirectory() stringByAppendingPathComponent:[[NSProcessInfo processInfo] globallyUniqueString]];
     
     [self.client loadFile:path intoPath:tempFile];
 }
@@ -77,7 +77,7 @@
 {
     self.uploadFileCallback = callback;
     
-    NSString* tempFile = [NSTemporaryDirectory() stringByAppendingPathExtension:[[NSProcessInfo processInfo] globallyUniqueString]];
+    NSString* tempFile = [NSTemporaryDirectory() stringByAppendingPathComponent:[[NSProcessInfo processInfo] globallyUniqueString]];
     [data writeToFile:tempFile atomically:YES];
 
     [self.client uploadFile:[path lastPathComponent] toPath:[path stringByDeletingLastPathComponent] withParentRev:revision fromPath:tempFile];
