@@ -14,7 +14,6 @@
 @interface LocalStorage ()
 
 @property (nonatomic, strong) NSArray* databases;
-@property (nonatomic, strong) NSMutableArray* observerBlocks;
 
 @end
 
@@ -27,7 +26,6 @@
     if (self)
     {
         self.databases = @[];
-        self.observerBlocks = [NSMutableArray array];
     }
     
     return self;
@@ -143,8 +141,6 @@
         dispatch_async(dispatch_get_main_queue(), ^
         {
             callback(nil);
-            
-            [self notifyObservers];
         });
     });
 }
@@ -156,17 +152,6 @@
     NSString* file = [[localDirectory stringByAppendingPathComponent:database.name] stringByAppendingPathExtension:DB_FILE_EXTENSION];
     
     return file;
-}
-
-- (void)addObserverBlock:(observerBlock)block
-{
-    [self.observerBlocks addObject:block];
-}
-
-- (void)notifyObservers
-{
-    for (observerBlock block in self.observerBlocks)
-        block();
 }
 
 @end

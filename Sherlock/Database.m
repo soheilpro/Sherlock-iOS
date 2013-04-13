@@ -75,14 +75,14 @@
     return item;
 }
 
-- (void)save
+- (void)saveWithCallback:(void(^)(NSError* error))callback;
 {
     NSData* data = [self data];
     
     if (self.password != nil)
         data = [TripleDES transformData:data operation:kCCEncrypt withPassword:self.password];
     
-    [self.storage saveDatabase:self withData:data callback:^(NSError* error) {}];
+    [self.storage saveDatabase:self withData:data callback:callback];
 }
 
 - (NSData*)data

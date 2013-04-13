@@ -14,6 +14,8 @@
 #import "EditItemViewController.h"
 #import "Database+Display.h"
 #import "NewPasswordViewController.h"
+#import "UIViewController+ActivityIndicator.h"
+#import "UIViewController+Alert.h"
 
 #define SECTION_FOLDERS 0
 #define SECTION_ITEMS 1
@@ -184,6 +186,8 @@
 
 - (void)didUpdateFolder:(Folder*)folder
 {
+    id activityIndicator = [self displayActivityIndicatorWithMessage:@"Saving database"];
+
     BOOL isNewFolder = NO;
     
     if (folder.parent == nil)
@@ -196,8 +200,15 @@
         [self.folder.folders addObject:folder];
     }
     
-    [self.folder.folders sortUsingComparator:[Folder sortingComparator]];   
-    [self.folder.database save];
+    [self.folder.folders sortUsingComparator:[Folder sortingComparator]];
+    
+    [self.folder.database saveWithCallback:^(NSError* error)
+    {
+        [self hideActivityIndicator:activityIndicator];
+        
+        if (error != nil)
+            [self displayErrorMessage:@"Cannot save database"];
+    }];
     
     [self filterFoldersAndItemsUsingText:self.searchBar.text];
     
@@ -217,6 +228,8 @@
 
 - (void)didUpdateItem:(Item*)item
 {
+    id activityIndicator = [self displayActivityIndicatorWithMessage:@"Saving database"];
+
     if (item.parent == nil)
     {
         item.parent = self.folder;
@@ -226,7 +239,14 @@
     }
     
     [self.folder.items sortUsingComparator:[Item sortingComparator]];
-    [self.folder.database save];
+    
+    [self.folder.database saveWithCallback:^(NSError* error)
+    {
+        [self hideActivityIndicator:activityIndicator];
+        
+        if (error != nil)
+            [self displayErrorMessage:@"Cannot save database"];
+    }];
 
     [self filterFoldersAndItemsUsingText:self.searchBar.text];
 
@@ -238,9 +258,17 @@
 
 - (void)didChooseNewPassword:(NSString*)password
 {
+    id activityIndicator = [self displayActivityIndicatorWithMessage:@"Saving database"];
+ 
     self.folder.database.password = password;
-    
-    [self.folder.database save];
+
+    [self.folder.database saveWithCallback:^(NSError* error)
+    {
+        [self hideActivityIndicator:activityIndicator];
+        
+        if (error != nil)
+            [self displayErrorMessage:@"Cannot save database"];
+    }];
     
     [self setEditing:NO];
 }
@@ -384,6 +412,8 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
+        id activityIndicator = [self displayActivityIndicatorWithMessage:@"Saving database"];
+
         if (indexPath.section == SECTION_FOLDERS)
         {
             Folder* folder = [self.folders objectAtIndex:indexPath.row];
@@ -401,7 +431,13 @@
         
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         
-        [self.folder.database save];
+        [self.folder.database saveWithCallback:^(NSError* error)
+        {
+            [self hideActivityIndicator:activityIndicator];
+            
+            if (error != nil)
+                [self displayErrorMessage:@"Cannot save database"];
+        }];
     }
 }
 

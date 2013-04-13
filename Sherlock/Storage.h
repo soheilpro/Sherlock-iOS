@@ -9,8 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "Database.h"
 
-typedef void (^observerBlock)();
-
 @protocol Storage<NSObject>
 
 @required
@@ -21,6 +19,5 @@ typedef void (^observerBlock)();
 - (void)readDatabase:(Database*)database callback:(void (^) (NSData* data, NSError* error))callback;
 - (void)saveDatabase:(Database*)database withData:(NSData*)data callback:(void (^) (NSError* error))callback;
 - (void)deleteDatabase:(Database*)database callback:(void (^) (NSError* error))callback;
-- (void)addObserverBlock:(observerBlock)block;
 
 @end

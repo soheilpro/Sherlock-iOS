@@ -15,6 +15,8 @@
 #import "Database.h"
 #import "AppDelegate.h"
 #import "Database+Display.h"
+#import "UIViewController+ActivityIndicator.h"
+#import "UIViewController+Alert.h"
 
 @interface DatabasesViewController ()
 
@@ -37,13 +39,6 @@
         [[DropboxStorage alloc] init]
     ];
     
-    for (id<Storage> storage in self.storages)
-    {
-        [storage addObserverBlock:^{
-            [self refreshDatabases];
-        }];
-    }
-
     [self refreshDatabases];
 }
 
@@ -68,7 +63,7 @@
 
 - (void)refreshDatabases
 {
-    MBProgressHUD* hud = [self showHUDWithText:@"Loading list of databases"];
+    id activityIndicator = [self displayActivityIndicatorWithMessage:@"Loading list of databases"];
     __block NSInteger fetchedStorageDatabases = 0;
     
     for (id<Storage> storage in self.storages)
@@ -80,7 +75,7 @@
             fetchedStorageDatabases++;
             
             if (fetchedStorageDatabases == self.storages.count)
-                [hud hide:YES];
+                [self hideActivityIndicator:activityIndicator];
         }];
     }
 }
@@ -117,25 +112,20 @@
 
 - (void)didCreateDatabase:(Database*)database
 {
-    [database save];
+    id activityIndicator = [self displayActivityIndicatorWithMessage:@"Creating database"];
+    
+    [database saveWithCallback:^(NSError* error)
+    {
+        [self hideActivityIndicator:activityIndicator];
+        
+        if (error != nil)
+            [self displayErrorMessage:@"Cannot delete database"];
+        else
+            [self refreshDatabases];
+
+    }];
     
     [self setEditing:NO];
-}
-
-- (MBProgressHUD*)showHUDWithText:(NSString*)text
-{
-    MBProgressHUD* hud = [[MBProgressHUD alloc] initWithView:self.view];
-    hud.yOffset = -40;
-    hud.mode = MBProgressHUDModeIndeterminate;
-    hud.labelText = text;
-    hud.labelFont = [Theme defaultTheme].hudFont;
-    hud.removeFromSuperViewOnHide = YES;
-    hud.userInteractionEnabled = NO;
-    
-    [self.view addSubview:hud];
-    [hud show:YES];
-    
-    return hud;
 }
 
 - (IBAction)openSettings:(id)sender
@@ -179,18 +169,24 @@
 
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    MBProgressHUD* hud = [self showHUDWithText:@"Loading database"];
+    id activityIndicator = [self displayActivityIndicatorWithMessage:@"Loading database"];
 
     id<Storage> storage = [self.storages objectAtIndex:indexPath.section];
     Database* database = [[storage databases] objectAtIndex:indexPath.row];
 
     [storage readDatabase:database callback:^(NSData* data, NSError* error)
     {
+        [self hideActivityIndicator:activityIndicator];
+        
+        if (error != nil)
+        {
+            [self displayErrorMessage:@"Cannot load database"];
+            return;
+        }
+        
         self.selectedDatabase = database;
         self.selectedDatabaseData = data;
         
-        [hud hide:YES];
-
         BOOL didOpenDatabase = [self.selectedDatabase openWithData:self.selectedDatabaseData andPassword:nil];
         
         if (didOpenDatabase)
@@ -216,7 +212,17 @@
         id<Storage> storage = [self.storages objectAtIndex:indexPath.section];
         Database* database = [[storage databases] objectAtIndex:indexPath.row];
         
-        [storage deleteDatabase:database callback:^(NSError* error) {}];
+        id activityIndicator = [self displayActivityIndicatorWithMessage:@"Deleting database"];
+        
+        [storage deleteDatabase:database callback:^(NSError* error)
+        {
+            [self hideActivityIndicator:activityIndicator];
+            
+            if (error != nil)
+                [self displayErrorMessage:@"Cannot delete database"];
+            else
+                [self refreshDatabases];
+        }];
     }
 }
 

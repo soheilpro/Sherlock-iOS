@@ -21,6 +21,6 @@
 @property (nonatomic, strong) Folder* root;
 
 - (BOOL)openWithData:(NSData*)data andPassword:(NSString*)password;
-- (void)save;
+- (void)saveWithCallback:(void(^)(NSError* error))callback;
 
 @end

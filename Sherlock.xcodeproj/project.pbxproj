@@ -48,6 +48,8 @@
 		5B8942D2170773EC00A618C7 /* PasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8942D1170773EC00A618C7 /* PasswordViewController.m */; };
 		5B8942D51707837800A618C7 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8942D41707837800A618C7 /* SettingsViewController.m */; };
 		5B8942DF17079A3F00A618C7 /* ActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8942DE17079A3F00A618C7 /* ActionSheet.m */; };
+		5B9D48C117195AB80010F064 /* UIViewController+ActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B9D48BE17195AB80010F064 /* UIViewController+ActivityIndicator.m */; };
+		5B9D48C217195AB80010F064 /* UIViewController+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B9D48C017195AB80010F064 /* UIViewController+Alert.m */; };
 		5BBDB012170B8A8900439235 /* Database+Display.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBDB011170B8A8900439235 /* Database+Display.m */; };
 		5BBDB016170B8B6100439235 /* UIView+Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBDB015170B8B6100439235 /* UIView+Animation.m */; };
 		5BBDB01A170B8C6800439235 /* TripleDES.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBDB019170B8C6800439235 /* TripleDES.m */; };
@@ -138,6 +140,10 @@
 		5B8942D41707837800A618C7 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		5B8942DD17079A3F00A618C7 /* ActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheet.h; sourceTree = "<group>"; };
 		5B8942DE17079A3F00A618C7 /* ActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionSheet.m; sourceTree = "<group>"; };
+		5B9D48BD17195AB80010F064 /* UIViewController+ActivityIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ActivityIndicator.h"; sourceTree = "<group>"; };
+		5B9D48BE17195AB80010F064 /* UIViewController+ActivityIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ActivityIndicator.m"; sourceTree = "<group>"; };
+		5B9D48BF17195AB80010F064 /* UIViewController+Alert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Alert.h"; sourceTree = "<group>"; };
+		5B9D48C017195AB80010F064 /* UIViewController+Alert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Alert.m"; sourceTree = "<group>"; };
 		5BBDB010170B8A8900439235 /* Database+Display.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Database+Display.h"; sourceTree = "<group>"; };
 		5BBDB011170B8A8900439235 /* Database+Display.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Database+Display.m"; sourceTree = "<group>"; };
 		5BBDB014170B8B6100439235 /* UIView+Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Animation.h"; sourceTree = "<group>"; };
@@ -403,6 +409,10 @@
 				5BBDB011170B8A8900439235 /* Database+Display.m */,
 				5BBDB014170B8B6100439235 /* UIView+Animation.h */,
 				5BBDB015170B8B6100439235 /* UIView+Animation.m */,
+				5B9D48BD17195AB80010F064 /* UIViewController+ActivityIndicator.h */,
+				5B9D48BE17195AB80010F064 /* UIViewController+ActivityIndicator.m */,
+				5B9D48BF17195AB80010F064 /* UIViewController+Alert.h */,
+				5B9D48C017195AB80010F064 /* UIViewController+Alert.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -552,6 +562,8 @@
 				5BBDB01A170B8C6800439235 /* TripleDES.m in Sources */,
 				5BBDB01D170B95C100439235 /* NewPasswordViewController.m in Sources */,
 				5B4F2577170EE67400609904 /* Dropbox.m in Sources */,
+				5B9D48C117195AB80010F064 /* UIViewController+ActivityIndicator.m in Sources */,
+				5B9D48C217195AB80010F064 /* UIViewController+Alert.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

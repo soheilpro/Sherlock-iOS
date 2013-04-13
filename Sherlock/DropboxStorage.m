@@ -56,6 +56,12 @@
 {
     [self fetchRemoteDatabasesWithCallback:^(NSArray* databases, NSError* error)
     {
+        if (error != nil)
+        {
+            callback(nil, error);
+            return;
+        }
+        
         NSMutableArray* mutableDatabases = [databases mutableCopy];
         
         [mutableDatabases sortUsingComparator:^NSComparisonResult(id obj1, id obj2)
@@ -78,6 +84,12 @@
 
     [self addDropboxDatabasesInPath:@"/" relativeTo:@"" toArray:databases withCallback:^(NSArray* database, NSError* error)
     {
+        if (error != nil)
+        {
+            callback(nil, error);
+            return;
+        }
+
         callback(database, error);
     }];
 }
@@ -117,6 +129,12 @@
 {
     [self.dropbox loadFileAtPath:[self pathForDatabase:database] callback:^(NSData* data, DBMetadata* metadata, NSError* error)
     {
+        if (error != nil)
+        {
+            callback(nil, error);
+            return;
+        }
+
         [database.metadata setObject:metadata.rev forKey:@"revision"];
         
         callback(data, error);
@@ -125,29 +143,19 @@
 
 - (void)saveDatabase:(Database*)database withData:(NSData*)data callback:(void (^) (NSError* error))callback
 {
-    [self saveRemoteDatabase:database withData:data callback:^(NSError* error) {
-        
-        callback(error);
-        
-        [self notifyObservers];
-    }];
+    [self saveRemoteDatabase:database withData:data callback:callback];
 }
 
 - (void)saveRemoteDatabase:(Database*)database withData:(NSData*)data callback:(void (^) (NSError* error))callback
 {
     NSString* revision = [database.metadata objectForKey:@"revision"];
     
-    [self.dropbox uploadFileToPath:[self pathForDatabase:database] withData:data withRevision:revision callback:^(NSError* error)
-    {
-        callback(error);
-    }];
+    [self.dropbox uploadFileToPath:[self pathForDatabase:database] withData:data withRevision:revision callback:callback];
 }
 
 - (void)deleteDatabase:(Database*)database callback:(void (^) (NSError* error))callback;
 {
-    [self deleteRemoteDatabase:database callback:^(NSError* error) {
-        [self notifyObservers];
-    }];
+    [self deleteRemoteDatabase:database callback:callback];
 }
 
 - (void)deleteRemoteDatabase:(Database*)database callback:(void (^) (NSError* error))callback
@@ -160,17 +168,6 @@
     NSString* documentDirectory = @"/";
     
     return [documentDirectory stringByAppendingPathComponent:[database.name stringByAppendingPathExtension:DB_FILE_EXTENSION]];
-}
-
-- (void)addObserverBlock:(observerBlock)block
-{
-    [self.observerBlocks addObject:block];
-}
-
-- (void)notifyObservers
-{
-    for (observerBlock block in self.observerBlocks)
-        block();
 }
 
 @end
