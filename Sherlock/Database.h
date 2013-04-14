@@ -26,4 +26,6 @@
 - (BOOL)openWithData:(NSData*)data andPassword:(NSString*)password;
 - (void)saveWithCallback:(void(^)(NSError* error))callback;
 
++ (NSArray*)sortDatabases:(NSArray*)databases;
+
 @end

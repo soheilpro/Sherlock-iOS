@@ -65,15 +65,7 @@
     
     [self addDatabasesInPath:localDirectory relativeTo:@"" toArray:databases];
     
-    [databases sortUsingComparator:^NSComparisonResult(id obj1, id obj2)
-    {
-        Database* database1 = obj1;
-        Database* database2 = obj2;
-    
-        return [database1.name compare:database2.name options:NSCaseInsensitiveSearch];
-    }];
-    
-    return databases;
+    return [Database sortDatabases:databases];
 }
 
 - (void)addDatabasesInPath:(NSString*)path relativeTo:(NSString*)relativePath toArray:(NSMutableArray*)databases

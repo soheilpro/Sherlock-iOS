@@ -130,4 +130,24 @@
     return element;
 }
 
++ (NSArray*)sortDatabases:(NSArray*)databases
+{
+    return [databases sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2)
+    {
+        Database* database1 = obj1;
+        Database* database2 = obj2;
+        
+        if ([database1.name rangeOfString:@"/"].location != NSNotFound && [database2.name rangeOfString:@"/"].location != NSNotFound)
+            return [database1.name compare:database2.name options:NSCaseInsensitiveSearch];
+
+        if ([database1.name rangeOfString:@"/"].location != NSNotFound && [database2.name rangeOfString:@"/"].location == NSNotFound)
+            return -1;
+
+        if ([database1.name rangeOfString:@"/"].location == NSNotFound && [database2.name rangeOfString:@"/"].location != NSNotFound)
+            return 1;
+
+        return [database1.name compare:database2.name options:NSCaseInsensitiveSearch];
+    }];
+}
+
 @end

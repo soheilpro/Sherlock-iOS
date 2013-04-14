@@ -74,7 +74,7 @@
                 for (Database* database in databases)
                     database.isReadOnly = YES;
 
-                self.databases = [self sortDatabases:databases];
+                self.databases = databases;
                 
                 callback(self.databases, nil);
             }];
@@ -82,7 +82,7 @@
             return;
         }
         
-        self.databases = [self sortDatabases:databases];
+        self.databases = databases;
         
         callback(self.databases, nil);
     }];
@@ -100,7 +100,7 @@
             return;
         }
 
-        callback(database, error);
+        callback([Database sortDatabases:database], nil);
     }];
 }
 
@@ -147,17 +147,6 @@
 
         if (remainingChildrenToReturn == 0)
             callback(databases, nil);
-    }];
-}
-
-- (NSArray*)sortDatabases:(NSArray*)databases
-{
-    return [databases sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2)
-    {
-        Database* database1 = obj1;
-        Database* database2 = obj2;
-        
-        return [database1.name compare:database2.name options:NSCaseInsensitiveSearch];
     }];
 }
 
