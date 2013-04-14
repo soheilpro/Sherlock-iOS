@@ -12,7 +12,6 @@
 #import "LocalStorage.h"
 
 #define DB_ROOT_DIRECTORY @"/Apps/Sherlock/"
-#define DB_FILE_EXTENSION @"sdb"
 #define METADATA_REVISION_KEY @"revision"
 
 @interface DropboxStorage ()

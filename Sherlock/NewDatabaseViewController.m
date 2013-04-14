@@ -53,7 +53,7 @@
 -(void)done:(id)sender
 {
     Database* database = [[Database alloc] init];
-    database.name = self.nameTextField.text;
+    database.name = [self.nameTextField.text stringByAppendingPathExtension:DB_FILE_EXTENSION];
     database.storage = [self.storages objectAtIndex:self.selectedStorageIndex];
 
     [self.delegate didCreateDatabase:database];

@@ -8,8 +8,6 @@
 
 #import "LocalStorage.h"
 
-#define DB_FILE_EXTENSION @"sdb"
-
 @interface LocalStorage ()
 
 @property (nonatomic, strong) NSArray* databases;

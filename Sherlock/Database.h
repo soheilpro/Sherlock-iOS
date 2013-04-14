@@ -12,6 +12,8 @@
 #import "Item.h"
 #import "Storage.h"
 
+#define DB_FILE_EXTENSION @"sdb"
+
 @interface Database : NSObject
 
 @property (nonatomic, strong) id storage;
