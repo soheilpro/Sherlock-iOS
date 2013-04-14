@@ -206,6 +206,14 @@
     }];
 }
 
+- (BOOL)tableView:(UITableView*)tableView canEditRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    id<Storage> storage = [self.storages objectAtIndex:indexPath.section];
+    Database* database = [[storage databases] objectAtIndex:indexPath.row];
+    
+    return !database.isReadOnly;
+}
+
 - (void)tableView:(UITableView*)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath*)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
