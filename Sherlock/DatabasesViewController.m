@@ -119,7 +119,7 @@
         [self hideActivityIndicator:activityIndicator];
         
         if (error != nil)
-            [self displayErrorMessage:@"Cannot delete database"];
+            [self displayErrorMessage:@"Cannot create database"];
         else
             [self refreshDatabases];
 
