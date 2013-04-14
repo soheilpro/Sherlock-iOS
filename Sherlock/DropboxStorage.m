@@ -124,7 +124,7 @@
             
             Database* database = [[Database alloc] init];
             database.storage = self;
-            database.name = [[childMetadata.path stringByReplacingCharactersInRange:NSMakeRange(0, [basePath length]) withString:@""] stringByDeletingPathExtension];
+            database.name = [childMetadata.path stringByReplacingCharactersInRange:NSMakeRange(0, [basePath length]) withString:@""];
             
             [databases addObject:database];
         }
@@ -190,7 +190,7 @@
 
 - (NSString*)pathForDatabase:(Database*)database
 {
-    return [DB_ROOT_DIRECTORY stringByAppendingPathComponent:[database.name stringByAppendingPathExtension:DB_FILE_EXTENSION]];
+    return [DB_ROOT_DIRECTORY stringByAppendingPathComponent:database.name];
 }
 
 @end

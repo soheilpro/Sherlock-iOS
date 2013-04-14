@@ -12,7 +12,7 @@
 
 - (NSString*)displayName
 {
-    return [self.name stringByReplacingOccurrencesOfString:@"/" withString:@" / "];
+    return [[self.name stringByReplacingOccurrencesOfString:@"/" withString:@" / "] stringByDeletingPathExtension];
 }
 
 @end

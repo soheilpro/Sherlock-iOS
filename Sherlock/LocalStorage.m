@@ -92,7 +92,7 @@
         {
             Database* database = [[Database alloc] init];
             database.storage = self;
-            database.name = [[relativePath stringByAppendingPathComponent:file] stringByDeletingPathExtension];
+            database.name = [relativePath stringByAppendingPathComponent:file];
             
             [databases addObject:database];
         }
@@ -149,7 +149,7 @@
 {
     NSString* documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString* localDirectory = [documentDirectory stringByAppendingPathComponent:DB_ROOT_DIRECTORY];
-    NSString* file = [[localDirectory stringByAppendingPathComponent:database.name] stringByAppendingPathExtension:DB_FILE_EXTENSION];
+    NSString* file = [localDirectory stringByAppendingPathComponent:database.name];
     
     return file;
 }
