@@ -17,6 +17,7 @@
 #import "Database+Display.h"
 #import "UIViewController+ActivityIndicator.h"
 #import "UIViewController+Alert.h"
+#import "ActionSheet.h"
 
 @interface DatabasesViewController ()
 
@@ -218,20 +219,29 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
-        id<Storage> storage = [self.storages objectAtIndex:indexPath.section];
-        Database* database = [[storage databases] objectAtIndex:indexPath.row];
-        
-        id activityIndicator = [self displayActivityIndicatorWithMessage:@"Deleting database"];
-        
-        [storage deleteDatabase:database callback:^(NSError* error)
+        ActionSheet* actionSheet = [ActionSheet actionSheet];
+
+        [actionSheet addDestructiveButtonWithTitle:@"Delete" selectBlock:^
         {
-            [self hideActivityIndicator:activityIndicator];
+            id<Storage> storage = [self.storages objectAtIndex:indexPath.section];
+            Database* database = [[storage databases] objectAtIndex:indexPath.row];
             
-            if (error != nil)
-                [self displayErrorMessage:@"Cannot delete database"];
-            else
-                [self refreshDatabases];
+            id activityIndicator = [self displayActivityIndicatorWithMessage:@"Deleting database"];
+            
+            [storage deleteDatabase:database callback:^(NSError* error)
+            {
+                [self hideActivityIndicator:activityIndicator];
+                
+                if (error != nil)
+                    [self displayErrorMessage:@"Cannot delete database"];
+                else
+                    [self refreshDatabases];
+            }];
         }];
+        
+        [actionSheet addCancelButtonWithTitle:@"Cancel"];
+        
+        [actionSheet presentInView:self.view];
     }
 }
 
