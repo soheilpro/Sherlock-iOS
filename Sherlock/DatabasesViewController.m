@@ -35,7 +35,7 @@
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
     self.storages = @[
-        [[LocalStorage alloc] init],
+        [[LocalStorage alloc] initWithRootDirectory:@"Local"],
         [[DropboxStorage alloc] init]
     ];
     

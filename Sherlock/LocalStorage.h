@@ -11,4 +11,8 @@
 
 @interface LocalStorage : NSObject<Storage>
 
+@property (nonatomic, strong) NSString* rootDirectory;
+
+- (id)initWithRootDirectory:(NSString*)rootDirectory;
+
 @end

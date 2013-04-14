@@ -9,9 +9,9 @@
 #import <DropboxSDK/DropboxSDK.h>
 #import "DropboxStorage.h"
 #import "Dropbox.h"
+#import "LocalStorage.h"
 
 #define DB_ROOT_DIRECTORY @"/Apps/Sherlock/"
-#define CACHE_ROOT_DIRECTORY @"Dropbox"
 #define DB_FILE_EXTENSION @"sdb"
 #define METADATA_REVISION_KEY @"revision"
 
@@ -19,6 +19,7 @@
 
 @property (nonatomic, strong) NSArray* databases;
 @property (nonatomic, strong) Dropbox* dropbox;
+@property (nonatomic, strong) LocalStorage* cache;
 @property (nonatomic, strong) NSMutableArray* observerBlocks;
 
 @end
@@ -33,6 +34,7 @@
     {
         self.databases = @[];
         self.dropbox = [[Dropbox alloc] initWithSession:[DBSession sharedSession]];
+        self.cache = [[LocalStorage alloc] initWithRootDirectory:@"Dropbox"];
         self.observerBlocks = [NSMutableArray array];
     }
     
@@ -60,23 +62,30 @@
     {
         if (error != nil)
         {
-            callback(nil, error);
+            NSError* remoteError = error;
+            
+            [self.cache fetchDatabasesWithCallback:^(NSArray* databases, NSError* error)
+            {
+                if (error != nil)
+                {
+                    callback(nil, remoteError);
+                    return;
+                }
+                
+                for (Database* database in databases)
+                    database.isReadOnly = YES;
+
+                self.databases = [self sortDatabases:databases];
+                
+                callback(self.databases, nil);
+            }];
+            
             return;
         }
         
-        NSMutableArray* mutableDatabases = [databases mutableCopy];
+        self.databases = [self sortDatabases:databases];
         
-        [mutableDatabases sortUsingComparator:^NSComparisonResult(id obj1, id obj2)
-         {
-             Database* database1 = obj1;
-             Database* database2 = obj2;
-             
-             return [database1.name compare:database2.name options:NSCaseInsensitiveSearch];
-         }];
-        
-        self.databases = mutableDatabases;
-        
-        callback(mutableDatabases, nil);
+        callback(self.databases, nil);
     }];
 }
 
@@ -100,20 +109,28 @@
 {
     [self.dropbox loadMetadataForPath:path callback:^(DBMetadata* metadata, NSError* error)
     {
-        __block NSInteger remainingCallbacksToReturn = 0;
+        if (error != nil)
+        {
+            callback(nil, error);
+            return;
+        }
+        
+        __block NSInteger remainingChildrenToReturn = 0;
+        __block NSError* lastError = nil;
         
         for (DBMetadata* childMetadata in metadata.contents)
         {
             if (childMetadata.isDirectory)
             {
-                remainingCallbacksToReturn++;
+                remainingChildrenToReturn++;
                 
                 [self addDropboxDatabasesInPath:childMetadata.path basePath:basePath toArray:databases withCallback:^(NSArray* database, NSError* error)
                 {
-                    remainingCallbacksToReturn--;
+                    remainingChildrenToReturn--;
+                    lastError = error;
                     
-                    if (remainingCallbacksToReturn == 0)
-                        callback(database, nil);
+                    if (remainingChildrenToReturn == 0)
+                        callback(database, lastError);
                 }];
                 
                 continue;
@@ -129,14 +146,42 @@
             [databases addObject:database];
         }
 
-        if (remainingCallbacksToReturn == 0)
+        if (remainingChildrenToReturn == 0)
             callback(databases, nil);
+    }];
+}
+
+- (NSArray*)sortDatabases:(NSArray*)databases
+{
+    return [databases sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2)
+    {
+        Database* database1 = obj1;
+        Database* database2 = obj2;
+        
+        return [database1.name compare:database2.name options:NSCaseInsensitiveSearch];
     }];
 }
 
 - (void)readDatabase:(Database*)database callback:(void (^) (NSData* data, NSError* error))callback;
 {
-    [self readRemoteDatabase:database callback:callback];
+    if (database.isReadOnly)
+    {
+        [self.cache readDatabase:database callback:callback];
+        return;
+    }
+
+    [self readRemoteDatabase:database callback:^(NSData* data, NSError* error)
+    {
+        if (error != nil)
+        {
+            callback(nil, error);
+            return;
+        }
+        
+        [self.cache saveDatabase:database withData:data callback:^(NSError* error) {}];
+        
+        callback(data, nil);
+    }];
 }
 
 - (void)readRemoteDatabase:(Database*)database callback:(void (^) (NSData* data, NSError* error))callback;
@@ -157,7 +202,21 @@
 
 - (void)saveDatabase:(Database*)database withData:(NSData*)data callback:(void (^) (NSError* error))callback
 {
-    [self saveRemoteDatabase:database withData:data callback:callback];
+    if (database.isReadOnly)
+        @throw [[NSException alloc] initWithName:@"NotSupported" reason:@"Not Supported" userInfo:nil];
+    
+    [self saveRemoteDatabase:database withData:data callback:^(NSError* error)
+    {
+        if (error != nil)
+        {
+            callback(error);
+            return;
+        }
+        
+        [self.cache saveDatabase:database withData:data callback:^(NSError* error) {}];
+
+        callback(nil);
+    }];
 }
 
 - (void)saveRemoteDatabase:(Database*)database withData:(NSData*)data callback:(void (^) (NSError* error))callback
@@ -180,7 +239,21 @@
 
 - (void)deleteDatabase:(Database*)database callback:(void (^) (NSError* error))callback;
 {
-    [self deleteRemoteDatabase:database callback:callback];
+    if (database.isReadOnly)
+        @throw [[NSException alloc] initWithName:@"NotSupported" reason:@"Not Supported" userInfo:nil];
+
+    [self deleteRemoteDatabase:database callback:^(NSError* error)
+    {
+        if (error != nil)
+        {
+            callback(error);
+            return;
+        }
+        
+        [self.cache deleteDatabase:database callback:^(NSError* error) {}];
+
+        callback(nil);
+    }];
 }
 
 - (void)deleteRemoteDatabase:(Database*)database callback:(void (^) (NSError* error))callback
