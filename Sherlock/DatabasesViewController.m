@@ -163,6 +163,7 @@
     
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"DatabaseCell"];
     cell.textLabel.text = [database displayName];
+    cell.detailTextLabel.text = database.isReadOnly ? @"readonly" : nil;
     
     return cell;
 }

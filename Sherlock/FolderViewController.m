@@ -38,6 +38,7 @@
     self.folders = self.folder.folders;
     self.items = self.folder.items;
     
+    self.navigationItem.rightBarButtonItem = !self.folder.database.isReadOnly ? self.editButtonItem : nil;
     self.navigationItem.title = self.folder.parent != nil ? self.folder.name : [self.folder.database displayName];
     
     self.searchBar.text = nil;
@@ -62,8 +63,6 @@
 {
     [super viewDidLoad];
     
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
     if (self.folder.parent == nil)
     {
         self.unloadBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Unload" style:UIBarButtonItemStylePlain target:self action:@selector(unloadDatabase)];
@@ -74,7 +73,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
+    
     if (self.navigationItem.leftBarButtonItem == self.unloadBarButtonItem)
         self.navigationItem.leftBarButtonItem.enabled = NO;
 }
@@ -406,6 +405,11 @@
             [self presentModalViewController:editItemViewController animated:YES];
         }
     }
+}
+
+-(BOOL)tableView:(UITableView*)tableView canEditRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    return !self.folder.database.isReadOnly;
 }
 
 - (void)tableView:(UITableView*)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath*)indexPath
