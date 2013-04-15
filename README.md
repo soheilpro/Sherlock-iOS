@@ -11,9 +11,12 @@ This is software and software has bugs. Please, please and PLEASE backup your da
 + iOS 5.0
 
 ## Version History
-+ **1.0**
++ **1.1**
+	+ Switched from Dropbox's Sync API to Core API
+	+ Some minor enhancements
 
-	+ Initial release.
++ **1.0**
+	+ Initial release
 
 ## Roadmap
 + Adding support for iPad
