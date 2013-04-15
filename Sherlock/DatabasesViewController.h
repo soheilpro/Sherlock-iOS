@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "PasswordViewController.h"
 #import "NewDatabaseViewController.h"
+#import "PullRefreshTableViewController.h"
 
-@interface DatabasesViewController : UITableViewController<PasswordDelegate, NewDatabaseDelegate>
+@interface DatabasesViewController : PullRefreshTableViewController<PasswordDelegate, NewDatabaseDelegate>
 
 - (IBAction)openSettings:(id)sender;
 
