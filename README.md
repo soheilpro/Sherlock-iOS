@@ -8,7 +8,7 @@ This is software and software has bugs. Please, please and PLEASE backup your da
 ![Screenshots](/Screenshots.png)
 
 ## Requirements
-+ iOS 5.1
++ iOS 5.0
 
 ## Version History
 + **1.0**
