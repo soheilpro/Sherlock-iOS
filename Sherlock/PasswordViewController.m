@@ -50,7 +50,10 @@
     BOOL isPasswordCorrect = [self.delegate didEnterPassword:self.passwordTextField.text inViewController:self];
 
     if (!isPasswordCorrect)
+    {
+        self.passwordTextField.text = nil;
         [self.passwordTextField shake];
+    }
 }
 
 - (void)cancel:(id)sender
