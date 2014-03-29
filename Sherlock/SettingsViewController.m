@@ -23,11 +23,13 @@
 
 #pragma mark - UIViewController
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidLoad
 {
-    [super viewWillAppear:animated];
-    
+    [super viewDidLoad];
+
     [self refreshDropboxStatus];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 #pragma mark - Actions
@@ -51,6 +53,13 @@
     [actionSheet addCancelButtonWithTitle:@"Cancel"];
     
     [actionSheet presentInView:self.view];
+}
+
+#pragma mark - Notifications
+
+- (void)applicationDidBecomeActive:(NSNotification*)notification
+{
+    [self refreshDropboxStatus];
 }
 
 #pragma mark - 
