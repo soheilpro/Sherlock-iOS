@@ -29,9 +29,7 @@
     [super viewDidLoad];
 
     self.nameTextField.text = self.item.name;
-    self.nameTextField.delegate = self;
     self.valueTextView.text = self.item.value;
-    self.valueTextView.delegate = self;
     [self.isSecretSwitch setOn:self.item.isSecret];
 
     // Make sure valueTextView.contentSize is properly set

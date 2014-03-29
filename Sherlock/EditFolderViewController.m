@@ -25,7 +25,6 @@
     [super viewDidLoad];
     
     self.nameTextField.text = self.folder.name;
-    self.nameTextField.delegate = self;
     
     [self toggleCreateButton:nil];
     

@@ -27,7 +27,6 @@
     [super viewDidLoad];
     
     self.title = [self.database displayName];
-    self.passwordTextField.delegate = self;
     
     [self toggleOpenButton:nil];
 

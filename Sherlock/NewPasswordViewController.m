@@ -22,15 +22,6 @@
 
 #pragma mark - UIViewController
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-
-    self.currentPasswordTextField.delegate = self;
-    self.passwordTextField.delegate = self;
-    self.passwordConfirmTextField.delegate = self;
-}
-
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];

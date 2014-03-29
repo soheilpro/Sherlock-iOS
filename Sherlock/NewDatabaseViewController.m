@@ -26,8 +26,6 @@
 {
     [super viewDidLoad];
     
-    self.nameTextField.delegate = self;
-
     [self toggleCreateButton:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toggleCreateButton:) name:UITextFieldTextDidChangeNotification object:self.nameTextField];
