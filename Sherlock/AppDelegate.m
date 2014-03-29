@@ -22,29 +22,10 @@ NSString* const NSURLIsExcludedFromBackupKey = @"NSURLIsExcludedFromBackupKey";
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
-    UIUserInterfaceIdiom idiom = [[UIDevice currentDevice] userInterfaceIdiom];
+    FolderViewController* mainViewController = [((UINavigationController*)self.window.rootViewController).viewControllers objectAtIndex:0];
+    mainViewController.showCategories = YES;
+    mainViewController.showItems = YES;
 
-    if (idiom == UIUserInterfaceIdiomPhone)
-    {
-        FolderViewController* mainViewController = [((UINavigationController*)self.window.rootViewController).viewControllers objectAtIndex:0];
-        mainViewController.showCategories = YES;
-        mainViewController.showItems = YES;
-    }
-    else if (idiom == UIUserInterfaceIdiomPad)
-    {
-        UINavigationController* masterViewController = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"Navigation"];
-        FolderViewController* masterMainViewController = [masterViewController.viewControllers objectAtIndex:0];
-        masterMainViewController.showCategories = YES;
-        
-        UINavigationController* detailViewController = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"Navigation"];
-        FolderViewController* detailMainViewController = [detailViewController.viewControllers objectAtIndex:0];
-        detailMainViewController.showItems = YES;
-
-        UISplitViewController* splitViewController = (UISplitViewController*)self.window.rootViewController;
-        splitViewController.viewControllers = @[masterViewController, detailViewController];
-        splitViewController.delegate = detailMainViewController;
-    }
-    
     [self setupDropbox];
     
     [self.window makeKeyAndVisible];

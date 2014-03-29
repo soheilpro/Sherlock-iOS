@@ -48,17 +48,6 @@
     [self.tableView setContentOffset:CGPointZero animated:NO];
 }
 
-- (void)awakeFromNib
-{
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
-    {
-        self.clearsSelectionOnViewWillAppear = NO;
-        self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
-    }
-    
-    [super awakeFromNib];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -88,14 +77,6 @@
         {
             self.navigationItem.leftBarButtonItem.enabled = YES;
         });
-    }
-
-    // If we're in the master view controller, update the detail view controller as well
-    if (self.splitViewController != nil && [self.splitViewController.viewControllers objectAtIndex:0] == self.navigationController)
-    {
-        UINavigationController* detailViewController = [self.splitViewController.viewControllers lastObject];
-        FolderViewController* detailMainViewController = [detailViewController.viewControllers objectAtIndex:0];
-        detailMainViewController.folder = self.folder;
     }
 }
 
@@ -443,21 +424,6 @@
                 [self displayErrorMessage:@"Cannot save database"];
         }];
     }
-}
-
-#pragma mark - Split view
-
-- (void)splitViewController:(UISplitViewController*)splitController willHideViewController:(UIViewController*)viewController withBarButtonItem:(UIBarButtonItem*)barButtonItem forPopoverController:(UIPopoverController *)popoverController
-{
-    barButtonItem.title = NSLocalizedString(@"Master", @"Master");
-    [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
-    self.masterPopoverController = popoverController;
-}
-
-- (void)splitViewController:(UISplitViewController*)splitController willShowViewController:(UIViewController*)viewController invalidatingBarButtonItem:(UIBarButtonItem*)barButtonItem
-{
-    [self.navigationItem setLeftBarButtonItem:nil animated:YES];
-    self.masterPopoverController = nil;
 }
 
 @end

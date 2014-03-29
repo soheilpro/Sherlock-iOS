@@ -12,7 +12,7 @@
 #import "EditItemViewController.h"
 #import "NewPasswordViewController.h"
 
-@interface FolderViewController : UITableViewController<UISplitViewControllerDelegate, UISearchBarDelegate, EditFolderDelegate, EditItemDelegate, NewPasswordDelegate>
+@interface FolderViewController : UITableViewController<UISearchBarDelegate, EditFolderDelegate, EditItemDelegate, NewPasswordDelegate>
 
 @property (nonatomic) BOOL showCategories;
 @property (nonatomic) BOOL showItems;
