@@ -10,10 +10,6 @@
 		5B1A481B170E139900D81762 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1A481A170E139900D81762 /* DropboxSDK.framework */; };
 		5B1A481C170E13C000D81762 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B8942C417076DDE00A618C7 /* Security.framework */; };
 		5B1A481D170E13C600D81762 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B8942C817076DEC00A618C7 /* QuartzCore.framework */; };
-		5B245DA6170C2888000FBDB9 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B245DA5170C2888000FBDB9 /* Icon.png */; };
-		5B245DA8170C288C000FBDB9 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B245DA7170C288C000FBDB9 /* Icon@2x.png */; };
-		5B245DAA170C2891000FBDB9 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B245DA9170C2891000FBDB9 /* Icon-72.png */; };
-		5B245DAC170C2895000FBDB9 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B245DAB170C2895000FBDB9 /* Icon-72@2x.png */; };
 		5B4466A617089FC000A42D7C /* Dropbox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B4466A517089FC000A42D7C /* Dropbox@2x.png */; };
 		5B4466AB1708B12A00A42D7C /* LocalStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4466AA1708B12A00A42D7C /* LocalStorage.m */; };
 		5B4466AE1708B20500A42D7C /* DropboxStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4466AD1708B20500A42D7C /* DropboxStorage.m */; };
@@ -41,6 +37,7 @@
 		5BD5666018E741530077A954 /* DatabaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5665F18E741530077A954 /* DatabaseCell.m */; };
 		5BD5666318E742500077A954 /* FolderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5666218E742500077A954 /* FolderCell.m */; };
 		5BD5666618E7425D0077A954 /* ItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5666518E7425D0077A954 /* ItemCell.m */; };
+		5BD5666818E762F30077A954 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BD5666718E762F30077A954 /* Icon.png */; };
 		5BF812A51706E83E00039E45 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF812A41706E83E00039E45 /* UIKit.framework */; };
 		5BF812A71706E83E00039E45 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF812A61706E83E00039E45 /* Foundation.framework */; };
 		5BF812A91706E83E00039E45 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF812A81706E83E00039E45 /* CoreGraphics.framework */; };
@@ -63,10 +60,6 @@
 
 /* Begin PBXFileReference section */
 		5B1A481A170E139900D81762 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DropboxSDK.framework; path = Sherlock/DropboxSDK.framework; sourceTree = "<group>"; };
-		5B245DA5170C2888000FBDB9 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		5B245DA7170C288C000FBDB9 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
-		5B245DA9170C2891000FBDB9 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
-		5B245DAB170C2895000FBDB9 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
 		5B4466A517089FC000A42D7C /* Dropbox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Dropbox@2x.png"; sourceTree = "<group>"; };
 		5B4466A81708AEF600A42D7C /* Storage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Storage.h; sourceTree = "<group>"; };
 		5B4466A91708B12A00A42D7C /* LocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalStorage.h; sourceTree = "<group>"; };
@@ -125,6 +118,7 @@
 		5BD5666218E742500077A954 /* FolderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FolderCell.m; sourceTree = "<group>"; };
 		5BD5666418E7425D0077A954 /* ItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemCell.h; sourceTree = "<group>"; };
 		5BD5666518E7425D0077A954 /* ItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemCell.m; sourceTree = "<group>"; };
+		5BD5666718E762F30077A954 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		5BF812A01706E83E00039E45 /* Sherlock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sherlock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BF812A41706E83E00039E45 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5BF812A61706E83E00039E45 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -177,10 +171,7 @@
 		5B245DAD170C289F000FBDB9 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
-				5B245DAB170C2895000FBDB9 /* Icon-72@2x.png */,
-				5B245DA9170C2891000FBDB9 /* Icon-72.png */,
-				5B245DA7170C288C000FBDB9 /* Icon@2x.png */,
-				5B245DA5170C2888000FBDB9 /* Icon.png */,
+				5BD5666718E762F30077A954 /* Icon.png */,
 			);
 			name = Icons;
 			sourceTree = "<group>";
@@ -599,11 +590,8 @@
 				5BF812B91706E83E00039E45 /* Default@2x.png in Resources */,
 				5BF812BB1706E83E00039E45 /* Default-568h@2x.png in Resources */,
 				5BF812BE1706E83E00039E45 /* iPhone.storyboard in Resources */,
+				5BD5666818E762F30077A954 /* Icon.png in Resources */,
 				5B4466A617089FC000A42D7C /* Dropbox@2x.png in Resources */,
-				5B245DA6170C2888000FBDB9 /* Icon.png in Resources */,
-				5B245DA8170C288C000FBDB9 /* Icon@2x.png in Resources */,
-				5B245DAA170C2891000FBDB9 /* Icon-72.png in Resources */,
-				5B245DAC170C2895000FBDB9 /* Icon-72@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
