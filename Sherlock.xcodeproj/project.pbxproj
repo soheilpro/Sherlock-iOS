@@ -20,12 +20,13 @@
 		5B4466B11708C05D00A42D7C /* NewDatabaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4466B01708C05D00A42D7C /* NewDatabaseViewController.m */; };
 		5B4F2577170EE67400609904 /* Dropbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4F2576170EE67400609904 /* Dropbox.m */; };
 		5B59E1FE1708311400AEC98D /* DatabasesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B59E1FD1708311400AEC98D /* DatabasesViewController.m */; };
-		5B59E2421708596400AEC98D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B59E2411708596400AEC98D /* MBProgressHUD.m */; };
 		5B8942D2170773EC00A618C7 /* PasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8942D1170773EC00A618C7 /* PasswordViewController.m */; };
 		5B8942D51707837800A618C7 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8942D41707837800A618C7 /* SettingsViewController.m */; };
 		5B8942DF17079A3F00A618C7 /* ActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8942DE17079A3F00A618C7 /* ActionSheet.m */; };
 		5B9D48C117195AB80010F064 /* UIViewController+ActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B9D48BE17195AB80010F064 /* UIViewController+ActivityIndicator.m */; };
 		5B9D48C217195AB80010F064 /* UIViewController+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B9D48C017195AB80010F064 /* UIViewController+Alert.m */; };
+		5BA8611C18E6BEA5009D9A8B /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8611818E6BEA5009D9A8B /* MBProgressHUD.m */; };
+		5BA8611D18E6BEA5009D9A8B /* GDataXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8611B18E6BEA5009D9A8B /* GDataXMLNode.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5BBDB012170B8A8900439235 /* Database+Display.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBDB011170B8A8900439235 /* Database+Display.m */; };
 		5BBDB016170B8B6100439235 /* UIView+Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBDB015170B8B6100439235 /* UIView+Animation.m */; };
 		5BBDB01A170B8C6800439235 /* TripleDES.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBDB019170B8C6800439235 /* TripleDES.m */; };
@@ -45,7 +46,6 @@
 		5BF813101706FF0C00039E45 /* Folder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF8130F1706FF0C00039E45 /* Folder.m */; };
 		5BF813131706FF3100039E45 /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF813121706FF3100039E45 /* Item.m */; };
 		5BF8131E1707145C00039E45 /* ItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF8131D1707145C00039E45 /* ItemViewController.m */; };
-		5BF8132217071CED00039E45 /* GDataXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF8132117071CED00039E45 /* GDataXMLNode.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5BF8132A1707543E00039E45 /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF813291707543E00039E45 /* Database.m */; };
 		5BFB94CC170A138200459F8E /* EditFolderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFB94CB170A138200459F8E /* EditFolderViewController.m */; };
 		5BFB94D0170A279600459F8E /* EditItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFB94CF170A279600459F8E /* EditItemViewController.m */; };
@@ -69,8 +69,6 @@
 		5B4F2576170EE67400609904 /* Dropbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Dropbox.m; sourceTree = "<group>"; };
 		5B59E1FC1708311400AEC98D /* DatabasesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabasesViewController.h; sourceTree = "<group>"; };
 		5B59E1FD1708311400AEC98D /* DatabasesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabasesViewController.m; sourceTree = "<group>"; };
-		5B59E2401708596400AEC98D /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
-		5B59E2411708596400AEC98D /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		5B8942C217076DD600A618C7 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		5B8942C417076DDE00A618C7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		5B8942C617076DE600A618C7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -85,6 +83,10 @@
 		5B9D48BE17195AB80010F064 /* UIViewController+ActivityIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ActivityIndicator.m"; sourceTree = "<group>"; };
 		5B9D48BF17195AB80010F064 /* UIViewController+Alert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Alert.h"; sourceTree = "<group>"; };
 		5B9D48C017195AB80010F064 /* UIViewController+Alert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Alert.m"; sourceTree = "<group>"; };
+		5BA8611718E6BEA5009D9A8B /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		5BA8611818E6BEA5009D9A8B /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		5BA8611A18E6BEA5009D9A8B /* GDataXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataXMLNode.h; sourceTree = "<group>"; };
+		5BA8611B18E6BEA5009D9A8B /* GDataXMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDataXMLNode.m; sourceTree = "<group>"; };
 		5BBDB010170B8A8900439235 /* Database+Display.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Database+Display.h"; sourceTree = "<group>"; };
 		5BBDB011170B8A8900439235 /* Database+Display.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Database+Display.m"; sourceTree = "<group>"; };
 		5BBDB014170B8B6100439235 /* UIView+Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Animation.h"; sourceTree = "<group>"; };
@@ -117,8 +119,6 @@
 		5BF813121706FF3100039E45 /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
 		5BF8131C1707145C00039E45 /* ItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemViewController.h; sourceTree = "<group>"; };
 		5BF8131D1707145C00039E45 /* ItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemViewController.m; sourceTree = "<group>"; };
-		5BF8132017071CED00039E45 /* GDataXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataXMLNode.h; sourceTree = "<group>"; };
-		5BF8132117071CED00039E45 /* GDataXMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDataXMLNode.m; sourceTree = "<group>"; };
 		5BF813281707543E00039E45 /* Database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Database.h; sourceTree = "<group>"; };
 		5BF813291707543E00039E45 /* Database.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Database.m; sourceTree = "<group>"; };
 		5BFB94CA170A138200459F8E /* EditFolderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditFolderViewController.h; sourceTree = "<group>"; };
@@ -185,31 +185,149 @@
 			path = Sherlock/Images;
 			sourceTree = "<group>";
 		};
-		5B59E23F1708596400AEC98D /* MBProgressHUD */ = {
+		5BA8611618E6BEA5009D9A8B /* MBProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
-				5B59E2401708596400AEC98D /* MBProgressHUD.h */,
-				5B59E2411708596400AEC98D /* MBProgressHUD.m */,
+				5BA8611718E6BEA5009D9A8B /* MBProgressHUD.h */,
+				5BA8611818E6BEA5009D9A8B /* MBProgressHUD.m */,
 			);
-			path = MBProgressHUD;
-			sourceTree = "<group>";
+			name = MBProgressHUD;
+			path = Libraries/MBProgressHUD;
+			sourceTree = SOURCE_ROOT;
 		};
-		5B59E2431708596C00AEC98D /* GDataXML */ = {
+		5BA8611918E6BEA5009D9A8B /* GDataXML */ = {
 			isa = PBXGroup;
 			children = (
-				5BF8132017071CED00039E45 /* GDataXMLNode.h */,
-				5BF8132117071CED00039E45 /* GDataXMLNode.m */,
+				5BA8611A18E6BEA5009D9A8B /* GDataXMLNode.h */,
+				5BA8611B18E6BEA5009D9A8B /* GDataXMLNode.m */,
 			);
 			name = GDataXML;
-			sourceTree = "<group>";
+			path = Libraries/GDataXML;
+			sourceTree = SOURCE_ROOT;
 		};
-		5BBDB017170B8C4A00439235 /* Crypto */ = {
+		5BA8611E18E6BF0F009D9A8B /* DatabasesViewController */ = {
 			isa = PBXGroup;
 			children = (
+				5B59E1FC1708311400AEC98D /* DatabasesViewController.h */,
+				5B59E1FD1708311400AEC98D /* DatabasesViewController.m */,
+			);
+			name = DatabasesViewController;
+			sourceTree = "<group>";
+		};
+		5BA8611F18E6BF1C009D9A8B /* PasswordViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5B8942D0170773EC00A618C7 /* PasswordViewController.h */,
+				5B8942D1170773EC00A618C7 /* PasswordViewController.m */,
+			);
+			name = PasswordViewController;
+			sourceTree = "<group>";
+		};
+		5BA8612018E6BF22009D9A8B /* NewDatabaseViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5B4466AF1708C05D00A42D7C /* NewDatabaseViewController.h */,
+				5B4466B01708C05D00A42D7C /* NewDatabaseViewController.m */,
+			);
+			name = NewDatabaseViewController;
+			sourceTree = "<group>";
+		};
+		5BA8612118E6BF28009D9A8B /* FolderViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5BF812C21706E83E00039E45 /* FolderViewController.h */,
+				5BF812C31706E83E00039E45 /* FolderViewController.m */,
+			);
+			name = FolderViewController;
+			sourceTree = "<group>";
+		};
+		5BA8612318E6BF35009D9A8B /* ItemViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5BF8131C1707145C00039E45 /* ItemViewController.h */,
+				5BF8131D1707145C00039E45 /* ItemViewController.m */,
+			);
+			name = ItemViewController;
+			sourceTree = "<group>";
+		};
+		5BA8612418E6BF3B009D9A8B /* EditFolderViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5BFB94CA170A138200459F8E /* EditFolderViewController.h */,
+				5BFB94CB170A138200459F8E /* EditFolderViewController.m */,
+			);
+			name = EditFolderViewController;
+			sourceTree = "<group>";
+		};
+		5BA8612518E6BF41009D9A8B /* EditItemViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5BFB94CE170A279500459F8E /* EditItemViewController.h */,
+				5BFB94CF170A279600459F8E /* EditItemViewController.m */,
+			);
+			name = EditItemViewController;
+			sourceTree = "<group>";
+		};
+		5BA8612618E6BF4A009D9A8B /* NewPasswordViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5BBDB01B170B95C100439235 /* NewPasswordViewController.h */,
+				5BBDB01C170B95C100439235 /* NewPasswordViewController.m */,
+			);
+			name = NewPasswordViewController;
+			sourceTree = "<group>";
+		};
+		5BA8612718E6BF51009D9A8B /* SettingsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5B8942D31707837800A618C7 /* SettingsViewController.h */,
+				5B8942D41707837800A618C7 /* SettingsViewController.m */,
+			);
+			name = SettingsViewController;
+			sourceTree = "<group>";
+		};
+		5BA8612818E6BF61009D9A8B /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				5B8942DD17079A3F00A618C7 /* ActionSheet.h */,
+				5B8942DE17079A3F00A618C7 /* ActionSheet.m */,
+				5BBDB010170B8A8900439235 /* Database+Display.h */,
+				5BBDB011170B8A8900439235 /* Database+Display.m */,
+				5BBDB014170B8B6100439235 /* UIView+Animation.h */,
+				5BBDB015170B8B6100439235 /* UIView+Animation.m */,
+				5B9D48BD17195AB80010F064 /* UIViewController+ActivityIndicator.h */,
+				5B9D48BE17195AB80010F064 /* UIViewController+ActivityIndicator.m */,
+				5B9D48BF17195AB80010F064 /* UIViewController+Alert.h */,
+				5B9D48C017195AB80010F064 /* UIViewController+Alert.m */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+		5BA8612918E6BF69009D9A8B /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				5BA8611E18E6BF0F009D9A8B /* DatabasesViewController */,
+				5BA8612418E6BF3B009D9A8B /* EditFolderViewController */,
+				5BA8612518E6BF41009D9A8B /* EditItemViewController */,
+				5BA8612118E6BF28009D9A8B /* FolderViewController */,
+				5BA8612318E6BF35009D9A8B /* ItemViewController */,
+				5BA8612018E6BF22009D9A8B /* NewDatabaseViewController */,
+				5BA8612618E6BF4A009D9A8B /* NewPasswordViewController */,
+				5BA8611F18E6BF1C009D9A8B /* PasswordViewController */,
+				5BA8612718E6BF51009D9A8B /* SettingsViewController */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		5BBDB017170B8C4A00439235 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				5B4F2575170EE67400609904 /* Dropbox.h */,
+				5B4F2576170EE67400609904 /* Dropbox.m */,
 				5BBDB018170B8C6800439235 /* TripleDES.h */,
 				5BBDB019170B8C6800439235 /* TripleDES.m */,
 			);
-			name = Crypto;
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 		5BF812951706E83E00039E45 = {
@@ -252,13 +370,11 @@
 			children = (
 				5BF8130A1706FEBD00039E45 /* Database */,
 				5B4466A71708AEBD00A42D7C /* Storage */,
-				5BBDB017170B8C4A00439235 /* Crypto */,
 				5BF813091706FE8800039E45 /* UI */,
+				5BBDB017170B8C4A00439235 /* Utilities */,
 				5BF812B31706E83E00039E45 /* AppDelegate.h */,
 				5BF812B41706E83E00039E45 /* AppDelegate.m */,
 				5BF812B01706E83E00039E45 /* Main.m */,
-				5B4F2575170EE67400609904 /* Dropbox.h */,
-				5B4F2576170EE67400609904 /* Dropbox.m */,
 			);
 			path = Sherlock;
 			sourceTree = "<group>";
@@ -280,35 +396,9 @@
 		5BF813091706FE8800039E45 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				5BA8612918E6BF69009D9A8B /* ViewControllers */,
+				5BA8612818E6BF61009D9A8B /* Utilities */,
 				5BF812BC1706E83E00039E45 /* iPhone.storyboard */,
-				5B59E1FC1708311400AEC98D /* DatabasesViewController.h */,
-				5B59E1FD1708311400AEC98D /* DatabasesViewController.m */,
-				5B8942D0170773EC00A618C7 /* PasswordViewController.h */,
-				5B8942D1170773EC00A618C7 /* PasswordViewController.m */,
-				5B4466AF1708C05D00A42D7C /* NewDatabaseViewController.h */,
-				5B4466B01708C05D00A42D7C /* NewDatabaseViewController.m */,
-				5BF812C21706E83E00039E45 /* FolderViewController.h */,
-				5BF812C31706E83E00039E45 /* FolderViewController.m */,
-				5BF8131C1707145C00039E45 /* ItemViewController.h */,
-				5BF8131D1707145C00039E45 /* ItemViewController.m */,
-				5BFB94CA170A138200459F8E /* EditFolderViewController.h */,
-				5BFB94CB170A138200459F8E /* EditFolderViewController.m */,
-				5BFB94CE170A279500459F8E /* EditItemViewController.h */,
-				5BFB94CF170A279600459F8E /* EditItemViewController.m */,
-				5BBDB01B170B95C100439235 /* NewPasswordViewController.h */,
-				5BBDB01C170B95C100439235 /* NewPasswordViewController.m */,
-				5B8942D31707837800A618C7 /* SettingsViewController.h */,
-				5B8942D41707837800A618C7 /* SettingsViewController.m */,
-				5B8942DD17079A3F00A618C7 /* ActionSheet.h */,
-				5B8942DE17079A3F00A618C7 /* ActionSheet.m */,
-				5BBDB010170B8A8900439235 /* Database+Display.h */,
-				5BBDB011170B8A8900439235 /* Database+Display.m */,
-				5BBDB014170B8B6100439235 /* UIView+Animation.h */,
-				5BBDB015170B8B6100439235 /* UIView+Animation.m */,
-				5B9D48BD17195AB80010F064 /* UIViewController+ActivityIndicator.h */,
-				5B9D48BE17195AB80010F064 /* UIViewController+ActivityIndicator.m */,
-				5B9D48BF17195AB80010F064 /* UIViewController+Alert.h */,
-				5B9D48C017195AB80010F064 /* UIViewController+Alert.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -331,8 +421,8 @@
 		5BF8132317071CF800039E45 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				5B59E23F1708596400AEC98D /* MBProgressHUD */,
-				5B59E2431708596C00AEC98D /* GDataXML */,
+				5BA8611618E6BEA5009D9A8B /* MBProgressHUD */,
+				5BA8611918E6BEA5009D9A8B /* GDataXML */,
 			);
 			name = Libraries;
 			path = Sherlock;
@@ -416,18 +506,18 @@
 				5BF813101706FF0C00039E45 /* Folder.m in Sources */,
 				5BF813131706FF3100039E45 /* Item.m in Sources */,
 				5BF8131E1707145C00039E45 /* ItemViewController.m in Sources */,
-				5BF8132217071CED00039E45 /* GDataXMLNode.m in Sources */,
 				5BF8132A1707543E00039E45 /* Database.m in Sources */,
 				5B8942D2170773EC00A618C7 /* PasswordViewController.m in Sources */,
 				5B8942D51707837800A618C7 /* SettingsViewController.m in Sources */,
 				5B8942DF17079A3F00A618C7 /* ActionSheet.m in Sources */,
 				5B59E1FE1708311400AEC98D /* DatabasesViewController.m in Sources */,
-				5B59E2421708596400AEC98D /* MBProgressHUD.m in Sources */,
 				5B4466AB1708B12A00A42D7C /* LocalStorage.m in Sources */,
 				5B4466AE1708B20500A42D7C /* DropboxStorage.m in Sources */,
 				5B4466B11708C05D00A42D7C /* NewDatabaseViewController.m in Sources */,
 				5BFB94CC170A138200459F8E /* EditFolderViewController.m in Sources */,
 				5BFB94D0170A279600459F8E /* EditItemViewController.m in Sources */,
+				5BA8611D18E6BEA5009D9A8B /* GDataXMLNode.m in Sources */,
+				5BA8611C18E6BEA5009D9A8B /* MBProgressHUD.m in Sources */,
 				5BBDB012170B8A8900439235 /* Database+Display.m in Sources */,
 				5BBDB016170B8B6100439235 /* UIView+Animation.m in Sources */,
 				5BBDB01A170B8C6800439235 /* TripleDES.m in Sources */,
