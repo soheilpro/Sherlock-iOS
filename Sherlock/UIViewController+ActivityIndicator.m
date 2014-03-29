@@ -8,7 +8,6 @@
 
 #import "UIViewController+ActivityIndicator.h"
 #import "MBProgressHUD.h"
-#import "Theme.h"
 
 @implementation UIViewController (ActivityIndicator)
 
@@ -31,7 +30,6 @@
 {
     MBProgressHUD* progressHUD = [[MBProgressHUD alloc] initWithView:self.view];
     progressHUD.labelText = message;
-    progressHUD.labelFont = [Theme defaultTheme].hudFont;
     progressHUD.removeFromSuperViewOnHide = YES;
     progressHUD.userInteractionEnabled = userInteractionEnabled;
 

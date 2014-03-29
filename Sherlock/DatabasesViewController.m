@@ -8,7 +8,6 @@
 
 #import "DatabasesViewController.h"
 #import "MBProgressHUD.h"
-#import "Theme.h"
 #import "Storage.h"
 #import "LocalStorage.h"
 #import "DropboxStorage.h"
@@ -34,7 +33,6 @@
     [super viewDidLoad];
     
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    self.refreshLabel.font = [[Theme defaultTheme] textFontBoldOfSizePlus:-2];
     self.refreshLabel.textColor = [self.refreshLabel.textColor colorWithAlphaComponent:.25];
     
     self.storages = @[

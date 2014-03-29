@@ -20,30 +20,6 @@
 		5B4466B11708C05D00A42D7C /* NewDatabaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4466B01708C05D00A42D7C /* NewDatabaseViewController.m */; };
 		5B4F2577170EE67400609904 /* Dropbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4F2576170EE67400609904 /* Dropbox.m */; };
 		5B59E1FE1708311400AEC98D /* DatabasesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B59E1FD1708311400AEC98D /* DatabasesViewController.m */; };
-		5B59E2101708338F00AEC98D /* PTC75F.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B59E2011708338F00AEC98D /* PTC75F.ttf */; };
-		5B59E2111708338F00AEC98D /* PTS75F.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B59E2021708338F00AEC98D /* PTS75F.ttf */; };
-		5B59E2121708338F00AEC98D /* ButtonBarItem.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B59E2041708338F00AEC98D /* ButtonBarItem.png */; };
-		5B59E2131708338F00AEC98D /* ButtonBarItem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B59E2051708338F00AEC98D /* ButtonBarItem@2x.png */; };
-		5B59E2141708338F00AEC98D /* ButtonBarItemBack.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B59E2061708338F00AEC98D /* ButtonBarItemBack.png */; };
-		5B59E2151708338F00AEC98D /* ButtonBarItemBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B59E2071708338F00AEC98D /* ButtonBarItemBack@2x.png */; };
-		5B59E2161708338F00AEC98D /* ButtonDark.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B59E2081708338F00AEC98D /* ButtonDark.png */; };
-		5B59E2171708338F00AEC98D /* ButtonDark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B59E2091708338F00AEC98D /* ButtonDark@2x.png */; };
-		5B59E2181708338F00AEC98D /* ButtonLight.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B59E20A1708338F00AEC98D /* ButtonLight.png */; };
-		5B59E2191708338F00AEC98D /* ButtonLight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B59E20B1708338F00AEC98D /* ButtonLight@2x.png */; };
-		5B59E21A1708338F00AEC98D /* MenuAccessoryDark.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B59E20C1708338F00AEC98D /* MenuAccessoryDark.png */; };
-		5B59E21B1708338F00AEC98D /* MenuAccessoryDark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B59E20D1708338F00AEC98D /* MenuAccessoryDark@2x.png */; };
-		5B59E21C1708338F00AEC98D /* MenuAccessoryLight.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B59E20E1708338F00AEC98D /* MenuAccessoryLight.png */; };
-		5B59E21D1708338F00AEC98D /* MenuAccessoryLight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B59E20F1708338F00AEC98D /* MenuAccessoryLight@2x.png */; };
-		5B59E2201708349100AEC98D /* Theme.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B59E21F1708349100AEC98D /* Theme.m */; };
-		5B59E22D170834F300AEC98D /* ThemedButtonDark.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B59E222170834F200AEC98D /* ThemedButtonDark.m */; };
-		5B59E22F170834F300AEC98D /* ThemedTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B59E226170834F300AEC98D /* ThemedTableView.m */; };
-		5B59E230170834F300AEC98D /* ThemedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B59E228170834F300AEC98D /* ThemedTableViewCell.m */; };
-		5B59E231170834F300AEC98D /* ThemedTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B59E22A170834F300AEC98D /* ThemedTextField.m */; };
-		5B59E232170834F300AEC98D /* ThemedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B59E22C170834F300AEC98D /* ThemedView.m */; };
-		5B59E235170836BF00AEC98D /* ThemedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B59E234170836BF00AEC98D /* ThemedLabel.m */; };
-		5B59E2381708374E00AEC98D /* ThemedLabelBold.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B59E2371708374D00AEC98D /* ThemedLabelBold.m */; };
-		5B59E23B1708409E00AEC98D /* ThemedTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B59E23A1708409D00AEC98D /* ThemedTextView.m */; };
-		5B59E23E1708433400AEC98D /* ThemedPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B59E23D1708433400AEC98D /* ThemedPanel.m */; };
 		5B59E2421708596400AEC98D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B59E2411708596400AEC98D /* MBProgressHUD.m */; };
 		5B8942D2170773EC00A618C7 /* PasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8942D1170773EC00A618C7 /* PasswordViewController.m */; };
 		5B8942D51707837800A618C7 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8942D41707837800A618C7 /* SettingsViewController.m */; };
@@ -95,40 +71,6 @@
 		5B4F2576170EE67400609904 /* Dropbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Dropbox.m; sourceTree = "<group>"; };
 		5B59E1FC1708311400AEC98D /* DatabasesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabasesViewController.h; sourceTree = "<group>"; };
 		5B59E1FD1708311400AEC98D /* DatabasesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabasesViewController.m; sourceTree = "<group>"; };
-		5B59E2011708338F00AEC98D /* PTC75F.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = PTC75F.ttf; sourceTree = "<group>"; };
-		5B59E2021708338F00AEC98D /* PTS75F.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = PTS75F.ttf; sourceTree = "<group>"; };
-		5B59E2041708338F00AEC98D /* ButtonBarItem.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonBarItem.png; sourceTree = "<group>"; };
-		5B59E2051708338F00AEC98D /* ButtonBarItem@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ButtonBarItem@2x.png"; sourceTree = "<group>"; };
-		5B59E2061708338F00AEC98D /* ButtonBarItemBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonBarItemBack.png; sourceTree = "<group>"; };
-		5B59E2071708338F00AEC98D /* ButtonBarItemBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ButtonBarItemBack@2x.png"; sourceTree = "<group>"; };
-		5B59E2081708338F00AEC98D /* ButtonDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonDark.png; sourceTree = "<group>"; };
-		5B59E2091708338F00AEC98D /* ButtonDark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ButtonDark@2x.png"; sourceTree = "<group>"; };
-		5B59E20A1708338F00AEC98D /* ButtonLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonLight.png; sourceTree = "<group>"; };
-		5B59E20B1708338F00AEC98D /* ButtonLight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ButtonLight@2x.png"; sourceTree = "<group>"; };
-		5B59E20C1708338F00AEC98D /* MenuAccessoryDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MenuAccessoryDark.png; sourceTree = "<group>"; };
-		5B59E20D1708338F00AEC98D /* MenuAccessoryDark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MenuAccessoryDark@2x.png"; sourceTree = "<group>"; };
-		5B59E20E1708338F00AEC98D /* MenuAccessoryLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MenuAccessoryLight.png; sourceTree = "<group>"; };
-		5B59E20F1708338F00AEC98D /* MenuAccessoryLight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MenuAccessoryLight@2x.png"; sourceTree = "<group>"; };
-		5B59E21E1708349100AEC98D /* Theme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Theme.h; sourceTree = "<group>"; };
-		5B59E21F1708349100AEC98D /* Theme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Theme.m; sourceTree = "<group>"; };
-		5B59E221170834F200AEC98D /* ThemedButtonDark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemedButtonDark.h; sourceTree = "<group>"; };
-		5B59E222170834F200AEC98D /* ThemedButtonDark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemedButtonDark.m; sourceTree = "<group>"; };
-		5B59E225170834F300AEC98D /* ThemedTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemedTableView.h; sourceTree = "<group>"; };
-		5B59E226170834F300AEC98D /* ThemedTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemedTableView.m; sourceTree = "<group>"; };
-		5B59E227170834F300AEC98D /* ThemedTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemedTableViewCell.h; sourceTree = "<group>"; };
-		5B59E228170834F300AEC98D /* ThemedTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemedTableViewCell.m; sourceTree = "<group>"; };
-		5B59E229170834F300AEC98D /* ThemedTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemedTextField.h; sourceTree = "<group>"; };
-		5B59E22A170834F300AEC98D /* ThemedTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemedTextField.m; sourceTree = "<group>"; };
-		5B59E22B170834F300AEC98D /* ThemedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemedView.h; sourceTree = "<group>"; };
-		5B59E22C170834F300AEC98D /* ThemedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemedView.m; sourceTree = "<group>"; };
-		5B59E233170836BF00AEC98D /* ThemedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemedLabel.h; sourceTree = "<group>"; };
-		5B59E234170836BF00AEC98D /* ThemedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemedLabel.m; sourceTree = "<group>"; };
-		5B59E2361708374D00AEC98D /* ThemedLabelBold.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemedLabelBold.h; sourceTree = "<group>"; };
-		5B59E2371708374D00AEC98D /* ThemedLabelBold.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemedLabelBold.m; sourceTree = "<group>"; };
-		5B59E2391708409D00AEC98D /* ThemedTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemedTextView.h; sourceTree = "<group>"; };
-		5B59E23A1708409D00AEC98D /* ThemedTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemedTextView.m; sourceTree = "<group>"; };
-		5B59E23C1708433300AEC98D /* ThemedPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemedPanel.h; sourceTree = "<group>"; };
-		5B59E23D1708433400AEC98D /* ThemedPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemedPanel.m; sourceTree = "<group>"; };
 		5B59E2401708596400AEC98D /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		5B59E2411708596400AEC98D /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		5B8942C217076DD600A618C7 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -233,38 +175,15 @@
 		5B59E1FF1708337600AEC98D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				5B59E2001708338F00AEC98D /* Fonts */,
 				5B59E2031708338F00AEC98D /* Images */,
 				5B245DAD170C289F000FBDB9 /* Icons */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		5B59E2001708338F00AEC98D /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				5B59E2011708338F00AEC98D /* PTC75F.ttf */,
-				5B59E2021708338F00AEC98D /* PTS75F.ttf */,
-			);
-			name = Fonts;
-			path = Sherlock/Fonts;
-			sourceTree = "<group>";
-		};
 		5B59E2031708338F00AEC98D /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				5B59E2041708338F00AEC98D /* ButtonBarItem.png */,
-				5B59E2051708338F00AEC98D /* ButtonBarItem@2x.png */,
-				5B59E2061708338F00AEC98D /* ButtonBarItemBack.png */,
-				5B59E2071708338F00AEC98D /* ButtonBarItemBack@2x.png */,
-				5B59E2081708338F00AEC98D /* ButtonDark.png */,
-				5B59E2091708338F00AEC98D /* ButtonDark@2x.png */,
-				5B59E20A1708338F00AEC98D /* ButtonLight.png */,
-				5B59E20B1708338F00AEC98D /* ButtonLight@2x.png */,
-				5B59E20C1708338F00AEC98D /* MenuAccessoryDark.png */,
-				5B59E20D1708338F00AEC98D /* MenuAccessoryDark@2x.png */,
-				5B59E20E1708338F00AEC98D /* MenuAccessoryLight.png */,
-				5B59E20F1708338F00AEC98D /* MenuAccessoryLight@2x.png */,
 				5B4466A517089FC000A42D7C /* Dropbox@2x.png */,
 			);
 			name = Images;
@@ -397,26 +316,6 @@
 				5B8942D41707837800A618C7 /* SettingsViewController.m */,
 				5B8942DD17079A3F00A618C7 /* ActionSheet.h */,
 				5B8942DE17079A3F00A618C7 /* ActionSheet.m */,
-				5B59E21E1708349100AEC98D /* Theme.h */,
-				5B59E21F1708349100AEC98D /* Theme.m */,
-				5B59E233170836BF00AEC98D /* ThemedLabel.h */,
-				5B59E234170836BF00AEC98D /* ThemedLabel.m */,
-				5B59E2361708374D00AEC98D /* ThemedLabelBold.h */,
-				5B59E2371708374D00AEC98D /* ThemedLabelBold.m */,
-				5B59E221170834F200AEC98D /* ThemedButtonDark.h */,
-				5B59E222170834F200AEC98D /* ThemedButtonDark.m */,
-				5B59E225170834F300AEC98D /* ThemedTableView.h */,
-				5B59E226170834F300AEC98D /* ThemedTableView.m */,
-				5B59E227170834F300AEC98D /* ThemedTableViewCell.h */,
-				5B59E228170834F300AEC98D /* ThemedTableViewCell.m */,
-				5B59E229170834F300AEC98D /* ThemedTextField.h */,
-				5B59E22A170834F300AEC98D /* ThemedTextField.m */,
-				5B59E2391708409D00AEC98D /* ThemedTextView.h */,
-				5B59E23A1708409D00AEC98D /* ThemedTextView.m */,
-				5B59E22B170834F300AEC98D /* ThemedView.h */,
-				5B59E22C170834F300AEC98D /* ThemedView.m */,
-				5B59E23C1708433300AEC98D /* ThemedPanel.h */,
-				5B59E23D1708433400AEC98D /* ThemedPanel.m */,
 				5BBDB010170B8A8900439235 /* Database+Display.h */,
 				5BBDB011170B8A8900439235 /* Database+Display.m */,
 				5BBDB014170B8B6100439235 /* UIView+Animation.h */,
@@ -512,20 +411,6 @@
 				5BF812BB1706E83E00039E45 /* Default-568h@2x.png in Resources */,
 				5BF812BE1706E83E00039E45 /* MainStoryboard_iPhone.storyboard in Resources */,
 				5BF812C11706E83E00039E45 /* MainStoryboard_iPad.storyboard in Resources */,
-				5B59E2101708338F00AEC98D /* PTC75F.ttf in Resources */,
-				5B59E2111708338F00AEC98D /* PTS75F.ttf in Resources */,
-				5B59E2121708338F00AEC98D /* ButtonBarItem.png in Resources */,
-				5B59E2131708338F00AEC98D /* ButtonBarItem@2x.png in Resources */,
-				5B59E2141708338F00AEC98D /* ButtonBarItemBack.png in Resources */,
-				5B59E2151708338F00AEC98D /* ButtonBarItemBack@2x.png in Resources */,
-				5B59E2161708338F00AEC98D /* ButtonDark.png in Resources */,
-				5B59E2171708338F00AEC98D /* ButtonDark@2x.png in Resources */,
-				5B59E2181708338F00AEC98D /* ButtonLight.png in Resources */,
-				5B59E2191708338F00AEC98D /* ButtonLight@2x.png in Resources */,
-				5B59E21A1708338F00AEC98D /* MenuAccessoryDark.png in Resources */,
-				5B59E21B1708338F00AEC98D /* MenuAccessoryDark@2x.png in Resources */,
-				5B59E21C1708338F00AEC98D /* MenuAccessoryLight.png in Resources */,
-				5B59E21D1708338F00AEC98D /* MenuAccessoryLight@2x.png in Resources */,
 				5B4466A617089FC000A42D7C /* Dropbox@2x.png in Resources */,
 				5B245DA6170C2888000FBDB9 /* Icon.png in Resources */,
 				5B245DA8170C288C000FBDB9 /* Icon@2x.png in Resources */,
@@ -554,16 +439,6 @@
 				5B8942D51707837800A618C7 /* SettingsViewController.m in Sources */,
 				5B8942DF17079A3F00A618C7 /* ActionSheet.m in Sources */,
 				5B59E1FE1708311400AEC98D /* DatabasesViewController.m in Sources */,
-				5B59E2201708349100AEC98D /* Theme.m in Sources */,
-				5B59E22D170834F300AEC98D /* ThemedButtonDark.m in Sources */,
-				5B59E22F170834F300AEC98D /* ThemedTableView.m in Sources */,
-				5B59E230170834F300AEC98D /* ThemedTableViewCell.m in Sources */,
-				5B59E231170834F300AEC98D /* ThemedTextField.m in Sources */,
-				5B59E232170834F300AEC98D /* ThemedView.m in Sources */,
-				5B59E235170836BF00AEC98D /* ThemedLabel.m in Sources */,
-				5B59E2381708374E00AEC98D /* ThemedLabelBold.m in Sources */,
-				5B59E23B1708409E00AEC98D /* ThemedTextView.m in Sources */,
-				5B59E23E1708433400AEC98D /* ThemedPanel.m in Sources */,
 				5B59E2421708596400AEC98D /* MBProgressHUD.m in Sources */,
 				5B4466AB1708B12A00A42D7C /* LocalStorage.m in Sources */,
 				5B4466AE1708B20500A42D7C /* DropboxStorage.m in Sources */,

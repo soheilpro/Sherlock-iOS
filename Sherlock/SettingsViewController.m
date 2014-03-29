@@ -9,7 +9,6 @@
 #import <DropboxSDK/DropboxSDK.h>
 #import "SettingsViewController.h"
 #import "ActionSheet.h"
-#import "Theme.h"
 
 @implementation SettingsViewController
 

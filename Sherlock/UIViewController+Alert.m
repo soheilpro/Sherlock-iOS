@@ -8,7 +8,6 @@
 
 #import "UIViewController+Alert.h"
 #import "MBProgressHUD.h"
-#import "Theme.h"
 
 @implementation UIViewController (Alert)
 
@@ -23,7 +22,6 @@
     hud.yOffset = keyboardVisible ? -77 : -40;
     hud.mode = MBProgressHUDModeText;
     hud.labelText = message;
-    hud.labelFont = [Theme defaultTheme].hudFont;
     hud.removeFromSuperViewOnHide = YES;
     hud.userInteractionEnabled = NO;
 

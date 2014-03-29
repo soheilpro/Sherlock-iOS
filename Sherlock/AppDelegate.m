@@ -9,7 +9,6 @@
 #import <DropboxSDK/DropboxSDK.h>
 #import "AppDelegate.h"
 #import "FolderViewController.h"
-#import "Theme.h"
 
 NSString* const NSURLIsExcludedFromBackupKey = @"NSURLIsExcludedFromBackupKey";
 
@@ -45,8 +44,6 @@ NSString* const NSURLIsExcludedFromBackupKey = @"NSURLIsExcludedFromBackupKey";
         splitViewController.viewControllers = @[masterViewController, detailViewController];
         splitViewController.delegate = detailMainViewController;
     }
-    
-    [[Theme defaultTheme] apply];
     
     [self setupDropbox];
     
