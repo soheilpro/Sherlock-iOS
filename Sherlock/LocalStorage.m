@@ -46,6 +46,12 @@
 
 - (void)fetchDatabasesWithCallback:(void (^) (NSArray* databases, NSError* error))callback;
 {
+    if (![self isAvailable])
+    {
+        callback(@[], nil);
+        return;
+    }
+
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
     {
         self.databases = [self fetchDatabaseInternal];

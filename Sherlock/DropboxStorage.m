@@ -57,6 +57,12 @@
 
 - (void)fetchDatabasesWithCallback:(void (^) (NSArray* databases, NSError* error))callback;
 {
+    if (![self isAvailable])
+    {
+        callback(@[], nil);
+        return;
+    }
+
     [self fetchRemoteDatabasesWithCallback:^(NSArray* databases, NSError* error)
     {
         if (error != nil)
