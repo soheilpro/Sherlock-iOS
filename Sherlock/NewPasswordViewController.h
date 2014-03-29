@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Softtool. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "Database.h"
+#import <UIKit/UIKit.h>
 
 @protocol NewPasswordDelegate<NSObject>
 
@@ -16,15 +16,11 @@
 
 @end
 
-@interface NewPasswordViewController : UIViewController<UITextFieldDelegate>
+@interface NewPasswordViewController : UITableViewController<UITextFieldDelegate>
 
 @property (nonatomic, strong) Database* database;
 @property (nonatomic, weak) id<NewPasswordDelegate> delegate;
-@property (nonatomic, weak) IBOutlet UITextField* currentPasswordTextField;
-@property (nonatomic, weak) IBOutlet UITextField* passwordTextField;
-@property (nonatomic, weak) IBOutlet UITextField* passwordConfirmTextField;
 
-- (IBAction)done:(id)sender;
-- (IBAction)cancel:(id)sender;
++ (instancetype)instantiate;
 
 @end

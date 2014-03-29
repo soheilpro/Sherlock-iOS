@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 Radset. All rights reserved.
 //
 
-#import "UIViewController+ActivityIndicator.h"
 #import "MBProgressHUD.h"
+#import "UIViewController+ActivityIndicator.h"
 
 @implementation UIViewController (ActivityIndicator)
 

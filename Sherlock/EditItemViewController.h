@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Softtool. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "Database.h"
+#import <UIKit/UIKit.h>
 
 @protocol EditItemDelegate<NSObject>
 
@@ -16,16 +16,11 @@
 
 @end
 
-@interface EditItemViewController : UIViewController<UITextFieldDelegate>
+@interface EditItemViewController : UITableViewController<UITextFieldDelegate, UITextViewDelegate>
 
 @property (nonatomic, strong) Item* item;
 @property (nonatomic, weak) id<EditItemDelegate> delegate;
-@property (nonatomic, weak) IBOutlet UIBarButtonItem* doneBarButtonItem;
-@property (nonatomic, weak) IBOutlet UITextField* nameTextField;
-@property (nonatomic, weak) IBOutlet UITextView* valueTextView;
-@property (nonatomic, weak) IBOutlet UISwitch* isSecretSwitch;
 
-- (IBAction)done:(id)sender;
-- (IBAction)cancel:(id)sender;
++ (instancetype)instantiate;
 
 @end

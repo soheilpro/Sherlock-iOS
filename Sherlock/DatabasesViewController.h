@@ -6,12 +6,12 @@
 //  Copyright (c) 2013 Softtool. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import "PasswordViewController.h"
 #import "NewDatabaseViewController.h"
+#import "PasswordViewController.h"
+#import <UIKit/UIKit.h>
 
 @interface DatabasesViewController : UITableViewController<PasswordDelegate, NewDatabaseDelegate>
 
-- (IBAction)openSettings:(id)sender;
++ (instancetype)instantiate;
 
 @end

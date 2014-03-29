@@ -6,15 +6,13 @@
 //  Copyright (c) 2013 Softtool. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "Database.h"
+#import <UIKit/UIKit.h>
 
-@interface ItemViewController : UIViewController
+@interface ItemViewController : UITableViewController
 
 @property (nonatomic, strong) Item* item;
-@property (nonatomic, weak) IBOutlet UILabel* nameLabel;
-@property (nonatomic, weak) IBOutlet UITextView* valueTextView;
 
-- (IBAction)close:(id)sender;
++ (instancetype)instantiate;
 
 @end

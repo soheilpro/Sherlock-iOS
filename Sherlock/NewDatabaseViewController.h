@@ -6,8 +6,9 @@
 //  Copyright (c) 2013 Softtool. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "Database.h"
+#import "Storage.h"
+#import <UIKit/UIKit.h>
 
 @protocol NewDatabaseDelegate<NSObject>
 
@@ -16,15 +17,11 @@
 
 @end
 
-@interface NewDatabaseViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
+@interface NewDatabaseViewController : UITableViewController<UITableViewDelegate, UITextFieldDelegate>
 
-@property (nonatomic, strong) NSArray* storages;
+@property (nonatomic, strong) id<Storage> storage;
 @property (nonatomic, weak) id<NewDatabaseDelegate> delegate;
-@property (nonatomic, weak) IBOutlet UITextField* nameTextField;
-@property (nonatomic, weak) IBOutlet UITableView* storageTableView;
-@property (nonatomic, weak) IBOutlet UIBarButtonItem* createButtonItem;
 
-- (IBAction)done:(id)sender;
-- (IBAction)cancel:(id)sender;
++ (instancetype)instantiate;
 
 @end

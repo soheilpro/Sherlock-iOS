@@ -22,15 +22,25 @@
 		5B59E1FE1708311400AEC98D /* DatabasesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B59E1FD1708311400AEC98D /* DatabasesViewController.m */; };
 		5B8942D2170773EC00A618C7 /* PasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8942D1170773EC00A618C7 /* PasswordViewController.m */; };
 		5B8942D51707837800A618C7 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8942D41707837800A618C7 /* SettingsViewController.m */; };
-		5B8942DF17079A3F00A618C7 /* ActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8942DE17079A3F00A618C7 /* ActionSheet.m */; };
 		5B9D48C117195AB80010F064 /* UIViewController+ActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B9D48BE17195AB80010F064 /* UIViewController+ActivityIndicator.m */; };
 		5B9D48C217195AB80010F064 /* UIViewController+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B9D48C017195AB80010F064 /* UIViewController+Alert.m */; };
 		5BA8611C18E6BEA5009D9A8B /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8611818E6BEA5009D9A8B /* MBProgressHUD.m */; };
 		5BA8611D18E6BEA5009D9A8B /* GDataXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8611B18E6BEA5009D9A8B /* GDataXMLNode.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		5BA8612D18E6C6E7009D9A8B /* SettingsModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8612C18E6C6E7009D9A8B /* SettingsModalViewController.m */; };
 		5BBDB012170B8A8900439235 /* Database+Display.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBDB011170B8A8900439235 /* Database+Display.m */; };
 		5BBDB016170B8B6100439235 /* UIView+Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBDB015170B8B6100439235 /* UIView+Animation.m */; };
 		5BBDB01A170B8C6800439235 /* TripleDES.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBDB019170B8C6800439235 /* TripleDES.m */; };
 		5BBDB01D170B95C100439235 /* NewPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBDB01C170B95C100439235 /* NewPasswordViewController.m */; };
+		5BD5664218E6CD590077A954 /* DatabasesModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5664118E6CD590077A954 /* DatabasesModalViewController.m */; };
+		5BD5664618E6CE680077A954 /* EditFolderModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5664518E6CE680077A954 /* EditFolderModalViewController.m */; };
+		5BD5664A18E6D2D00077A954 /* EditItemModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5664918E6D2D00077A954 /* EditItemModalViewController.m */; };
+		5BD5664F18E6D4C80077A954 /* NewDatabaseModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5664E18E6D4C80077A954 /* NewDatabaseModalViewController.m */; };
+		5BD5665418E6D6800077A954 /* NewPasswordModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5665318E6D6800077A954 /* NewPasswordModalViewController.m */; };
+		5BD5665818E6D7770077A954 /* PasswordModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5665718E6D7770077A954 /* PasswordModalViewController.m */; };
+		5BD5665D18E730FF0077A954 /* SRActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5665C18E730FF0077A954 /* SRActionSheet.m */; };
+		5BD5666018E741530077A954 /* DatabaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5665F18E741530077A954 /* DatabaseCell.m */; };
+		5BD5666318E742500077A954 /* FolderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5666218E742500077A954 /* FolderCell.m */; };
+		5BD5666618E7425D0077A954 /* ItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5666518E7425D0077A954 /* ItemCell.m */; };
 		5BF812A51706E83E00039E45 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF812A41706E83E00039E45 /* UIKit.framework */; };
 		5BF812A71706E83E00039E45 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF812A61706E83E00039E45 /* Foundation.framework */; };
 		5BF812A91706E83E00039E45 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF812A81706E83E00039E45 /* CoreGraphics.framework */; };
@@ -77,8 +87,6 @@
 		5B8942D1170773EC00A618C7 /* PasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordViewController.m; sourceTree = "<group>"; };
 		5B8942D31707837800A618C7 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		5B8942D41707837800A618C7 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
-		5B8942DD17079A3F00A618C7 /* ActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheet.h; sourceTree = "<group>"; };
-		5B8942DE17079A3F00A618C7 /* ActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionSheet.m; sourceTree = "<group>"; };
 		5B9D48BD17195AB80010F064 /* UIViewController+ActivityIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ActivityIndicator.h"; sourceTree = "<group>"; };
 		5B9D48BE17195AB80010F064 /* UIViewController+ActivityIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ActivityIndicator.m"; sourceTree = "<group>"; };
 		5B9D48BF17195AB80010F064 /* UIViewController+Alert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Alert.h"; sourceTree = "<group>"; };
@@ -87,6 +95,8 @@
 		5BA8611818E6BEA5009D9A8B /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		5BA8611A18E6BEA5009D9A8B /* GDataXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataXMLNode.h; sourceTree = "<group>"; };
 		5BA8611B18E6BEA5009D9A8B /* GDataXMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDataXMLNode.m; sourceTree = "<group>"; };
+		5BA8612B18E6C6E7009D9A8B /* SettingsModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsModalViewController.h; sourceTree = "<group>"; };
+		5BA8612C18E6C6E7009D9A8B /* SettingsModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsModalViewController.m; sourceTree = "<group>"; };
 		5BBDB010170B8A8900439235 /* Database+Display.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Database+Display.h"; sourceTree = "<group>"; };
 		5BBDB011170B8A8900439235 /* Database+Display.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Database+Display.m"; sourceTree = "<group>"; };
 		5BBDB014170B8B6100439235 /* UIView+Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Animation.h"; sourceTree = "<group>"; };
@@ -95,6 +105,26 @@
 		5BBDB019170B8C6800439235 /* TripleDES.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TripleDES.m; sourceTree = "<group>"; };
 		5BBDB01B170B95C100439235 /* NewPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPasswordViewController.h; sourceTree = "<group>"; };
 		5BBDB01C170B95C100439235 /* NewPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPasswordViewController.m; sourceTree = "<group>"; };
+		5BD5664018E6CD590077A954 /* DatabasesModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabasesModalViewController.h; sourceTree = "<group>"; };
+		5BD5664118E6CD590077A954 /* DatabasesModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabasesModalViewController.m; sourceTree = "<group>"; };
+		5BD5664418E6CE680077A954 /* EditFolderModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditFolderModalViewController.h; sourceTree = "<group>"; };
+		5BD5664518E6CE680077A954 /* EditFolderModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditFolderModalViewController.m; sourceTree = "<group>"; };
+		5BD5664818E6D2D00077A954 /* EditItemModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditItemModalViewController.h; sourceTree = "<group>"; };
+		5BD5664918E6D2D00077A954 /* EditItemModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditItemModalViewController.m; sourceTree = "<group>"; };
+		5BD5664D18E6D4C80077A954 /* NewDatabaseModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewDatabaseModalViewController.h; sourceTree = "<group>"; };
+		5BD5664E18E6D4C80077A954 /* NewDatabaseModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewDatabaseModalViewController.m; sourceTree = "<group>"; };
+		5BD5665218E6D6800077A954 /* NewPasswordModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPasswordModalViewController.h; sourceTree = "<group>"; };
+		5BD5665318E6D6800077A954 /* NewPasswordModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPasswordModalViewController.m; sourceTree = "<group>"; };
+		5BD5665618E6D7770077A954 /* PasswordModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasswordModalViewController.h; sourceTree = "<group>"; };
+		5BD5665718E6D7770077A954 /* PasswordModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordModalViewController.m; sourceTree = "<group>"; };
+		5BD5665B18E730FF0077A954 /* SRActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRActionSheet.h; sourceTree = "<group>"; };
+		5BD5665C18E730FF0077A954 /* SRActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRActionSheet.m; sourceTree = "<group>"; };
+		5BD5665E18E741530077A954 /* DatabaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseCell.h; sourceTree = "<group>"; };
+		5BD5665F18E741530077A954 /* DatabaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseCell.m; sourceTree = "<group>"; };
+		5BD5666118E742500077A954 /* FolderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderCell.h; sourceTree = "<group>"; };
+		5BD5666218E742500077A954 /* FolderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FolderCell.m; sourceTree = "<group>"; };
+		5BD5666418E7425D0077A954 /* ItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemCell.h; sourceTree = "<group>"; };
+		5BD5666518E7425D0077A954 /* ItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemCell.m; sourceTree = "<group>"; };
 		5BF812A01706E83E00039E45 /* Sherlock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sherlock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BF812A41706E83E00039E45 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5BF812A61706E83E00039E45 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -210,6 +240,8 @@
 			children = (
 				5B59E1FC1708311400AEC98D /* DatabasesViewController.h */,
 				5B59E1FD1708311400AEC98D /* DatabasesViewController.m */,
+				5BD5665E18E741530077A954 /* DatabaseCell.h */,
+				5BD5665F18E741530077A954 /* DatabaseCell.m */,
 			);
 			name = DatabasesViewController;
 			sourceTree = "<group>";
@@ -237,6 +269,10 @@
 			children = (
 				5BF812C21706E83E00039E45 /* FolderViewController.h */,
 				5BF812C31706E83E00039E45 /* FolderViewController.m */,
+				5BD5666118E742500077A954 /* FolderCell.h */,
+				5BD5666218E742500077A954 /* FolderCell.m */,
+				5BD5666418E7425D0077A954 /* ItemCell.h */,
+				5BD5666518E7425D0077A954 /* ItemCell.m */,
 			);
 			name = FolderViewController;
 			sourceTree = "<group>";
@@ -289,8 +325,6 @@
 		5BA8612818E6BF61009D9A8B /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				5B8942DD17079A3F00A618C7 /* ActionSheet.h */,
-				5B8942DE17079A3F00A618C7 /* ActionSheet.m */,
 				5BBDB010170B8A8900439235 /* Database+Display.h */,
 				5BBDB011170B8A8900439235 /* Database+Display.m */,
 				5BBDB014170B8B6100439235 /* UIView+Animation.h */,
@@ -306,17 +340,33 @@
 		5BA8612918E6BF69009D9A8B /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				5BD5664318E6CD5E0077A954 /* DatabasesModalViewController */,
 				5BA8611E18E6BF0F009D9A8B /* DatabasesViewController */,
+				5BD5664718E6CEAD0077A954 /* EditFolderModalViewController */,
 				5BA8612418E6BF3B009D9A8B /* EditFolderViewController */,
+				5BD5664B18E6D2D60077A954 /* EditItemModalViewController */,
 				5BA8612518E6BF41009D9A8B /* EditItemViewController */,
 				5BA8612118E6BF28009D9A8B /* FolderViewController */,
 				5BA8612318E6BF35009D9A8B /* ItemViewController */,
+				5BD5665018E6D50E0077A954 /* NewDatabaseModalViewController */,
 				5BA8612018E6BF22009D9A8B /* NewDatabaseViewController */,
+				5BD5665518E6D68D0077A954 /* NewPasswordModalViewController */,
 				5BA8612618E6BF4A009D9A8B /* NewPasswordViewController */,
+				5BD5665918E6D77E0077A954 /* PasswordModalViewController */,
 				5BA8611F18E6BF1C009D9A8B /* PasswordViewController */,
+				5BA8612A18E6C6D2009D9A8B /* SettingsModalViewController */,
 				5BA8612718E6BF51009D9A8B /* SettingsViewController */,
 			);
 			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		5BA8612A18E6C6D2009D9A8B /* SettingsModalViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5BA8612B18E6C6E7009D9A8B /* SettingsModalViewController.h */,
+				5BA8612C18E6C6E7009D9A8B /* SettingsModalViewController.m */,
+			);
+			name = SettingsModalViewController;
 			sourceTree = "<group>";
 		};
 		5BBDB017170B8C4A00439235 /* Utilities */ = {
@@ -329,6 +379,70 @@
 			);
 			name = Utilities;
 			sourceTree = "<group>";
+		};
+		5BD5664318E6CD5E0077A954 /* DatabasesModalViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5BD5664018E6CD590077A954 /* DatabasesModalViewController.h */,
+				5BD5664118E6CD590077A954 /* DatabasesModalViewController.m */,
+			);
+			name = DatabasesModalViewController;
+			sourceTree = "<group>";
+		};
+		5BD5664718E6CEAD0077A954 /* EditFolderModalViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5BD5664418E6CE680077A954 /* EditFolderModalViewController.h */,
+				5BD5664518E6CE680077A954 /* EditFolderModalViewController.m */,
+			);
+			name = EditFolderModalViewController;
+			sourceTree = "<group>";
+		};
+		5BD5664B18E6D2D60077A954 /* EditItemModalViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5BD5664818E6D2D00077A954 /* EditItemModalViewController.h */,
+				5BD5664918E6D2D00077A954 /* EditItemModalViewController.m */,
+			);
+			name = EditItemModalViewController;
+			sourceTree = "<group>";
+		};
+		5BD5665018E6D50E0077A954 /* NewDatabaseModalViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5BD5664D18E6D4C80077A954 /* NewDatabaseModalViewController.h */,
+				5BD5664E18E6D4C80077A954 /* NewDatabaseModalViewController.m */,
+			);
+			name = NewDatabaseModalViewController;
+			sourceTree = "<group>";
+		};
+		5BD5665518E6D68D0077A954 /* NewPasswordModalViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5BD5665218E6D6800077A954 /* NewPasswordModalViewController.h */,
+				5BD5665318E6D6800077A954 /* NewPasswordModalViewController.m */,
+			);
+			name = NewPasswordModalViewController;
+			sourceTree = "<group>";
+		};
+		5BD5665918E6D77E0077A954 /* PasswordModalViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5BD5665618E6D7770077A954 /* PasswordModalViewController.h */,
+				5BD5665718E6D7770077A954 /* PasswordModalViewController.m */,
+			);
+			name = PasswordModalViewController;
+			sourceTree = "<group>";
+		};
+		5BD5665A18E730FF0077A954 /* SRActionSheet */ = {
+			isa = PBXGroup;
+			children = (
+				5BD5665B18E730FF0077A954 /* SRActionSheet.h */,
+				5BD5665C18E730FF0077A954 /* SRActionSheet.m */,
+			);
+			name = SRActionSheet;
+			path = Libraries/SRActionSheet;
+			sourceTree = SOURCE_ROOT;
 		};
 		5BF812951706E83E00039E45 = {
 			isa = PBXGroup;
@@ -421,6 +535,7 @@
 		5BF8132317071CF800039E45 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				5BD5665A18E730FF0077A954 /* SRActionSheet */,
 				5BA8611618E6BEA5009D9A8B /* MBProgressHUD */,
 				5BA8611918E6BEA5009D9A8B /* GDataXML */,
 			);
@@ -499,18 +614,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BD5666618E7425D0077A954 /* ItemCell.m in Sources */,
 				5BF812B11706E83E00039E45 /* Main.m in Sources */,
 				5BF812B51706E83E00039E45 /* AppDelegate.m in Sources */,
+				5BD5666018E741530077A954 /* DatabaseCell.m in Sources */,
 				5BF812C41706E83E00039E45 /* FolderViewController.m in Sources */,
 				5BF8130D1706FEFA00039E45 /* Node.m in Sources */,
+				5BD5664F18E6D4C80077A954 /* NewDatabaseModalViewController.m in Sources */,
 				5BF813101706FF0C00039E45 /* Folder.m in Sources */,
 				5BF813131706FF3100039E45 /* Item.m in Sources */,
 				5BF8131E1707145C00039E45 /* ItemViewController.m in Sources */,
+				5BD5665418E6D6800077A954 /* NewPasswordModalViewController.m in Sources */,
 				5BF8132A1707543E00039E45 /* Database.m in Sources */,
+				5BD5665818E6D7770077A954 /* PasswordModalViewController.m in Sources */,
+				5BD5664618E6CE680077A954 /* EditFolderModalViewController.m in Sources */,
+				5BD5665D18E730FF0077A954 /* SRActionSheet.m in Sources */,
+				5BD5664A18E6D2D00077A954 /* EditItemModalViewController.m in Sources */,
 				5B8942D2170773EC00A618C7 /* PasswordViewController.m in Sources */,
+				5BD5664218E6CD590077A954 /* DatabasesModalViewController.m in Sources */,
 				5B8942D51707837800A618C7 /* SettingsViewController.m in Sources */,
-				5B8942DF17079A3F00A618C7 /* ActionSheet.m in Sources */,
 				5B59E1FE1708311400AEC98D /* DatabasesViewController.m in Sources */,
+				5BA8612D18E6C6E7009D9A8B /* SettingsModalViewController.m in Sources */,
 				5B4466AB1708B12A00A42D7C /* LocalStorage.m in Sources */,
 				5B4466AE1708B20500A42D7C /* DropboxStorage.m in Sources */,
 				5B4466B11708C05D00A42D7C /* NewDatabaseViewController.m in Sources */,
@@ -522,6 +646,7 @@
 				5BBDB016170B8B6100439235 /* UIView+Animation.m in Sources */,
 				5BBDB01A170B8C6800439235 /* TripleDES.m in Sources */,
 				5BBDB01D170B95C100439235 /* NewPasswordViewController.m in Sources */,
+				5BD5666318E742500077A954 /* FolderCell.m in Sources */,
 				5B4F2577170EE67400609904 /* Dropbox.m in Sources */,
 				5B9D48C117195AB80010F064 /* UIViewController+ActivityIndicator.m in Sources */,
 				5B9D48C217195AB80010F064 /* UIViewController+Alert.m in Sources */,
@@ -573,7 +698,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-lxml2";
 				SDKROOT = iphoneos;
@@ -597,7 +722,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "-lxml2";
 				SDKROOT = iphoneos;

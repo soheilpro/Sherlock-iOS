@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Softtool. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "Database.h"
+#import <UIKit/UIKit.h>
 
 @protocol EditFolderDelegate<NSObject>
 
@@ -16,14 +16,11 @@
 
 @end
 
-@interface EditFolderViewController : UIViewController<UITextFieldDelegate>
+@interface EditFolderViewController : UITableViewController<UITextFieldDelegate>
 
 @property (nonatomic, strong) Folder* folder;
 @property (nonatomic, weak) id<EditFolderDelegate> delegate;
-@property (nonatomic, weak) IBOutlet UIBarButtonItem* doneBarButtonItem;
-@property (nonatomic, weak) IBOutlet UITextField* nameTextField;
 
-- (IBAction)done:(id)sender;
-- (IBAction)cancel:(id)sender;
++ (instancetype)instantiate;
 
 @end

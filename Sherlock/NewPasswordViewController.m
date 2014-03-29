@@ -6,37 +6,41 @@
 //  Copyright (c) 2013 Softtool. All rights reserved.
 //
 
+#import "AppDelegate.h"
 #import "NewPasswordViewController.h"
 #import "UIView+Animation.h"
 
+@interface NewPasswordViewController ()
+
+@property (nonatomic, weak) IBOutlet UITextField* currentPasswordTextField;
+@property (nonatomic, weak) IBOutlet UITextField* passwordTextField;
+@property (nonatomic, weak) IBOutlet UITextField* passwordConfirmTextField;
+
+@end
+
 @implementation NewPasswordViewController
 
-- (void)viewWillAppear:(BOOL)animated
+#pragma mark - UIViewController
+
+- (void)viewDidLoad
 {
-    [super viewWillAppear:animated];
-    
+    [super viewDidLoad];
+
     self.currentPasswordTextField.delegate = self;
     self.passwordTextField.delegate = self;
     self.passwordConfirmTextField.delegate = self;
+}
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
     [self.currentPasswordTextField becomeFirstResponder];
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField*)textField
-{
-    if (textField == self.currentPasswordTextField)
-        [self.passwordTextField becomeFirstResponder];
+#pragma mark - Actions
 
-    if (textField == self.passwordTextField)
-        [self.passwordConfirmTextField becomeFirstResponder];
-
-    if (textField == self.passwordConfirmTextField)
-        [self done:textField];
-    
-    return YES;
-}
-
-- (void)done:(id)sender
+- (IBAction)done:(id)sender
 {
     if (![self.currentPasswordTextField.text isEqualToString:self.database.password ?: @""])
     {
@@ -64,9 +68,27 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
-- (void)cancel:(id)sender
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField*)textField
 {
-    [self dismissModalViewControllerAnimated:YES];
+    if (textField == self.currentPasswordTextField)
+        [self.passwordTextField becomeFirstResponder];
+
+    if (textField == self.passwordTextField)
+        [self.passwordConfirmTextField becomeFirstResponder];
+
+    if (textField == self.passwordConfirmTextField)
+        [self done:textField];
+
+    return YES;
+}
+
+#pragma mark - Class methods
+
++ (instancetype)instantiate
+{
+    return [[AppDelegate sharedDelegate].window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"NewPassword"];
 }
 
 @end

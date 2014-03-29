@@ -1,26 +1,24 @@
 //
-//  ActionSheet.m
-//  Sherlock
+//  SRActionSheet.m
+//  SRActionSheet
 //
-//  Created by Soheil Rashidi on 6/19/12.
-//  Copyright (c) 2012 Radset. All rights reserved.
+//  Created by Tyler Durden on 6/19/12.
+//  Copyright (c) 2012 Tyler Durden. All rights reserved.
 //
 
-#import "ActionSheet.h"
+#import "SRActionSheet.h"
 
-@interface ActionSheet ()
+@interface SRActionSheet ()
 
-@property (nonatomic, strong) ActionSheet* me;
 @property (nonatomic, strong) NSMutableArray* buttons;
 
 @end
 
-@implementation ActionSheet
+@implementation SRActionSheet
 
-+ (ActionSheet*)actionSheet
-{
-    return [[self alloc] init];
-}
+static SRActionSheet* currentInstance;
+
+#pragma mark - Init
 
 - (id)init
 {
@@ -33,6 +31,8 @@
 
     return self;
 }
+
+#pragma mark - Methods
 
 - (void)addButtonWithTitle:(NSString*)title selectBlock:(actionBlock)selectBlock
 {
@@ -86,7 +86,7 @@
 
     [actionSheet showInView:view];
 
-    self.me = self; // Only to make sure this instance stays aournd
+    currentInstance = self; // Only to make sure this instance stays aournd
 }
 
 - (void)actionSheet:(UIActionSheet*)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -100,14 +100,21 @@
         }
     }
 
-    self.me = nil;
+    // currentInstance = nil; // Enabling this line causes the app to crash iOS
+}
+
+#pragma mark - Class methods
+
++ (instancetype)actionSheet
+{
+    return [[self alloc] init];
 }
 
 @end
 
 @implementation ActionSheetButton
 
-+ (ActionSheetButton*)button
++ (instancetype)button
 {
     return [[self alloc] init];
 }

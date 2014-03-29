@@ -6,9 +6,19 @@
 //  Copyright (c) 2013 Softtool. All rights reserved.
 //
 
+#import "AppDelegate.h"
 #import "EditFolderViewController.h"
 
+@interface EditFolderViewController ()
+
+@property (nonatomic, weak) IBOutlet UIBarButtonItem* doneBarButtonItem;
+@property (nonatomic, weak) IBOutlet UITextField* nameTextField;
+
+@end
+
 @implementation EditFolderViewController
+
+#pragma mark - UIViewController
 
 - (void)viewDidLoad
 {
@@ -17,17 +27,38 @@
     self.nameTextField.text = self.folder.name;
     self.nameTextField.delegate = self;
     
-    [self toggleCreateButton];
+    [self toggleCreateButton:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toggleCreateButton) name:UITextFieldTextDidChangeNotification object:self.nameTextField];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toggleCreateButton:) name:UITextFieldTextDidChangeNotification object:self.nameTextField];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:YES];
+    [super viewDidAppear:animated];
     
     [self.nameTextField becomeFirstResponder];
 }
+
+#pragma mark - Actions
+
+- (IBAction)done:(id)sender
+{
+    self.folder.name = self.nameTextField.text;
+
+    [self.delegate didUpdateFolder:self.folder];
+
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+#pragma mark - Notifications
+
+- (void)toggleCreateButton:(NSNotification*)notification
+{
+    self.doneBarButtonItem.enabled = self.nameTextField.text.length > 0;
+}
+
+
+#pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField*)textField
 {
@@ -37,23 +68,11 @@
     return YES;
 }
 
-- (void)toggleCreateButton
-{
-    self.doneBarButtonItem.enabled = self.nameTextField.text.length > 0;
-}
+#pragma mark - Class methods
 
-- (void)done:(id)sender
++ (instancetype)instantiate
 {
-    self.folder.name = self.nameTextField.text;
-    
-    [self.delegate didUpdateFolder:self.folder];
-    
-    [self dismissModalViewControllerAnimated:YES];
-}
-
-- (void)cancel:(id)sender
-{
-    [self dismissModalViewControllerAnimated:YES];
+    return [[AppDelegate sharedDelegate].window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"EditFolder"];
 }
 
 @end

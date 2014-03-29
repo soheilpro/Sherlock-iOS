@@ -6,46 +6,44 @@
 //  Copyright (c) 2013 Softtool. All rights reserved.
 //
 
+#import "AppDelegate.h"
 #import "PasswordViewController.h"
 #import "Database.h"
 #import "Database+Display.h"
 #import "UIView+Animation.h"
 
+@interface PasswordViewController ()
+
+@property (nonatomic, weak) IBOutlet UITextField* passwordTextField;
+
+@end
+
 @implementation PasswordViewController
+
+#pragma mark - UIViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    self.navigationItem2.title = [self.database displayName];
+    self.title = [self.database displayName];
     self.passwordTextField.delegate = self;
     
-    [self toggleOpenButton];
+    [self toggleOpenButton:nil];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toggleOpenButton) name:UITextFieldTextDidChangeNotification object:self.passwordTextField];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toggleOpenButton:) name:UITextFieldTextDidChangeNotification object:self.passwordTextField];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+    [super viewDidAppear:animated];
     
     [self.passwordTextField becomeFirstResponder];
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField*)textField
-{
-    if (textField == self.passwordTextField)
-        [self go:textField];
-    
-    return YES;
-}
+#pragma mark - Actions
 
-- (void)toggleOpenButton
-{
-    self.navigationItem.rightBarButtonItem.enabled = self.passwordTextField.text.length > 0;
-}
-
-- (void)go:(id)sender
+- (IBAction)go:(id)sender
 {
     BOOL isPasswordCorrect = [self.delegate didEnterPassword:self.passwordTextField.text inViewController:self];
 
@@ -56,9 +54,28 @@
     }
 }
 
-- (void)cancel:(id)sender
+#pragma mark - Notifications
+
+- (void)toggleOpenButton:(NSNotification*)notification
 {
-    [self dismissModalViewControllerAnimated:YES];
+    self.navigationItem.rightBarButtonItem.enabled = self.passwordTextField.text.length > 0;
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField*)textField
+{
+    if (textField == self.passwordTextField)
+        [self go:textField];
+
+    return YES;
+}
+
+#pragma mark - Class methods
+
++ (instancetype)instantiate
+{
+    return [[AppDelegate sharedDelegate].window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"Password"];
 }
 
 @end

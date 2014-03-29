@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Softtool. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import <CommonCrypto/CommonCryptor.h>
+#import <Foundation/Foundation.h>
 
 @interface TripleDES : NSObject
 

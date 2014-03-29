@@ -1,9 +1,9 @@
 //
-//  ActionSheet.h
-//  Sherlock
+//  SRActionSheet.h
+//  SRActionSheet
 //
-//  Created by Soheil Rashidi on 6/19/12.
-//  Copyright (c) 2012 Radset. All rights reserved.
+//  Created by Tyler Durden on 6/19/12.
+//  Copyright (c) 2012 Tyler Durden. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -17,17 +17,17 @@ typedef enum
     ActionSheetButtonTypeCancel,
 } ActionSheetButtonType;
 
-@interface ActionSheet : NSObject<UIActionSheetDelegate>
+@interface SRActionSheet : NSObject<UIActionSheetDelegate>
 
 @property (nonatomic, strong) NSString* title;
-
-+ (ActionSheet*)actionSheet;
 
 - (void)addButtonWithTitle:(NSString*)title selectBlock:(actionBlock)selectBlock;
 - (void)addDestructiveButtonWithTitle:(NSString*)title selectBlock:(actionBlock)selectBlock;
 - (void)addCancelButtonWithTitle:(NSString*)title selectBlock:(actionBlock)selectBlock;
 - (void)addCancelButtonWithTitle:(NSString*)title;
 - (void)presentInView:(UIView*)view;
+
++ (instancetype)actionSheet;
 
 @end
 
@@ -38,6 +38,6 @@ typedef enum
 @property (nonatomic, strong) actionBlock selectBlock;
 @property (nonatomic) NSInteger index;
 
-+ (ActionSheetButton*)button;
++ (instancetype)button;
 
 @end

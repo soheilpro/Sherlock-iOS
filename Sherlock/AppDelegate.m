@@ -6,9 +6,10 @@
 //  Copyright (c) 2013 Softtool. All rights reserved.
 //
 
-#import <DropboxSDK/DropboxSDK.h>
 #import "AppDelegate.h"
+#import "DatabasesModalViewController.h"
 #import "FolderViewController.h"
+#import <DropboxSDK/DropboxSDK.h>
 
 NSString* const NSURLIsExcludedFromBackupKey = @"NSURLIsExcludedFromBackupKey";
 
@@ -19,6 +20,8 @@ NSString* const NSURLIsExcludedFromBackupKey = @"NSURLIsExcludedFromBackupKey";
 @end
 
 @implementation AppDelegate
+
+#pragma mark - UIApplicationDelegate
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
@@ -42,6 +45,25 @@ NSString* const NSURLIsExcludedFromBackupKey = @"NSURLIsExcludedFromBackupKey";
     return NO;
 }
 
+#pragma mark - Methods
+
+- (void)unloadCurrentDatabase
+{
+    self.database = nil;
+
+    [self selectDatabase:YES];
+}
+
+- (void)didOpenDatabase:(Database*)database
+{
+    self.database = database;
+
+    FolderViewController* mainViewController = [((UINavigationController*)self.window.rootViewController).viewControllers objectAtIndex:0];
+    mainViewController.folder = database.root;
+}
+
+#pragma mark -
+
 - (void)setupDropbox
 {
     DBSession* session = [[DBSession alloc] initWithAppKey:@"YOUR_APP_KEY" appSecret:@"YOUR_APP_SECRET" root:kDBRootDropbox];
@@ -50,25 +72,16 @@ NSString* const NSURLIsExcludedFromBackupKey = @"NSURLIsExcludedFromBackupKey";
 
 - (void)selectDatabase:(BOOL)animated;
 {
-    UIViewController* rootViewController = self.window.rootViewController;
-    UINavigationController* navigationViewController = [rootViewController.storyboard instantiateViewControllerWithIdentifier:@"DatabasesNavigation"];
-    
-    [rootViewController presentModalViewController:navigationViewController animated:animated];
+    DatabasesModalViewController* databasesModalViewController = [DatabasesModalViewController instantiate];
+
+    [self.window.rootViewController presentViewController:databasesModalViewController animated:animated completion:nil];
 }
 
-- (void)didOpenDatabase:(Database*)database
-{
-    self.database = database;
-    
-    FolderViewController* mainViewController = [((UINavigationController*)self.window.rootViewController).viewControllers objectAtIndex:0];
-    mainViewController.folder = database.root;
-}
+#pragma mark - Class methods
 
-- (void)unloadCurrentDatabase
++ (AppDelegate*)sharedDelegate
 {
-    self.database = nil;
-    
-    [self selectDatabase:YES];
+    return ((AppDelegate*)[UIApplication sharedApplication].delegate);
 }
 
 @end

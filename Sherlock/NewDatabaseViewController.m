@@ -6,18 +6,21 @@
 //  Copyright (c) 2013 Softtool. All rights reserved.
 //
 
-#import "NewDatabaseViewController.h"
-#import "Storage.h"
-#import "Database.h"
 #import "AppDelegate.h"
+#import "NewDatabaseViewController.h"
 
 @interface NewDatabaseViewController ()
 
 @property (nonatomic) NSInteger selectedStorageIndex;
+@property (nonatomic, weak) IBOutlet UITextField* nameTextField;
+@property (nonatomic, weak) IBOutlet UITableView* storageTableView;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem* createButtonItem;
 
 @end
 
 @implementation NewDatabaseViewController
+
+#pragma mark - UIViewController
 
 - (void)viewDidLoad
 {
@@ -25,74 +28,53 @@
     
     self.nameTextField.delegate = self;
 
-    [self toggleCreateButton];
+    [self toggleCreateButton:nil];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toggleCreateButton) name:UITextFieldTextDidChangeNotification object:self.nameTextField];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toggleCreateButton:) name:UITextFieldTextDidChangeNotification object:self.nameTextField];
 }
 
--(void)viewWillAppear:(BOOL)animated
+-(void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+    [super viewDidAppear:animated];
     
     [self.nameTextField becomeFirstResponder];
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField*)textField
-{
-    if (textField == self.nameTextField)
-        [self done:textField];
-    
-    return YES;
-}
+#pragma mark - Actions
 
-- (void)toggleCreateButton
-{
-    self.createButtonItem.enabled = self.nameTextField.text.length > 0;
-}
-
--(void)done:(id)sender
+-(IBAction)create:(id)sender
 {
     Database* database = [[Database alloc] init];
     database.name = [self.nameTextField.text stringByAppendingPathExtension:DB_FILE_EXTENSION];
-    database.storage = [self.storages objectAtIndex:self.selectedStorageIndex];
+    database.storage = self.storage;
 
     [self.delegate didCreateDatabase:database];
     
     [self dismissModalViewControllerAnimated:YES];
 }
 
-- (void)cancel:(id)sender
+#pragma mark - Notifications
+
+- (void)toggleCreateButton:(NSNotification*)notification
 {
-    [self dismissModalViewControllerAnimated:YES];
+    self.createButtonItem.enabled = self.nameTextField.text.length > 0;
 }
 
-#pragma mark - Table view data source
+#pragma mark - UITextFieldDelegate
 
-- (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
+- (BOOL)textFieldShouldReturn:(UITextField*)textField
 {
-    return self.storages.count;
+    if (textField == self.nameTextField)
+        [self create:textField];
+
+    return YES;
 }
 
-- (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
-{
-    id<Storage> storage = [self.storages objectAtIndex:indexPath.row];
-    
-    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"StorageCell"];
-    cell.textLabel.text = [storage name];
-    cell.accessoryType = indexPath.row == self.selectedStorageIndex ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
-    
-    return cell;
-}
+#pragma mark - Class methods
 
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
++ (instancetype)instantiate
 {
-    self.selectedStorageIndex = indexPath.row;
-    
-    [tableView reloadData];
-    [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    return [[AppDelegate sharedDelegate].window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"NewDatabase"];
 }
 
 @end

@@ -8,14 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SettingsViewController : UIViewController
+@interface SettingsViewController : UITableViewController
 
-@property (nonatomic, weak) IBOutlet UIButton* linkDropboxButton;
-@property (nonatomic, weak) IBOutlet UIButton* unlinkDropboxButton;
-@property (nonatomic, weak) IBOutlet UILabel* dropboxStatusLabel;
-
-- (IBAction)close:(id)sender;
-- (IBAction)linkDropbox:(id)sender;
-- (IBAction)unlinkDropbox:(id)sender;
++ (instancetype)instantiate;
 
 @end

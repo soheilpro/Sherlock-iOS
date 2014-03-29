@@ -6,17 +6,19 @@
 //  Copyright (c) 2013 Softtool. All rights reserved.
 //
 
-#import "DatabasesViewController.h"
-#import "MBProgressHUD.h"
-#import "Storage.h"
-#import "LocalStorage.h"
-#import "DropboxStorage.h"
-#import "Database.h"
 #import "AppDelegate.h"
-#import "Database+Display.h"
+#import "Database.h"
+#import "DatabaseCell.h"
+#import "DatabasesViewController.h"
+#import "DropboxStorage.h"
+#import "LocalStorage.h"
+#import "MBProgressHUD.h"
+#import "NewDatabaseModalViewController.h"
+#import "PasswordModalViewController.h"
+#import "SRActionSheet.h"
+#import "SettingsModalViewController.h"
 #import "UIViewController+ActivityIndicator.h"
 #import "UIViewController+Alert.h"
-#import "ActionSheet.h"
 
 @interface DatabasesViewController ()
 
@@ -27,6 +29,8 @@
 @end
 
 @implementation DatabasesViewController
+
+#pragma mark - UIViewController
 
 - (void)viewDidLoad
 {
@@ -42,6 +46,8 @@
     [self refreshDatabases];
 }
 
+#pragma mark - UITableViewController
+
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
     [super setEditing:editing animated:animated];
@@ -51,7 +57,7 @@
     if (editing)
     {
         originalLeftBarButtonItems = self.navigationItem.leftBarButtonItems;
-        UIBarButtonItem* addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(newDatabase)];
+        UIBarButtonItem* addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(newDatabase:)];
         
         [self.navigationItem setLeftBarButtonItem:addButton animated:YES];
     }
@@ -61,83 +67,40 @@
     }
 }
 
-- (void)refreshDatabases
-{
-    id activityIndicator = [self displayActivityIndicatorWithMessage:@"Loading list of databases"];
-    __block NSInteger fetchedStorageDatabases = 0;
-    
-    for (id<Storage> storage in self.storages)
-    {
-        [storage fetchDatabasesWithCallback:^(NSArray* databases, NSError* error)
-        {
-            [self.tableView reloadData];
-
-            fetchedStorageDatabases++;
-            
-            if (fetchedStorageDatabases == self.storages.count)
-            {
-                [self hideActivityIndicator:activityIndicator];
-            }
-        }];
-    }
-}
-
-- (BOOL)didEnterPassword:(NSString*)password inViewController:(UIViewController*)viewController;
-{
-    BOOL didOpenDatabase = [self.selectedDatabase openWithData:self.selectedDatabaseData andPassword:password];
-     
-    if (!didOpenDatabase)
-        return NO;
-    
-    [((AppDelegate*)[UIApplication sharedApplication].delegate) didOpenDatabase:self.selectedDatabase];
-    
-    [viewController dismissModalViewControllerAnimated:NO];
-    [self dismissModalViewControllerAnimated:YES];
-    
-    return YES;
-}
-
-- (void)newDatabase
-{
-    NSMutableArray* availableStorages = [NSMutableArray array];
-    
-    for (id<Storage> storage in self.storages)
-        if ([storage isAvailable])
-            [availableStorages addObject:storage];
-    
-    NewDatabaseViewController* newDatabaseViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NewDatabase"];
-    newDatabaseViewController.storages = availableStorages;
-    newDatabaseViewController.delegate = self;
-
-    [self presentModalViewController:newDatabaseViewController animated:YES];
-}
-
-- (void)didCreateDatabase:(Database*)database
-{
-    id activityIndicator = [self displayActivityIndicatorWithMessage:@"Creating database"];
-    
-    [database saveWithCallback:^(NSError* error)
-    {
-        [self hideActivityIndicator:activityIndicator];
-        
-        if (error != nil)
-            [self displayErrorMessage:@"Cannot create database"];
-        else
-            [self refreshDatabases];
-
-    }];
-    
-    [self setEditing:NO];
-}
+#pragma mark - Actions
 
 - (IBAction)openSettings:(id)sender
 {
-    UIViewController* settingsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Settings"];
+    SettingsModalViewController* settingsModalViewController = [SettingsModalViewController instantiate];
 
-    [self presentModalViewController:settingsViewController animated:YES];
+    [self presentViewController:settingsModalViewController animated:YES completion:nil];
 }
 
-#pragma mark - Table view data source
+- (void)newDatabase:(id)sender
+{
+    SRActionSheet* actionSheet = [SRActionSheet actionSheet];
+
+    for (id<Storage> storage in self.storages)
+    {
+        if (![storage isAvailable])
+            continue;
+
+        [actionSheet addButtonWithTitle:storage.name selectBlock:^
+        {
+            NewDatabaseModalViewController* newDatabaseModalViewController = [NewDatabaseModalViewController instantiate];
+            newDatabaseModalViewController.storage = storage;
+            newDatabaseModalViewController.neuDatabaseDelegate = self;
+
+            [self presentViewController:newDatabaseModalViewController animated:YES completion:nil];
+        }];
+    }
+
+    [actionSheet addCancelButtonWithTitle:@"Cancel"];
+
+    [actionSheet presentInView:self.view];
+}
+
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
 {
@@ -163,12 +126,51 @@
     id<Storage> storage = [self.storages objectAtIndex:indexPath.section];
     Database* database = [[storage databases] objectAtIndex:indexPath.row];
     
-    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"DatabaseCell"];
-    cell.textLabel.text = [database displayName];
-    cell.detailTextLabel.text = database.isReadOnly ? @"readonly" : nil;
+    DatabaseCell* cell = [tableView dequeueReusableCellWithIdentifier:@"DatabaseCell"];
+    cell.database = database;
     
     return cell;
 }
+
+- (BOOL)tableView:(UITableView*)tableView canEditRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    id<Storage> storage = [self.storages objectAtIndex:indexPath.section];
+    Database* database = [[storage databases] objectAtIndex:indexPath.row];
+
+    return !database.isReadOnly;
+}
+
+- (void)tableView:(UITableView*)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        SRActionSheet* actionSheet = [SRActionSheet actionSheet];
+
+        [actionSheet addDestructiveButtonWithTitle:@"Delete" selectBlock:^
+        {
+            id<Storage> storage = [self.storages objectAtIndex:indexPath.section];
+            Database* database = [[storage databases] objectAtIndex:indexPath.row];
+
+            id activityIndicator = [self displayActivityIndicatorWithMessage:@"Deleting database"];
+
+            [storage deleteDatabase:database callback:^(NSError* error)
+            {
+                [self hideActivityIndicator:activityIndicator];
+
+                if (error != nil)
+                    [self displayErrorMessage:@"Cannot delete database"];
+                else
+                    [self refreshDatabases];
+            }];
+        }];
+
+        [actionSheet addCancelButtonWithTitle:@"Cancel"];
+
+        [actionSheet presentInView:self.view];
+    }
+}
+
+#pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
@@ -199,51 +201,80 @@
         }
         else
         {
-            PasswordViewController* passwordViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Password"];
-            passwordViewController.database = database;
-            passwordViewController.delegate = self;
+            PasswordModalViewController* passwordModalViewController = [PasswordModalViewController instantiate];
+            passwordModalViewController.database = database;
+            passwordModalViewController.passwordDelegate = self;
         
-            [self presentModalViewController:passwordViewController animated:YES];
+            [self presentViewController:passwordModalViewController animated:YES completion:nil];
         }
     }];
 }
 
-- (BOOL)tableView:(UITableView*)tableView canEditRowAtIndexPath:(NSIndexPath*)indexPath
+
+#pragma mark - PasswordDelegate
+
+- (BOOL)didEnterPassword:(NSString*)password inViewController:(UIViewController*)viewController;
 {
-    id<Storage> storage = [self.storages objectAtIndex:indexPath.section];
-    Database* database = [[storage databases] objectAtIndex:indexPath.row];
-    
-    return !database.isReadOnly;
+    BOOL didOpenDatabase = [self.selectedDatabase openWithData:self.selectedDatabaseData andPassword:password];
+
+    if (!didOpenDatabase)
+        return NO;
+
+    [((AppDelegate*)[UIApplication sharedApplication].delegate) didOpenDatabase:self.selectedDatabase];
+
+    [viewController dismissModalViewControllerAnimated:NO];
+    [self dismissModalViewControllerAnimated:YES];
+
+    return YES;
 }
 
-- (void)tableView:(UITableView*)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath*)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete)
-    {
-        ActionSheet* actionSheet = [ActionSheet actionSheet];
+#pragma mark - NewDatabaseDelegate
 
-        [actionSheet addDestructiveButtonWithTitle:@"Delete" selectBlock:^
+- (void)didCreateDatabase:(Database*)database
+{
+    id activityIndicator = [self displayActivityIndicatorWithMessage:@"Creating database"];
+
+    [database saveWithCallback:^(NSError* error)
+    {
+        [self hideActivityIndicator:activityIndicator];
+
+        if (error != nil)
+            [self displayErrorMessage:@"Cannot create database"];
+        else
+            [self refreshDatabases];
+    }];
+
+    [self setEditing:NO];
+}
+
+#pragma mark -
+
+- (void)refreshDatabases
+{
+    id activityIndicator = [self displayActivityIndicatorWithMessage:@"Loading databases"];
+    __block NSInteger fetchedStorageDatabases = 0;
+
+    for (id<Storage> storage in self.storages)
+    {
+        [storage fetchDatabasesWithCallback:^(NSArray* databases, NSError* error)
         {
-            id<Storage> storage = [self.storages objectAtIndex:indexPath.section];
-            Database* database = [[storage databases] objectAtIndex:indexPath.row];
-            
-            id activityIndicator = [self displayActivityIndicatorWithMessage:@"Deleting database"];
-            
-            [storage deleteDatabase:database callback:^(NSError* error)
+            [self.tableView reloadData];
+
+            fetchedStorageDatabases++;
+
+            if (fetchedStorageDatabases == self.storages.count)
             {
                 [self hideActivityIndicator:activityIndicator];
-                
-                if (error != nil)
-                    [self displayErrorMessage:@"Cannot delete database"];
-                else
-                    [self refreshDatabases];
-            }];
+            }
         }];
-        
-        [actionSheet addCancelButtonWithTitle:@"Cancel"];
-        
-        [actionSheet presentInView:self.view];
     }
+}
+
+#pragma mark - Class methods
+
++ (instancetype)instantiate
+{
+    return [[AppDelegate sharedDelegate].window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"Databases"];
 }
 
 @end

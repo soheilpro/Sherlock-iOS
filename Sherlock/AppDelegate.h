@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Softtool. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "Database.h"
+#import <UIKit/UIKit.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -15,5 +15,7 @@
 
 - (void)unloadCurrentDatabase;
 - (void)didOpenDatabase:(Database*)database;
+
++ (instancetype)sharedDelegate;
 
 @end

@@ -6,11 +6,22 @@
 //  Copyright (c) 2013 Softtool. All rights reserved.
 //
 
-#import <DropboxSDK/DropboxSDK.h>
+#import "AppDelegate.h"
+#import "SRActionSheet.h"
 #import "SettingsViewController.h"
-#import "ActionSheet.h"
+#import <DropboxSDK/DropboxSDK.h>
+
+@interface SettingsViewController ()
+
+@property (nonatomic, weak) IBOutlet UIButton* linkDropboxButton;
+@property (nonatomic, weak) IBOutlet UIButton* unlinkDropboxButton;
+@property (nonatomic, weak) IBOutlet UILabel* dropboxStatusLabel;
+
+@end
 
 @implementation SettingsViewController
+
+#pragma mark - UIViewController
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -19,19 +30,16 @@
     [self refreshDropboxStatus];
 }
 
-- (IBAction)close:(id)sender
-{
-    [self dismissModalViewControllerAnimated:YES];
-}
+#pragma mark - Actions
 
 - (IBAction)linkDropbox:(id)sender
 {
     [[DBSession sharedSession] linkFromController:self];
 }
 
-- (void)unlinkDropbox:(id)sender
+- (IBAction)unlinkDropbox:(id)sender
 {
-    ActionSheet* actionSheet = [ActionSheet actionSheet];
+    SRActionSheet* actionSheet = [SRActionSheet actionSheet];
     
     [actionSheet addDestructiveButtonWithTitle:@"Unlink" selectBlock:^
     {
@@ -44,6 +52,8 @@
     
     [actionSheet presentInView:self.view];
 }
+
+#pragma mark - 
 
 - (void)refreshDropboxStatus
 {
@@ -61,6 +71,13 @@
         self.dropboxStatusLabel.text = @"Linked";
         self.dropboxStatusLabel.textColor = [UIColor colorWithRed:0 green:.5 blue:0 alpha:1];
     }
+}
+
+#pragma mark - Class methods
+
++ (instancetype)instantiate
+{
+    return [[AppDelegate sharedDelegate].window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"Settings"];
 }
 
 @end
