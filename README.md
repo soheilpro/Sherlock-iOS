@@ -1,36 +1,37 @@
 # Sherlock
-Sherlock is a very simple password and personal information manager for iOS. All data is encrypted using 3DES algorithm and is stored locally or on Dropbox.
-
-## Caution
-This is software and software has bugs. Please, please and PLEASE backup your data regularly.
+Sherlock is a simple password and personal information manager for iOS. All data is encrypted using 3DES algorithm and is stored locally or on Dropbox.
 
 ## Screenshots
 ![Screenshots](/Screenshots.png)
 
 ## Requirements
-+ iOS 5.0
++ iOS 7.0
 
 ## Other Platforms
++ Mac CLI: https://github.com/soheilpro/Sherlock-MacCLI
 + Windows: https://github.com/soheilpro/Sherlock-Win
 
 ## Version History
++ **1.2**
+	+ Updated to iOS 7.
+
 + **1.1**
-	+ Switched from Dropbox's Sync API to Core API
-	+ Some minor enhancements
+	+ Switched from Dropbox's Sync API to Core API.
+	+ Some minor enhancements.
 
 + **1.0**
-	+ Initial release
+	+ Initial release.
 
 ## Roadmap
-+ Adding support for iPad
-+ Adding support for stronger encryption algorithms
-+ Adding support for iCloud and Google Drive
-+ Adding support for storing non-textual data like images
++ Adding support for iPad.
++ Adding support for stronger encryption algorithms.
++ Adding support for iCloud and Google Drive.
++ Adding support for storing non-textual data like images.
 
 ## Developers
 To build and run this app on your iDevices you need to have an Apple Developer account.
 
-If you want the Dropbox support as well, you need to create a Dropbox App and update the AppDelegate.m file with your app key and secret.
+If you want Dropbox support as well, you need to create a Dropbox App and update the AppDelegate.m file with your app key and secret.
 
 ## Contributing
 Please report issues or better yet, fork, fix and send a pull request.
@@ -43,7 +44,7 @@ Please report issues or better yet, fork, fix and send a pull request.
 + http://github.com/soheilpro
 
 ## Copyright and License
-Copyright 2013 Soheil Rashidi
+Copyright 2014 Soheil Rashidi
 
 Licensed under the The MIT License (the "License");
 you may not use this work except in compliance with the License.
