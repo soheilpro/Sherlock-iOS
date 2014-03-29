@@ -30,7 +30,6 @@
 		5BBDB016170B8B6100439235 /* UIView+Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBDB015170B8B6100439235 /* UIView+Animation.m */; };
 		5BBDB01A170B8C6800439235 /* TripleDES.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBDB019170B8C6800439235 /* TripleDES.m */; };
 		5BBDB01D170B95C100439235 /* NewPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBDB01C170B95C100439235 /* NewPasswordViewController.m */; };
-		5BC0DA9E171BF4E200E214CA /* PullRefreshTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC0DA9D171BF4E200E214CA /* PullRefreshTableViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5BF812A51706E83E00039E45 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF812A41706E83E00039E45 /* UIKit.framework */; };
 		5BF812A71706E83E00039E45 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF812A61706E83E00039E45 /* Foundation.framework */; };
 		5BF812A91706E83E00039E45 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF812A81706E83E00039E45 /* CoreGraphics.framework */; };
@@ -94,8 +93,6 @@
 		5BBDB019170B8C6800439235 /* TripleDES.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TripleDES.m; sourceTree = "<group>"; };
 		5BBDB01B170B95C100439235 /* NewPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPasswordViewController.h; sourceTree = "<group>"; };
 		5BBDB01C170B95C100439235 /* NewPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPasswordViewController.m; sourceTree = "<group>"; };
-		5BC0DA9C171BF4E200E214CA /* PullRefreshTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PullRefreshTableViewController.h; sourceTree = "<group>"; };
-		5BC0DA9D171BF4E200E214CA /* PullRefreshTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PullRefreshTableViewController.m; sourceTree = "<group>"; };
 		5BF812A01706E83E00039E45 /* Sherlock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sherlock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BF812A41706E83E00039E45 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5BF812A61706E83E00039E45 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -213,15 +210,6 @@
 				5BBDB019170B8C6800439235 /* TripleDES.m */,
 			);
 			name = Crypto;
-			sourceTree = "<group>";
-		};
-		5BC0DA9B171BF4E200E214CA /* PullRefreshTableViewController */ = {
-			isa = PBXGroup;
-			children = (
-				5BC0DA9C171BF4E200E214CA /* PullRefreshTableViewController.h */,
-				5BC0DA9D171BF4E200E214CA /* PullRefreshTableViewController.m */,
-			);
-			path = PullRefreshTableViewController;
 			sourceTree = "<group>";
 		};
 		5BF812951706E83E00039E45 = {
@@ -343,7 +331,6 @@
 		5BF8132317071CF800039E45 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				5BC0DA9B171BF4E200E214CA /* PullRefreshTableViewController */,
 				5B59E23F1708596400AEC98D /* MBProgressHUD */,
 				5B59E2431708596C00AEC98D /* GDataXML */,
 			);
@@ -448,7 +435,6 @@
 				5B4F2577170EE67400609904 /* Dropbox.m in Sources */,
 				5B9D48C117195AB80010F064 /* UIViewController+ActivityIndicator.m in Sources */,
 				5B9D48C217195AB80010F064 /* UIViewController+Alert.m in Sources */,
-				5BC0DA9E171BF4E200E214CA /* PullRefreshTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

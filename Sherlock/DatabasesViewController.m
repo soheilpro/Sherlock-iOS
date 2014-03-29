@@ -33,8 +33,7 @@
     [super viewDidLoad];
     
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    self.refreshLabel.textColor = [self.refreshLabel.textColor colorWithAlphaComponent:.25];
-    
+
     self.storages = @[
         [[LocalStorage alloc] initWithRootDirectory:@"Local"],
         [[DropboxStorage alloc] init]
@@ -78,7 +77,6 @@
             if (fetchedStorageDatabases == self.storages.count)
             {
                 [self hideActivityIndicator:activityIndicator];
-                [self stopLoading];
             }
         }];
     }
@@ -137,11 +135,6 @@
     UIViewController* settingsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Settings"];
 
     [self presentModalViewController:settingsViewController animated:YES];
-}
-
-- (void)refresh
-{
-    [self refreshDatabases];
 }
 
 #pragma mark - Table view data source
