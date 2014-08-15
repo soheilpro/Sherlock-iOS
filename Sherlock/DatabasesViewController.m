@@ -40,6 +40,9 @@
 
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(refreshDatabases) forControlEvents:UIControlEventValueChanged];
+
     self.storages = @[
         [[LocalStorage alloc] initWithRootDirectory:@"Local"],
         [[DropboxStorage alloc] init],
@@ -271,11 +274,19 @@
 
 - (void)refreshDatabases
 {
+    __block NSInteger fetchedStorageDatabases = 0;
+
     for (id<Storage> storage in self.storages)
     {
         [storage fetchDatabasesWithCallback:^(NSArray* databases, NSError* error)
         {
             self.storageLoadingState[[self.storages indexOfObject:storage]] = @(YES);
+            fetchedStorageDatabases++;
+
+            if (fetchedStorageDatabases == self.storages.count)
+            {
+                [self.refreshControl endRefreshing];
+            }
 
             [self.tableView reloadData];
         }];
