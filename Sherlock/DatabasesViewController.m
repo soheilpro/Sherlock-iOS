@@ -26,6 +26,7 @@
 @property (nonatomic, strong) NSArray* storages;
 @property (nonatomic, strong) Database* selectedDatabase;
 @property (nonatomic, strong) NSData* selectedDatabaseData;
+@property (nonatomic, strong) NSMutableArray* storageLoadingState;
 
 @end
 
@@ -36,7 +37,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
     self.storages = @[
@@ -44,7 +45,13 @@
         [[DropboxStorage alloc] init],
         [[GoogleDriveStorage alloc] init]
     ];
-    
+
+    self.storageLoadingState = [NSMutableArray arrayWithCapacity:self.storages];
+    [self.storages enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
+    {
+        self.storageLoadingState[idx] = @(NO);
+    }];
+
     [self refreshDatabases];
 }
 
@@ -53,14 +60,14 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
     [super setEditing:editing animated:animated];
-    
+
     static NSArray* originalLeftBarButtonItems;
-    
+
     if (editing)
     {
         originalLeftBarButtonItems = self.navigationItem.leftBarButtonItems;
         UIBarButtonItem* addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(newDatabase:)];
-        
+
         [self.navigationItem setLeftBarButtonItem:addButton animated:YES];
     }
     else
@@ -112,31 +119,42 @@
 - (NSString*)tableView:(UITableView*)tableView titleForHeaderInSection:(NSInteger)section
 {
     id<Storage> storage = self.storages[section];
-    
-    return [storage databases].count > 0 ? [storage name] : nil;
+
+    return [storage name];
 }
 
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
     id<Storage> storage = self.storages[section];
-    
-    return [storage databases].count;
+    BOOL isStorageLoaded = [self.storageLoadingState[section] boolValue];
+
+    return !isStorageLoaded ? 1 : [storage databases].count;
 }
 
 - (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
     id<Storage> storage = self.storages[indexPath.section];
+    BOOL isStorageLoaded = [self.storageLoadingState[indexPath.section] boolValue];
+
+    if (!isStorageLoaded)
+        return [tableView dequeueReusableCellWithIdentifier:@"LoadingCell"];
+
     Database* database = [storage databases][indexPath.row];
-    
+
     DatabaseCell* cell = [tableView dequeueReusableCellWithIdentifier:@"DatabaseCell"];
     cell.database = database;
-    
+
     return cell;
 }
 
 - (BOOL)tableView:(UITableView*)tableView canEditRowAtIndexPath:(NSIndexPath*)indexPath
 {
     id<Storage> storage = (self.storages)[indexPath.section];
+    BOOL isStorageLoaded = [self.storageLoadingState[indexPath.section] boolValue];
+
+    if (!isStorageLoaded)
+        return NO;
+
     Database* database = [storage databases][indexPath.row];
 
     return !database.isReadOnly;
@@ -184,18 +202,18 @@
     [storage readDatabase:database callback:^(NSData* data, NSError* error)
     {
         [self hideActivityIndicator:activityIndicator];
-        
+
         if (error != nil)
         {
             [self displayErrorMessage:@"Cannot load database"];
             return;
         }
-        
+
         self.selectedDatabase = database;
         self.selectedDatabaseData = data;
-        
+
         BOOL didOpenDatabase = [self.selectedDatabase openWithData:self.selectedDatabaseData andPassword:nil];
-        
+
         if (didOpenDatabase)
         {
             [((AppDelegate*)[UIApplication sharedApplication].delegate) didOpenDatabase:self.selectedDatabase];
@@ -206,7 +224,7 @@
             PasswordModalViewController* passwordModalViewController = [PasswordModalViewController instantiate];
             passwordModalViewController.database = database;
             passwordModalViewController.passwordDelegate = self;
-        
+
             [self presentViewController:passwordModalViewController animated:YES completion:nil];
         }
     }];
@@ -253,21 +271,13 @@
 
 - (void)refreshDatabases
 {
-    id activityIndicator = [self displayActivityIndicatorWithMessage:@"Loading databases"];
-    __block NSInteger fetchedStorageDatabases = 0;
-
     for (id<Storage> storage in self.storages)
     {
         [storage fetchDatabasesWithCallback:^(NSArray* databases, NSError* error)
         {
+            self.storageLoadingState[[self.storages indexOfObject:storage]] = @(YES);
+
             [self.tableView reloadData];
-
-            fetchedStorageDatabases++;
-
-            if (fetchedStorageDatabases == self.storages.count)
-            {
-                [self hideActivityIndicator:activityIndicator];
-            }
         }];
     }
 }
