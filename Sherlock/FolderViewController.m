@@ -193,7 +193,7 @@
     if (indexPath.section == SECTION_FOLDERS)
     {
         FolderCell* cell = [self.tableView dequeueReusableCellWithIdentifier:@"FolderCell"];
-        cell.folder = [self.folders objectAtIndex:indexPath.row];
+        cell.folder = self.folders[indexPath.row];
 
         return cell;
     }
@@ -201,7 +201,7 @@
     if (indexPath.section == SECTION_ITEMS)
     {
         ItemCell* cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItemCell"];
-        cell.item = [self.items objectAtIndex:indexPath.row];
+        cell.item = self.items[indexPath.row];
 
         return cell;
     }
@@ -222,14 +222,14 @@
 
         if (indexPath.section == SECTION_FOLDERS)
         {
-            Folder* folder = [self.folders objectAtIndex:indexPath.row];
+            Folder* folder = self.folders[indexPath.row];
 
             [self.folder.folders removeObject:folder];
             [self.folders removeObject:folder];
         }
         else if (indexPath.section == SECTION_ITEMS)
         {
-            Item* item = [self.items objectAtIndex:indexPath.row];
+            Item* item = self.items[indexPath.row];
 
             [self.folder.items removeObject:item];
             [self.items removeObject:item];
@@ -253,7 +253,7 @@
 {
     if (indexPath.section == SECTION_FOLDERS)
     {
-        Folder* folder = [self.folders objectAtIndex:indexPath.row];
+        Folder* folder = self.folders[indexPath.row];
 
         if (!self.tableView.isEditing)
         {
@@ -277,7 +277,7 @@
     {
         if (!self.tableView.isEditing)
         {
-            Item* item = [self.items objectAtIndex:indexPath.row];
+            Item* item = self.items[indexPath.row];
 
             SRActionSheet* actionSheet = [SRActionSheet actionSheet];
             [actionSheet addButtonWithTitle:@"View" selectBlock:^
@@ -315,7 +315,7 @@
         }
         else
         {
-            Item* item = [self.items objectAtIndex:indexPath.row];
+            Item* item = self.items[indexPath.row];
 
             EditItemModalViewController* editItemModalViewController = [EditItemModalViewController instantiate];
             editItemModalViewController.item = item;

@@ -25,7 +25,7 @@ NSString* const NSURLIsExcludedFromBackupKey = @"NSURLIsExcludedFromBackupKey";
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
-    FolderViewController* mainViewController = [((UINavigationController*)self.window.rootViewController).viewControllers objectAtIndex:0];
+    FolderViewController* mainViewController = ((UINavigationController*)self.window.rootViewController).viewControllers[0];
     mainViewController.showCategories = YES;
     mainViewController.showItems = YES;
 
@@ -58,7 +58,7 @@ NSString* const NSURLIsExcludedFromBackupKey = @"NSURLIsExcludedFromBackupKey";
 {
     self.database = database;
 
-    FolderViewController* mainViewController = [((UINavigationController*)self.window.rootViewController).viewControllers objectAtIndex:0];
+    FolderViewController* mainViewController = ((UINavigationController*)self.window.rootViewController).viewControllers[0];
     mainViewController.folder = database.root;
 }
 

@@ -65,7 +65,7 @@
 
 - (NSArray*)fetchDatabaseInternal
 {
-    NSString* documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString* documentDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
     NSString* localDirectory = [documentDirectory stringByAppendingPathComponent:self.rootDirectory];
     NSMutableArray* databases = [NSMutableArray array];
     
@@ -80,7 +80,7 @@
     {
         NSDictionary* attributres = [[NSFileManager defaultManager] attributesOfItemAtPath:[path stringByAppendingPathComponent:file] error:nil];
         
-        if ([attributres objectForKey:NSFileType] == NSFileTypeDirectory)
+        if (attributres[NSFileType] == NSFileTypeDirectory)
         {
             [self addDatabasesInPath:[path stringByAppendingPathComponent:file] relativeTo:[relativePath stringByAppendingPathComponent:file] toArray:databases];
         }
@@ -143,7 +143,7 @@
 
 - (NSString*)fileForDatabase:(Database*)database
 {
-    NSString* documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString* documentDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
     NSString* localDirectory = [documentDirectory stringByAppendingPathComponent:self.rootDirectory];
     NSString* file = [localDirectory stringByAppendingPathComponent:database.name];
     

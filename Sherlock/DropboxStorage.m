@@ -115,7 +115,7 @@
             return;
         }
 
-        [database.metadata setObject:metadata.rev forKey:METADATA_REVISION_KEY];
+        database.metadata[METADATA_REVISION_KEY] = metadata.rev;
         
         callback(data, error);
     }];
@@ -123,7 +123,7 @@
 
 - (void)saveRemoteDatabase:(Database*)database withData:(NSData*)data callback:(void (^) (NSError* error))callback
 {
-    NSString* revision = [database.metadata objectForKey:METADATA_REVISION_KEY];
+    NSString* revision = database.metadata[METADATA_REVISION_KEY];
     
     [self.dropbox uploadFileToPath:[self pathForDatabase:database] withData:data withRevision:revision callback:^(DBMetadata* metadata, NSError* error)
     {
@@ -133,7 +133,7 @@
             return;
         }
         
-        [database.metadata setObject:metadata.rev forKey:METADATA_REVISION_KEY];
+        database.metadata[METADATA_REVISION_KEY] = metadata.rev;
         
         callback(nil);
     }];

@@ -111,22 +111,22 @@
 
 - (NSString*)tableView:(UITableView*)tableView titleForHeaderInSection:(NSInteger)section
 {
-    id<Storage> storage = [self.storages objectAtIndex:section];
+    id<Storage> storage = self.storages[section];
     
     return [storage databases].count > 0 ? [storage name] : nil;
 }
 
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
-    id<Storage> storage = [self.storages objectAtIndex:section];
+    id<Storage> storage = self.storages[section];
     
     return [storage databases].count;
 }
 
 - (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    id<Storage> storage = [self.storages objectAtIndex:indexPath.section];
-    Database* database = [[storage databases] objectAtIndex:indexPath.row];
+    id<Storage> storage = self.storages[indexPath.section];
+    Database* database = [storage databases][indexPath.row];
     
     DatabaseCell* cell = [tableView dequeueReusableCellWithIdentifier:@"DatabaseCell"];
     cell.database = database;
@@ -136,8 +136,8 @@
 
 - (BOOL)tableView:(UITableView*)tableView canEditRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    id<Storage> storage = [self.storages objectAtIndex:indexPath.section];
-    Database* database = [[storage databases] objectAtIndex:indexPath.row];
+    id<Storage> storage = (self.storages)[indexPath.section];
+    Database* database = [storage databases][indexPath.row];
 
     return !database.isReadOnly;
 }
@@ -150,8 +150,8 @@
 
         [actionSheet addDestructiveButtonWithTitle:@"Delete" selectBlock:^
         {
-            id<Storage> storage = [self.storages objectAtIndex:indexPath.section];
-            Database* database = [[storage databases] objectAtIndex:indexPath.row];
+            id<Storage> storage = self.storages[indexPath.section];
+            Database* database = [storage databases][indexPath.row];
 
             id activityIndicator = [self displayActivityIndicatorWithMessage:@"Deleting database"];
 
@@ -178,8 +178,8 @@
 {
     id activityIndicator = [self displayActivityIndicatorWithMessage:@"Loading database"];
 
-    id<Storage> storage = [self.storages objectAtIndex:indexPath.section];
-    Database* database = [[storage databases] objectAtIndex:indexPath.row];
+    id<Storage> storage = self.storages[indexPath.section];
+    Database* database = [storage databases][indexPath.row];
 
     [storage readDatabase:database callback:^(NSData* data, NSError* error)
     {
