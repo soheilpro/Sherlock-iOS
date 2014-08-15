@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "GoogleDrive.h"
 #import "SRActionSheet.h"
 #import "SettingsViewController.h"
 #import <DropboxSDK/DropboxSDK.h>
@@ -16,6 +17,10 @@
 @property (nonatomic, weak) IBOutlet UIButton* linkDropboxButton;
 @property (nonatomic, weak) IBOutlet UIButton* unlinkDropboxButton;
 @property (nonatomic, weak) IBOutlet UILabel* dropboxStatusLabel;
+
+@property (nonatomic, weak) IBOutlet UIButton* linkGoogleDriveButton;
+@property (nonatomic, weak) IBOutlet UIButton* unlinkGoogleDriveButton;
+@property (nonatomic, weak) IBOutlet UILabel* googleDriveStatusLabel;
 
 @end
 
@@ -28,6 +33,7 @@
     [super viewDidLoad];
 
     [self refreshDropboxStatus];
+    [self refreshGoogleDriveStatus];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
 }
@@ -55,11 +61,36 @@
     [actionSheet presentInView:self.view];
 }
 
+- (IBAction)linkGoogleDrive:(id)sender
+{
+    [[GoogleDrive sharedGoogleDrive] linkWithViewController:self callback:^
+    {
+        [self refreshGoogleDriveStatus];
+    }];
+}
+
+- (IBAction)unlinkGoogleDrive:(id)sender
+{
+    SRActionSheet* actionSheet = [SRActionSheet actionSheet];
+
+    [actionSheet addDestructiveButtonWithTitle:@"Unlink" selectBlock:^
+    {
+        [[GoogleDrive sharedGoogleDrive] unlink];
+
+        [self refreshGoogleDriveStatus];
+    }];
+
+    [actionSheet addCancelButtonWithTitle:@"Cancel"];
+
+    [actionSheet presentInView:self.view];
+}
+
 #pragma mark - Notifications
 
 - (void)applicationDidBecomeActive:(NSNotification*)notification
 {
     [self refreshDropboxStatus];
+    [self refreshGoogleDriveStatus];
 }
 
 #pragma mark - 
@@ -79,6 +110,24 @@
         self.unlinkDropboxButton.hidden = NO;
         self.dropboxStatusLabel.text = @"Linked";
         self.dropboxStatusLabel.textColor = [UIColor colorWithRed:0 green:.5 blue:0 alpha:1];
+    }
+}
+
+- (void)refreshGoogleDriveStatus
+{
+    if (![GoogleDrive sharedGoogleDrive].isLinked)
+    {
+        self.linkGoogleDriveButton.hidden = NO;
+        self.unlinkGoogleDriveButton.hidden = YES;
+        self.googleDriveStatusLabel.text = @"No linked account";
+        self.googleDriveStatusLabel.textColor = [UIColor grayColor];
+    }
+    else
+    {
+        self.linkGoogleDriveButton.hidden = YES;
+        self.unlinkGoogleDriveButton.hidden = NO;
+        self.googleDriveStatusLabel.text = @"Linked";
+        self.googleDriveStatusLabel.textColor = [UIColor colorWithRed:0 green:.5 blue:0 alpha:1];
     }
 }
 

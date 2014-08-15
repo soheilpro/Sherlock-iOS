@@ -1,5 +1,5 @@
 # Sherlock
-Sherlock is a simple password and personal information manager for iOS. All data is encrypted using 3DES algorithm and is stored locally or on Dropbox.
+Sherlock is a simple password and personal information manager for iOS. All data is encrypted using 3DES algorithm and is stored locally or on Dropbox/Google Drive.
 
 ## Screenshots
 ![Screenshots](/Screenshots.png)
@@ -12,6 +12,9 @@ Sherlock is a simple password and personal information manager for iOS. All data
 + Windows: https://github.com/soheilpro/Sherlock-Win
 
 ## Version History
++ **1.3**
+  + Added Google Drive support.
+
 + **1.2**
 	+ Updated to iOS 7.
 
@@ -25,13 +28,14 @@ Sherlock is a simple password and personal information manager for iOS. All data
 ## Roadmap
 + Adding support for iPad.
 + Adding support for stronger encryption algorithms.
-+ Adding support for iCloud and Google Drive.
++ Adding support for iCloud.
 + Adding support for storing non-textual data like images.
 
 ## Developers
 To build and run this app on your iDevices you need to have an Apple Developer account.
 
-If you want Dropbox support as well, you need to create a Dropbox App and update the AppDelegate.m file with your app key and secret.
+For Dropbox support, you need to create a Dropbox App and update the AppDelegate.m file with your app key and secret.
+For Google Drive support, you need to create a project in the Google Developers Console and update the GoogleDrive.m file with your app's client id and secret.
 
 ## Contributing
 Please report issues or better yet, fork, fix and send a pull request.

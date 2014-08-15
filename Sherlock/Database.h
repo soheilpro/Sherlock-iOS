@@ -13,6 +13,7 @@
 #import "Storage.h"
 
 #define DB_FILE_EXTENSION @"sdb"
+#define DB_FILE_MIMETYPE @"application/vnd.sherlock.sdb"
 
 @interface Database : NSObject
 

@@ -11,6 +11,7 @@
 #import "DatabaseCell.h"
 #import "DatabasesViewController.h"
 #import "DropboxStorage.h"
+#import "GoogleDriveStorage.h"
 #import "LocalStorage.h"
 #import "MBProgressHUD.h"
 #import "NewDatabaseModalViewController.h"
@@ -40,7 +41,8 @@
 
     self.storages = @[
         [[LocalStorage alloc] initWithRootDirectory:@"Local"],
-        [[DropboxStorage alloc] init]
+        [[DropboxStorage alloc] init],
+        [[GoogleDriveStorage alloc] init]
     ];
     
     [self refreshDatabases];
