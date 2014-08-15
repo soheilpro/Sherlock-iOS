@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Storage.h"
+#import "StorageWithCache.h"
 
-@interface DropboxStorage : NSObject<Storage>
+@interface DropboxStorage : StorageWithCache
 
 @end

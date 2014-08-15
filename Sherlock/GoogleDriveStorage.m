@@ -11,12 +11,6 @@
 
 #define METADATA_FILE @"file"
 
-@interface GoogleDriveStorage ()
-
-@property (nonatomic, strong) NSArray* databases;
-
-@end
-
 @implementation GoogleDriveStorage
 
 - (NSString*)name
@@ -29,12 +23,7 @@
     return [[GoogleDrive sharedGoogleDrive] isLinked];
 }
 
-- (NSArray*)databases
-{
-    return _databases;
-}
-
-- (void)fetchDatabasesWithCallback:(void (^) (NSArray* databases, NSError* error))callback
+- (void)fetchRemoteDatabasesWithCallback:(void (^) (NSArray* databases, NSError* error))callback
 {
     NSString* query = [NSString stringWithFormat:@"fileExtension = '%@' and trashed=false", DB_FILE_EXTENSION];
 
@@ -58,20 +47,18 @@
             [databases addObject:database];
         }
 
-        self.databases = databases;
-
-        callback(self.databases, nil);
+        callback(databases, nil);
     }];
 }
 
-- (void)readDatabase:(Database*)database callback:(void (^) (NSData* data, NSError* error))callback;
+- (void)readRemoteDatabase:(Database*)database callback:(void (^) (NSData* data, NSError* error))callback;
 {
     GTLDriveFile* file = database.metadata[METADATA_FILE];
 
     [[GoogleDrive sharedGoogleDrive] readFile:file callback:callback];
 }
 
-- (void)saveDatabase:(Database*)database withData:(NSData*)data callback:(void (^) (NSError* error))callback;
+- (void)saveRemoteDatabase:(Database*)database withData:(NSData*)data callback:(void (^) (NSError* error))callback;
 {
     GTLDriveFile* file = database.metadata[METADATA_FILE];
 
@@ -94,7 +81,7 @@
     }
 }
 
-- (void)deleteDatabase:(Database*)database callback:(void (^) (NSError* error))callback;
+- (void)deleteRemoteDatabase:(Database*)database callback:(void (^) (NSError* error))callback;
 {
     GTLDriveFile* file = database.metadata[METADATA_FILE];
 

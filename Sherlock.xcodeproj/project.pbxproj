@@ -21,6 +21,7 @@
 		5B4466AE1708B20500A42D7C /* DropboxStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4466AD1708B20500A42D7C /* DropboxStorage.m */; };
 		5B4466B11708C05D00A42D7C /* NewDatabaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4466B01708C05D00A42D7C /* NewDatabaseViewController.m */; };
 		5B4F2577170EE67400609904 /* Dropbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4F2576170EE67400609904 /* Dropbox.m */; };
+		5B51B31A199E09280040F2D9 /* StorageWithCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B51B319199E09280040F2D9 /* StorageWithCache.m */; };
 		5B59E1FE1708311400AEC98D /* DatabasesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B59E1FD1708311400AEC98D /* DatabasesViewController.m */; };
 		5B63BC23199E044E00179180 /* libGTLTouchStaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B63BC22199E044E00179180 /* libGTLTouchStaticLib.a */; };
 		5B8942D2170773EC00A618C7 /* PasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8942D1170773EC00A618C7 /* PasswordViewController.m */; };
@@ -85,6 +86,8 @@
 		5B4466B01708C05D00A42D7C /* NewDatabaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewDatabaseViewController.m; sourceTree = "<group>"; };
 		5B4F2575170EE67400609904 /* Dropbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dropbox.h; sourceTree = "<group>"; };
 		5B4F2576170EE67400609904 /* Dropbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Dropbox.m; sourceTree = "<group>"; };
+		5B51B318199E09280040F2D9 /* StorageWithCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StorageWithCache.h; sourceTree = "<group>"; };
+		5B51B319199E09280040F2D9 /* StorageWithCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StorageWithCache.m; sourceTree = "<group>"; };
 		5B59E1FC1708311400AEC98D /* DatabasesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabasesViewController.h; sourceTree = "<group>"; };
 		5B59E1FD1708311400AEC98D /* DatabasesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabasesViewController.m; sourceTree = "<group>"; };
 		5B63BC22199E044E00179180 /* libGTLTouchStaticLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGTLTouchStaticLib.a; path = "GTL/build/Debug-iphoneos/libGTLTouchStaticLib.a"; sourceTree = "<group>"; };
@@ -204,6 +207,8 @@
 				5B4466A91708B12A00A42D7C /* LocalStorage.h */,
 				5B4466AA1708B12A00A42D7C /* LocalStorage.m */,
 				5B4466A81708AEF600A42D7C /* Storage.h */,
+				5B51B318199E09280040F2D9 /* StorageWithCache.h */,
+				5B51B319199E09280040F2D9 /* StorageWithCache.m */,
 			);
 			name = Storage;
 			sourceTree = "<group>";
@@ -657,6 +662,7 @@
 				5B4466AE1708B20500A42D7C /* DropboxStorage.m in Sources */,
 				5B4466B11708C05D00A42D7C /* NewDatabaseViewController.m in Sources */,
 				5BFB94CC170A138200459F8E /* EditFolderViewController.m in Sources */,
+				5B51B31A199E09280040F2D9 /* StorageWithCache.m in Sources */,
 				5BFB94D0170A279600459F8E /* EditItemViewController.m in Sources */,
 				5BA8611D18E6BEA5009D9A8B /* GDataXMLNode.m in Sources */,
 				5B1542B9199D724000C1E7D2 /* GoogleDriveStorage.m in Sources */,

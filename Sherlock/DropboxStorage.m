@@ -9,17 +9,13 @@
 #import <DropboxSDK/DropboxSDK.h>
 #import "DropboxStorage.h"
 #import "Dropbox.h"
-#import "LocalStorage.h"
 
 #define DB_ROOT_DIRECTORY @"/Apps/Sherlock/"
 #define METADATA_REVISION_KEY @"revision"
 
 @interface DropboxStorage ()
 
-@property (nonatomic, strong) NSArray* databases;
 @property (nonatomic, strong) Dropbox* dropbox;
-@property (nonatomic, strong) LocalStorage* cache;
-@property (nonatomic, strong) NSMutableArray* observerBlocks;
 
 @end
 
@@ -31,10 +27,7 @@
     
     if (self)
     {
-        self.databases = @[];
         self.dropbox = [[Dropbox alloc] initWithSession:[DBSession sharedSession]];
-        self.cache = [[LocalStorage alloc] initWithRootDirectory:@"Dropbox"];
-        self.observerBlocks = [NSMutableArray array];
     }
     
     return self;
@@ -48,50 +41,6 @@
 - (BOOL)isAvailable
 {
     return [DBSession sharedSession].isLinked;
-}
-
-- (NSArray*)databases
-{
-    return _databases;
-}
-
-- (void)fetchDatabasesWithCallback:(void (^) (NSArray* databases, NSError* error))callback;
-{
-    if (![self isAvailable])
-    {
-        callback(@[], nil);
-        return;
-    }
-
-    [self fetchRemoteDatabasesWithCallback:^(NSArray* databases, NSError* error)
-    {
-        if (error != nil)
-        {
-            NSError* remoteError = error;
-            
-            [self.cache fetchDatabasesWithCallback:^(NSArray* databases, NSError* error)
-            {
-                if (error != nil)
-                {
-                    callback(nil, remoteError);
-                    return;
-                }
-                
-                for (Database* database in databases)
-                    database.isReadOnly = YES;
-
-                self.databases = databases;
-                
-                callback(self.databases, nil);
-            }];
-            
-            return;
-        }
-        
-        self.databases = databases;
-        
-        callback(self.databases, nil);
-    }];
 }
 
 - (void)fetchRemoteDatabasesWithCallback:(void (^) (NSArray* database, NSError* error))callback;
@@ -156,28 +105,6 @@
     }];
 }
 
-- (void)readDatabase:(Database*)database callback:(void (^) (NSData* data, NSError* error))callback;
-{
-    if (database.isReadOnly)
-    {
-        [self.cache readDatabase:database callback:callback];
-        return;
-    }
-
-    [self readRemoteDatabase:database callback:^(NSData* data, NSError* error)
-    {
-        if (error != nil)
-        {
-            callback(nil, error);
-            return;
-        }
-        
-        [self.cache saveDatabase:database withData:data callback:^(NSError* error) {}];
-        
-        callback(data, nil);
-    }];
-}
-
 - (void)readRemoteDatabase:(Database*)database callback:(void (^) (NSData* data, NSError* error))callback;
 {
     [self.dropbox loadFileAtPath:[self pathForDatabase:database] callback:^(NSData* data, DBMetadata* metadata, NSError* error)
@@ -191,25 +118,6 @@
         [database.metadata setObject:metadata.rev forKey:METADATA_REVISION_KEY];
         
         callback(data, error);
-    }];
-}
-
-- (void)saveDatabase:(Database*)database withData:(NSData*)data callback:(void (^) (NSError* error))callback
-{
-    if (database.isReadOnly)
-        @throw [[NSException alloc] initWithName:@"NotSupported" reason:@"Not Supported" userInfo:nil];
-    
-    [self saveRemoteDatabase:database withData:data callback:^(NSError* error)
-    {
-        if (error != nil)
-        {
-            callback(error);
-            return;
-        }
-        
-        [self.cache saveDatabase:database withData:data callback:^(NSError* error) {}];
-
-        callback(nil);
     }];
 }
 
@@ -227,25 +135,6 @@
         
         [database.metadata setObject:metadata.rev forKey:METADATA_REVISION_KEY];
         
-        callback(nil);
-    }];
-}
-
-- (void)deleteDatabase:(Database*)database callback:(void (^) (NSError* error))callback;
-{
-    if (database.isReadOnly)
-        @throw [[NSException alloc] initWithName:@"NotSupported" reason:@"Not Supported" userInfo:nil];
-
-    [self deleteRemoteDatabase:database callback:^(NSError* error)
-    {
-        if (error != nil)
-        {
-            callback(error);
-            return;
-        }
-        
-        [self.cache deleteDatabase:database callback:^(NSError* error) {}];
-
         callback(nil);
     }];
 }
