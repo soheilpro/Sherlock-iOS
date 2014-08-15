@@ -16,10 +16,15 @@ typedef void (^DeleteFileCallback)(NSError* error);
 
 @interface Dropbox : NSObject<DBRestClientDelegate>
 
-- initWithSession:(DBSession*)session;
+- (BOOL)isLinked;
+- (void)linkWithViewController:(UIViewController*)viewController callback:(void (^)())callback;
+- (void)unlink;
+- (BOOL)handleOpenURL:(NSURL*)url;
 - (void)loadMetadataForPath:(NSString*)path callback:(LoadMetadataCallback)callback;
 - (void)loadFileAtPath:(NSString*)path callback:(LoadFileCallback)callback;
 - (void)uploadFileToPath:(NSString*)path withData:(NSData*)data withRevision:(NSString*)revision callback:(UploadFileCallback)callback;
 - (void)deleteFileAtPath:(NSString*)path callback:(DeleteFileCallback)callback;
+
++ (instancetype)sharedDropbox;
 
 @end

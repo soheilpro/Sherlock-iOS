@@ -8,8 +8,8 @@
 
 #import "AppDelegate.h"
 #import "DatabasesModalViewController.h"
+#import "Dropbox.h"
 #import "FolderViewController.h"
-#import <DropboxSDK/DropboxSDK.h>
 
 NSString* const NSURLIsExcludedFromBackupKey = @"NSURLIsExcludedFromBackupKey";
 
@@ -29,8 +29,6 @@ NSString* const NSURLIsExcludedFromBackupKey = @"NSURLIsExcludedFromBackupKey";
     mainViewController.showCategories = YES;
     mainViewController.showItems = YES;
 
-    [self setupDropbox];
-    
     [self.window makeKeyAndVisible];
     [self selectDatabase:NO];
     
@@ -39,7 +37,7 @@ NSString* const NSURLIsExcludedFromBackupKey = @"NSURLIsExcludedFromBackupKey";
 
 - (BOOL)application:(UIApplication*)app openURL:(NSURL*)url sourceApplication:(NSString*)source annotation:(id)annotation
 {
-    if ([[DBSession sharedSession] handleOpenURL:url])
+    if ([[Dropbox sharedDropbox] handleOpenURL:url])
         return YES;
     
     return NO;
@@ -63,12 +61,6 @@ NSString* const NSURLIsExcludedFromBackupKey = @"NSURLIsExcludedFromBackupKey";
 }
 
 #pragma mark -
-
-- (void)setupDropbox
-{
-    DBSession* session = [[DBSession alloc] initWithAppKey:@"YOUR_APP_KEY" appSecret:@"YOUR_APP_SECRET" root:kDBRootDropbox];
-    [DBSession setSharedSession:session];
-}
 
 - (void)selectDatabase:(BOOL)animated;
 {

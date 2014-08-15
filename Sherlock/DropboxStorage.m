@@ -6,32 +6,13 @@
 //  Copyright (c) 2013 Softtool. All rights reserved.
 //
 
-#import <DropboxSDK/DropboxSDK.h>
-#import "DropboxStorage.h"
 #import "Dropbox.h"
+#import "DropboxStorage.h"
 
 #define DB_ROOT_DIRECTORY @"/Apps/Sherlock/"
 #define METADATA_REVISION_KEY @"revision"
 
-@interface DropboxStorage ()
-
-@property (nonatomic, strong) Dropbox* dropbox;
-
-@end
-
 @implementation DropboxStorage
-
-- (id)init
-{
-    self = [super init];
-    
-    if (self)
-    {
-        self.dropbox = [[Dropbox alloc] initWithSession:[DBSession sharedSession]];
-    }
-    
-    return self;
-}
 
 - (NSString*)name
 {
@@ -40,7 +21,7 @@
 
 - (BOOL)isAvailable
 {
-    return [DBSession sharedSession].isLinked;
+    return [Dropbox sharedDropbox].isLinked;
 }
 
 - (void)fetchRemoteDatabasesWithCallback:(void (^) (NSArray* database, NSError* error))callback;
@@ -61,7 +42,7 @@
 
 - (void)addDropboxDatabasesInPath:(NSString*)path basePath:(NSString*)basePath toArray:(NSMutableArray*)databases withCallback:(void (^) (NSArray* database, NSError* error))callback;
 {
-    [self.dropbox loadMetadataForPath:path callback:^(DBMetadata* metadata, NSError* error)
+    [[Dropbox sharedDropbox] loadMetadataForPath:path callback:^(DBMetadata* metadata, NSError* error)
     {
         if (error != nil)
         {
@@ -107,7 +88,7 @@
 
 - (void)readRemoteDatabase:(Database*)database callback:(void (^) (NSData* data, NSError* error))callback;
 {
-    [self.dropbox loadFileAtPath:[self pathForDatabase:database] callback:^(NSData* data, DBMetadata* metadata, NSError* error)
+    [[Dropbox sharedDropbox] loadFileAtPath:[self pathForDatabase:database] callback:^(NSData* data, DBMetadata* metadata, NSError* error)
     {
         if (error != nil)
         {
@@ -125,7 +106,7 @@
 {
     NSString* revision = database.metadata[METADATA_REVISION_KEY];
     
-    [self.dropbox uploadFileToPath:[self pathForDatabase:database] withData:data withRevision:revision callback:^(DBMetadata* metadata, NSError* error)
+    [[Dropbox sharedDropbox] uploadFileToPath:[self pathForDatabase:database] withData:data withRevision:revision callback:^(DBMetadata* metadata, NSError* error)
     {
         if (error != nil)
         {
@@ -141,7 +122,7 @@
 
 - (void)deleteRemoteDatabase:(Database*)database callback:(void (^) (NSError* error))callback
 {
-    [self.dropbox deleteFileAtPath:[self pathForDatabase:database] callback:callback];
+    [[Dropbox sharedDropbox] deleteFileAtPath:[self pathForDatabase:database] callback:callback];
 }
 
 - (NSString*)pathForDatabase:(Database*)database

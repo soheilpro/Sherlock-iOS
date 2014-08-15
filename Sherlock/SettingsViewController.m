@@ -7,10 +7,10 @@
 //
 
 #import "AppDelegate.h"
+#import "Dropbox.h"
 #import "GoogleDrive.h"
 #import "SRActionSheet.h"
 #import "SettingsViewController.h"
-#import <DropboxSDK/DropboxSDK.h>
 
 @interface SettingsViewController ()
 
@@ -42,7 +42,7 @@
 
 - (IBAction)linkDropbox:(id)sender
 {
-    [[DBSession sharedSession] linkFromController:self];
+    [[Dropbox sharedDropbox] linkWithViewController:self callback:^{}];
 }
 
 - (IBAction)unlinkDropbox:(id)sender
@@ -51,7 +51,7 @@
     
     [actionSheet addDestructiveButtonWithTitle:@"Unlink" selectBlock:^
     {
-        [[DBSession sharedSession] unlinkAll];
+        [[Dropbox sharedDropbox] unlink];
 
         [self refreshDropboxStatus];
     }];
@@ -97,7 +97,7 @@
 
 - (void)refreshDropboxStatus
 {
-    if (![DBSession sharedSession].isLinked)
+    if (![Dropbox sharedDropbox].isLinked)
     {
         self.linkDropboxButton.hidden = NO;
         self.unlinkDropboxButton.hidden = YES;

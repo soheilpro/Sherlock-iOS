@@ -34,7 +34,7 @@ Sherlock is a simple password and personal information manager for iOS. All data
 ## Developers
 To build and run this app on your iDevices you need to have an Apple Developer account.
 
-For Dropbox support, you need to create a Dropbox App and update the AppDelegate.m file with your app key and secret.
+For Dropbox support, you need to create a Dropbox App and update the Dropbox.m file with your app key and secret.
 For Google Drive support, you need to create a project in the Google Developers Console and update the GoogleDrive.m file with your app's client id and secret.
 
 ## Contributing
