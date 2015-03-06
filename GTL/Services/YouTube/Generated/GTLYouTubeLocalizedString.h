@@ -1,4 +1,4 @@
-/* Copyright (c) 2013 Google Inc.
+/* Copyright (c) 2014 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,14 +39,7 @@
 //   GTLYouTubeLocalizedString
 //
 
-// A localized string.
-
 @interface GTLYouTubeLocalizedString : GTLObject
-
-// Language associated to this value.
 @property (copy) NSString *language;
-
-// Value of the property.
 @property (copy) NSString *value;
-
 @end

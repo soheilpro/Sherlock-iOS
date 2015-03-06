@@ -130,6 +130,8 @@
   // notification counters
   int parseStartedCount_;
   int parseStoppedCount_;
+
+  NSURL *fileToRemove_;
 }
 
 @end
@@ -204,6 +206,14 @@ static NSString *const kBatchRPCPageBName = @"TaskBatchPage1b.rpc";
   testServer_ = nil;
 
   isServerRunning_ = NO;
+
+  if (fileToRemove_) {
+    NSError *fileError = nil;
+    XCTAssert([[NSFileManager defaultManager] removeItemAtURL:fileToRemove_ error:&fileError],
+              @"%@", fileError);
+    [fileToRemove_ release];
+    fileToRemove_ = nil;
+  }
 }
 
 #pragma mark Notification callbacks
@@ -233,6 +243,7 @@ static NSString *const kBatchRPCPageBName = @"TaskBatchPage1b.rpc";
   if (!isServerRunning_) return;
 
   GTLService *service = [[[GTLService alloc] init] autorelease];
+  service.allowInsecureQueries = YES;
 
   GTLServiceCompletionHandler completionBlock;
   GTLServiceTicket *ticket;
@@ -249,31 +260,27 @@ static NSString *const kBatchRPCPageBName = @"TaskBatchPage1b.rpc";
     //
     // test items array
     //
-    XCTAssertEqual([feed.items count], (NSUInteger) 2,
-                   @"wrong feed items");
+    XCTAssertEqual(feed.items.count, (NSUInteger) 2,);
 
     GTLTasksTask *item = feed[0];
     NSString *className = NSStringFromClass([item class]);
     NSString *expectedName = PREFIXED_CLASSNAME(@"GTLTasksTask");
 
-    XCTAssertEqualObjects(expectedName, className, @"object member error");
+    XCTAssertEqualObjects(className, expectedName);
 
     // test date/time member
-    XCTAssertEqualObjects(item.updated.RFC3339String, @"2011-04-29T22:14:47.779Z",
-                         @"GTLDateTime member error");
+    XCTAssertEqualObjects(item.updated.RFC3339String, @"2011-04-29T22:14:47.779Z");
 
     // test string member
-    XCTAssertEqualObjects(item.title, @"task one",
-                         @"NSString member error");
+    XCTAssertEqualObjects(item.title, @"task one");
 
-    XCTAssertEqualObjects(className, expectedName,
-                         @"object member error");
+    XCTAssertEqualObjects(className, expectedName,);
   };
 
   ticket = [service fetchObjectWithURL:feedURL
                      completionHandler:completionBlock];
   [self service:service waitForTicket:ticket];
-  XCTAssertTrue(ticket.hasCalledCallback, @"callback skipped");
+  XCTAssertTrue(ticket.hasCalledCallback);
 
   //
   // test fetch error
@@ -284,23 +291,20 @@ static NSString *const kBatchRPCPageBName = @"TaskBatchPage1b.rpc";
     NSDictionary *userInfo = [error userInfo];
     GTLErrorObject *errObj = userInfo[kGTLStructuredErrorKey];
 
-    XCTAssertNil(object, @"unexpected object on error");
-    XCTAssertEqualObjects(errObj.message, @"Server Status 499",
-                         @"error message");
-    XCTAssertEqual([errObj.code intValue], 499,
-                   @"error code");
+    XCTAssertNil(object);
+    XCTAssertEqualObjects(errObj.message, @"Server Status 499");
+    XCTAssertEqual([errObj.code intValue], 499);
   };
 
   ticket = [service fetchObjectWithURL:feedURL
                      completionHandler:completionBlock];
   [self service:service waitForTicket:ticket];
-  XCTAssertTrue(ticket.hasCalledCallback, @"callback skipped");
+  XCTAssertTrue(ticket.hasCalledCallback);
 
   //
   // test parse notifications
   //
-  XCTAssertEqual(parseStartedCount_, 1, @"Parse count wrong");
-
+  XCTAssertEqual(parseStartedCount_, 1);
 }
 
 - (void)testServiceRPCFetch {
@@ -314,30 +318,30 @@ static NSString *const kBatchRPCPageBName = @"TaskBatchPage1b.rpc";
   GTLService *service = [[[GTLService alloc] init] autorelease];
   service.rpcURL = [testServer_ localURLForFile:kRPCValidName];
   service.apiVersion = @"v1";
+  service.allowInsecureQueries = YES;
 
   service.authorizer = [GTLTestAuthorizer authorizerWithValue:@"catpaws"];
 
-  GTLServiceCompletionHandler completionBlock;
-
-  completionBlock = ^(GTLServiceTicket *ticket, id object, NSError *error) {
+  GTLServiceCompletionHandler completionBlock = ^(GTLServiceTicket *ticket,
+                                                  id object, NSError *error) {
     GTLTasksTasks *tasks = object;
 
-    XCTAssertNil(error, @"fetch error %@", error);
-    XCTAssertEqual((NSUInteger) 2, [tasks.items count], @"item count");
+    XCTAssertNil(error);
+    XCTAssertEqual(tasks.items.count, (NSUInteger) 2);
 
     GTLTasksTask *item = tasks[0];
     NSString *className = NSStringFromClass([item class]);
     NSString *expectedName = PREFIXED_CLASSNAME(@"GTLTasksTask");
 
-    XCTAssertEqualObjects(expectedName, className, @"object member error");
+    XCTAssertEqualObjects(expectedName, className);
 
     // test members
-    XCTAssertEqualObjects(@"task one", item.title, @"NSString member error");
-    XCTAssertEqualObjects(@"2011-04-29T22:14:47.779Z",
-                         item.updated.RFC3339String, @"Date");
+    XCTAssertEqualObjects(item.title, @"task one");
+    XCTAssertEqualObjects(item.updated.RFC3339String, @"2011-04-29T22:14:47.779Z");
   };
 
-  GTLQueryTasksTest *query = [GTLQueryTasksTest queryForTasksListWithTasklist:@"MDg0NTg2OTA1ODg4OTI3MzgyMzQ6NDow"];
+  GTLQueryTasksTest *query =
+      [GTLQueryTasksTest queryForTasksListWithTasklist:@"MDg0NTg2OTA1ODg4OTI3MzgyMzQ6NDow"];
 
   query.showCompleted = YES;
   query.showHidden = NO;
@@ -354,11 +358,18 @@ static NSString *const kBatchRPCPageBName = @"TaskBatchPage1b.rpc";
   GTLServiceTicket *ticket = [service executeQuery:query
                                  completionHandler:completionBlock];
 
+  __block unsigned long long maxUploadProgress = 0;
+  ticket.uploadProgressBlock = ^(GTLServiceTicket *ticket, unsigned long long numberOfBytesRead,
+                                 unsigned long long dataLength) {
+    maxUploadProgress = numberOfBytesRead;
+  };
+  
   NSString *headerValue = [ticket.objectFetcher.mutableRequest valueForHTTPHeaderField:@"X-Feline"];
-  XCTAssertEqualObjects(headerValue, @"Fluffy", @"query http headers");
+  XCTAssertEqualObjects(headerValue, @"Fluffy");
 
   [self service:service waitForTicket:ticket];
-  XCTAssertTrue(ticket.hasCalledCallback, @"callback skipped");
+  XCTAssert(ticket.hasCalledCallback);
+  XCTAssertGreaterThan(maxUploadProgress, 0ULL);
 
   //
   // test: fetch single query with error returned
@@ -368,21 +379,21 @@ static NSString *const kBatchRPCPageBName = @"TaskBatchPage1b.rpc";
   service.rpcURL = [testServer_ localURLForFile:kRPCInvalidName];
 
   completionBlock = ^(GTLServiceTicket *ticket, id object, NSError *error) {
-    XCTAssertNil(object, @"fetch object %@", object);
-    XCTAssertNotNil(error, @"fetch error missing");
+    XCTAssertNil(object);
+    XCTAssertNotNil(error);
 
     GTLErrorObject *errorObj = [[error userInfo] objectForKey:kGTLStructuredErrorKey];
     NSString *className = NSStringFromClass([errorObj class]);
     NSString *expectedName = PREFIXED_CLASSNAME(@"GTLErrorObject");
-    XCTAssertEqualObjects(expectedName, className, @"error class name");
+    XCTAssertEqualObjects(className, expectedName);
 
-    XCTAssertEqualObjects(@"Invalid Value", errorObj.message, @"message");
-    XCTAssertEqual(400, [errorObj.code intValue], @"error code");
+    XCTAssertEqualObjects(errorObj.message, @"Invalid Value");
+    XCTAssertEqual(errorObj.code.intValue, 400);
 
-    GTLErrorObjectData *errData = [errorObj.data lastObject];
-    XCTAssertEqualObjects(@"global", errData.domain, @"domain");
-    XCTAssertEqualObjects(@"invalid", errData.reason, @"reason");
-    XCTAssertEqualObjects(@"Invalid Value", errData.message, @"message");
+    GTLErrorObjectData *errData = errorObj.data.lastObject;
+    XCTAssertEqualObjects(errData.domain, @"global");
+    XCTAssertEqualObjects(errData.reason, @"invalid");
+    XCTAssertEqualObjects(errData.message, @"Invalid Value");
   };
 
   query = [GTLQueryTasksTest queryForTasksListWithTasklist:@"abcd"];
@@ -397,7 +408,7 @@ static NSString *const kBatchRPCPageBName = @"TaskBatchPage1b.rpc";
   // test: fetch single valid query with invalid auth
   //
   completionBlock = ^(GTLServiceTicket *ticket, id object, NSError *error) {
-    XCTAssertEqual((NSInteger) 401, [error code], @"auth should not match");
+    XCTAssertEqual([error code], (NSInteger) 401);
   };
 
   query = [GTLQueryTasksTest queryForTasksListWithTasklist:@"MDg0NTg2OTA1ODg4OTI3MzgyMzQ6NDow"];
@@ -436,9 +447,8 @@ static NSString *const kBatchRPCPageBName = @"TaskBatchPage1b.rpc";
   // response as a bare object instance
   //
   completionBlock = ^(GTLServiceTicket *ticket, id object, NSError *error) {
-    XCTAssertTrue([object isKindOfClass:[GTLTasksTasks class]],
-                 @"%@", [object class]);
-    XCTAssertNil([object JSON], @"%@", [object JSON]);
+    XCTAssertTrue([object isKindOfClass:[GTLTasksTasks class]], @"%@", [object class]);
+    XCTAssertNil([object JSON]);
   };
 
   service.rpcURL = [testServer_ localURLForFile:kRPCEmptyName];
@@ -448,7 +458,7 @@ static NSString *const kBatchRPCPageBName = @"TaskBatchPage1b.rpc";
   ticket = [service executeQuery:query
                completionHandler:completionBlock];
   [self service:service waitForTicket:ticket];
-  XCTAssertTrue(ticket.hasCalledCallback, @"callback skipped");
+  XCTAssertTrue(ticket.hasCalledCallback);
 }
 
 - (void)testServiceRPCSurrogates {
@@ -463,6 +473,7 @@ static NSString *const kBatchRPCPageBName = @"TaskBatchPage1b.rpc";
   GTLService *service = [[[GTLService alloc] init] autorelease];
   service.rpcURL = [testServer_ localURLForFile:kRPCValidName];
   service.apiVersion = @"v1";
+  service.allowInsecureQueries = YES;
 
   // declare the surrogates we want instantiated
   service.surrogates = @{ (id<NSCopying>)[GTLTasksTask class] : [MyTask class],
@@ -473,7 +484,7 @@ static NSString *const kBatchRPCPageBName = @"TaskBatchPage1b.rpc";
   completionBlock = ^(GTLServiceTicket *ticket, id object, NSError *error) {
     MyTasks *tasks = object;
 
-    XCTAssertNil(error, @"fetch error %@", error);
+    XCTAssertNil(error);
 
     // top-level object
     NSString *className = NSStringFromClass([tasks class]);
@@ -490,8 +501,7 @@ static NSString *const kBatchRPCPageBName = @"TaskBatchPage1b.rpc";
     expectedName = @"MyTask";
     XCTAssertEqualObjects(className, expectedName, @"surrogate 2");
 
-    XCTAssertEqualObjects(task.identifier, @"MDg0NTg2OTA1ODg4OTI3MzgyMzQ6NDoy",
-                         @"id");
+    XCTAssertEqualObjects(task.identifier, @"MDg0NTg2OTA1ODg4OTI3MzgyMzQ6NDoy");
     XCTAssertEqualObjects(task.mondegreen, @"crimean river", @"subclass");
   };
 
@@ -505,7 +515,7 @@ static NSString *const kBatchRPCPageBName = @"TaskBatchPage1b.rpc";
   GTLServiceTicket *ticket = [service executeQuery:query
                                  completionHandler:completionBlock];
   [self service:service waitForTicket:ticket];
-  XCTAssertTrue(ticket.hasCalledCallback, @"callback skipped");
+  XCTAssertTrue(ticket.hasCalledCallback);
 }
 
 - (void)testServiceRPCPagedFetch {
@@ -522,28 +532,29 @@ static NSString *const kBatchRPCPageBName = @"TaskBatchPage1b.rpc";
   service.rpcURL = [testServer_ localURLForFile:kRPCPageAName];
   service.apiVersion = @"v1";
   service.shouldFetchNextPages = YES;
+  service.allowInsecureQueries = YES;
 
   GTLServiceCompletionHandler completionBlock;
 
   completionBlock = ^(GTLServiceTicket *ticket, id object, NSError *error) {
     GTLTasksTasks *tasks = object;
 
-    XCTAssertNil(error, @"fetch error %@", error);
+    XCTAssertNil(error);
 
     // we should have four items, two from each page
-    XCTAssertEqual([tasks.items count], (NSUInteger) 4, @"item count");
+    XCTAssertEqual(tasks.items.count, (NSUInteger) 4);
 
     // test item class
     GTLTasksTask *item1 = tasks[0];
     NSString *className = NSStringFromClass([item1 class]);
     NSString *expectedName = PREFIXED_CLASSNAME(@"GTLTasksTask");
-    XCTAssertEqualObjects(expectedName, className, @"object member error");
+    XCTAssertEqualObjects(className, expectedName);
 
     // test members of items from each page
-    XCTAssertEqualObjects(@"task one", item1.title, @"NSString member error");
+    XCTAssertEqualObjects(item1.title, @"task one");
 
     GTLTasksTask *item4 = tasks[3];
-    XCTAssertEqualObjects(@"task four", item4.title, @"NSString member error");
+    XCTAssertEqualObjects(item4.title, @"task four");
   };
 
   GTLQueryTasksTest *query = [GTLQueryTasksTest queryForTasksListWithTasklist:@"MDg0NTg2OTA1ODg4OTI3MzgyMzQ6NDow"];
@@ -560,7 +571,7 @@ static NSString *const kBatchRPCPageBName = @"TaskBatchPage1b.rpc";
   service.rpcURL = [testServer_ localURLForFile:kRPCPageBName];
 
   [self service:service waitForTicket:ticket];
-  XCTAssertTrue(ticket.hasCalledCallback, @"callback skipped");
+  XCTAssertTrue(ticket.hasCalledCallback);
 
   //
   // Test indexed-based paging (relying on the task categories at
@@ -577,7 +588,7 @@ static NSString *const kBatchRPCPageBName = @"TaskBatchPage1b.rpc";
   service.rpcURL = [testServer_ localURLForFile:kRPCPageDName];
 
   [self service:service waitForTicket:ticket];
-  XCTAssertTrue(ticket.hasCalledCallback, @"callback skipped");
+  XCTAssertTrue(ticket.hasCalledCallback);
 }
 
 - (void)testServiceRPCBatchFetch {
@@ -591,7 +602,8 @@ static NSString *const kBatchRPCPageBName = @"TaskBatchPage1b.rpc";
   GTLService *service = [[[GTLService alloc] init] autorelease];
   service.rpcURL = [testServer_ localURLForFile:kBatchRPCName];
   service.apiVersion = @"v1";
-  
+  service.allowInsecureQueries = YES;
+
   GTLServiceCompletionHandler completionBlock;
   
   completionBlock = ^(GTLServiceTicket *ticket, id object, NSError *error) {
@@ -601,33 +613,32 @@ static NSString *const kBatchRPCPageBName = @"TaskBatchPage1b.rpc";
     // the third to succeed but return an empty object, which shows up
     // as an NSNull
     NSDictionary *successes = batchResult.successes;
-    XCTAssertEqual((NSUInteger) 2, [successes count], @"success count");
+    XCTAssertEqual(successes.count, (NSUInteger) 2);
     
     NSDictionary *failures = batchResult.failures;
-    XCTAssertEqual((NSUInteger) 1, [failures count], @"failure count");
+    XCTAssertEqual(failures.count, (NSUInteger) 1);
     
     // successful item
     GTLTasksTask *item = successes[@"gtl_19"];
     NSString *className = NSStringFromClass([item class]);
     NSString *expectedName = PREFIXED_CLASSNAME(@"GTLTasksTask");
-    XCTAssertEqualObjects(expectedName, className, @"result class error");
+    XCTAssertEqualObjects(className, expectedName);
     
-    XCTAssertEqualObjects(@"tasks#task", item.kind, @"kind field");
-    XCTAssertEqualObjects(@"MDg0NTg2OTA1ODg4OTI3MzgyMzQ6NDox", item.identifier, @"id");
-    XCTAssertEqualObjects(@"2011-05-03T23:14:20.735Z",
-                         item.updated.RFC3339String, @"date");
+    XCTAssertEqualObjects(item.kind, @"tasks#task");
+    XCTAssertEqualObjects(item.identifier, @"MDg0NTg2OTA1ODg4OTI3MzgyMzQ6NDox");
+    XCTAssertEqualObjects(item.updated.RFC3339String, @"2011-05-03T23:14:20.735Z");
     
     // failed item
     GTLErrorObject *errorObj = failures[@"gtl_18"];
     className = NSStringFromClass([errorObj class]);
     expectedName = PREFIXED_CLASSNAME(@"GTLErrorObject");
-    XCTAssertEqualObjects(expectedName, className, @"error object");
+    XCTAssertEqualObjects(className, expectedName);
     
-    XCTAssertEqual(400, [errorObj.code intValue], @"error code");
-    XCTAssertEqualObjects(@"Invalid Value", errorObj.message, @"error message");
+    XCTAssertEqual(errorObj.code.intValue, 400);
+    XCTAssertEqualObjects(errorObj.message, @"Invalid Value");
     
-    GTLErrorObjectData *errData = [errorObj.data lastObject];
-    XCTAssertEqualObjects(@"invalid", errData.reason, @"error reason");
+    GTLErrorObjectData *errData = errorObj.data.lastObject;
+    XCTAssertEqualObjects(errData.reason, @"invalid");
   };
 
   // make a batch with two queries
@@ -644,7 +655,7 @@ static NSString *const kBatchRPCPageBName = @"TaskBatchPage1b.rpc";
   query1.requestID = @"gtl_19";
   query1.completionBlock = ^(GTLServiceTicket *ticket, id object, NSError *error) {
     // Remove this query from the list
-    XCTAssertTrue([queriesToCallBack containsObject:query1], @"callback list");
+    XCTAssertTrue([queriesToCallBack containsObject:query1], @"%@", queriesToCallBack);
     [queriesToCallBack removeObject:query1];
   };
   [queriesToCallBack addObject:query1];
@@ -659,7 +670,7 @@ static NSString *const kBatchRPCPageBName = @"TaskBatchPage1b.rpc";
   query2.requestID = @"gtl_18";
   query2.completionBlock = ^(GTLServiceTicket *ticket, id object, NSError *error) {
     // Remove this query from the list
-    XCTAssertTrue([queriesToCallBack containsObject:query2], @"callback list");
+    XCTAssertTrue([queriesToCallBack containsObject:query2], @"%@", queriesToCallBack);
     [queriesToCallBack removeObject:query2];
   };
   [queriesToCallBack addObject:query2];
@@ -670,7 +681,7 @@ static NSString *const kBatchRPCPageBName = @"TaskBatchPage1b.rpc";
   query3.completionBlock = ^(GTLServiceTicket *ticket, id object, NSError *error) {
     XCTAssertEqual(object, [NSNull null]);
     // Remove this query from the list
-    XCTAssertTrue([queriesToCallBack containsObject:query3], @"callback list");
+    XCTAssertTrue([queriesToCallBack containsObject:query3], @"%@", queriesToCallBack);
     [queriesToCallBack removeObject:query3];
   };
   [queriesToCallBack addObject:query3];
@@ -685,8 +696,7 @@ static NSString *const kBatchRPCPageBName = @"TaskBatchPage1b.rpc";
   [self service:service waitForTicket:ticket];
   XCTAssertTrue(ticket.hasCalledCallback, @"callback skipped");
 
-  XCTAssertEqual([queriesToCallBack count], (NSUInteger) 0,
-                 @"queries not called back");
+  XCTAssertEqual(queriesToCallBack.count, (NSUInteger) 0);
   XCTAssertNil(query2.completionBlock, @"Query callback not cleared");
 }
 
@@ -703,6 +713,7 @@ static NSString *const kBatchRPCPageBName = @"TaskBatchPage1b.rpc";
   service.rpcURL = [testServer_ localURLForFile:kBatchRPCPageAName];
   service.apiVersion = @"v1";
   service.shouldFetchNextPages = YES;
+  service.allowInsecureQueries = YES;
 
   // Query for one item
   GTLQueryTasksTest *query1 = [GTLQueryTasksTest queryForTasksGetWithTasklist:@"MTQwNzM4MjM0NzE2NDExMDgxOTM6MDow"
@@ -724,27 +735,26 @@ static NSString *const kBatchRPCPageBName = @"TaskBatchPage1b.rpc";
   GTLServiceCompletionHandler completionBlock;
   completionBlock = ^(GTLServiceTicket *ticket, id object, NSError *error) {
 
-    XCTAssertNil(error, @"fetch error %@ %@", error, [error userInfo]);
+    XCTAssertNil(error);
     GTLBatchResult *result = object;
 
     NSDictionary *successes = result.successes;
     NSDictionary *failures = result.failures;
 
-    XCTAssertEqual([successes count], (NSUInteger) 2, @"success count");
-    XCTAssertEqual([failures count], (NSUInteger) 0, @"failures count");
+    XCTAssertEqual(successes.count, (NSUInteger) 2);
+    XCTAssertEqual(failures.count, (NSUInteger) 0);
 
     GTLTasksTask *task = [successes objectForKey:[query1 requestID]];
-    XCTAssertEqualObjects(task.title, @"Wash", @"task title");
+    XCTAssertEqualObjects(task.title, @"Wash");
 
     GTLTasksTasks *taskCollection = [successes objectForKey:[query2 requestID]];
-    XCTAssertEqual([taskCollection.items count], (NSUInteger) 4,
-                   @"collection count");
+    XCTAssertEqual(taskCollection.items.count, (NSUInteger) 4);
 
     GTLTasksTask *item0 = [taskCollection itemAtIndex:0];
     GTLTasksTask *item3 = [taskCollection itemAtIndex:3];
-    XCTAssertEqualObjects(item0.title, @"task uno", @"first task");
-    XCTAssertEqualObjects(item3.title, @"task cuatro", @"last task");
-    XCTAssertEqualObjects(item3.notes, @"Notez", @"last task");
+    XCTAssertEqualObjects(item0.title, @"task uno");
+    XCTAssertEqualObjects(item3.title, @"task cuatro");
+    XCTAssertEqualObjects(item3.notes, @"Notez");
   };
 
   GTLServiceTicket *ticket = [service executeQuery:batchQuery
@@ -765,6 +775,436 @@ static NSString *const kBatchRPCPageBName = @"TaskBatchPage1b.rpc";
                  timeout:kTimeoutInterval
            fetchedObject:NULL
                    error:NULL];
+}
+
+- (GTLTasksTasks *)taskItemsForTestBlocks {
+  GTLTasksTask *task1 = [GTLTasksTask object];
+  task1.title = @"task alpha";
+  GTLTasksTask *task2 = [GTLTasksTask object];
+  task2.title = @"task beta";
+
+  GTLTasksTasks *tasks = [GTLTasksTasks object];
+  tasks.items = @[ task1, task2 ];
+  return tasks;
+}
+
+- (void)testServiceRPCTestBlock {
+  // Test a single query.
+  testServer_ = nil;
+
+  XCTestExpectation *expectExecuteCompletion = [self expectationWithDescription:@"Execute block"];
+  XCTestExpectation *expectQueryCompletion = [self expectationWithDescription:@"Query block"];
+  XCTestExpectation *expectProgress = [self expectationWithDescription:@"Upload progress"];
+
+  GTLService *service = [[[GTLService alloc] init] autorelease];
+  service.rpcURL = [NSURL URLWithString:@"https://example.invalid"];
+
+  GTLQueryTasksTest *query = [GTLQueryTasksTest queryForTasksListWithTasklist:@"abcd"];
+  query.requestID = @"gtl_11";
+
+  query.testBlock = ^(GTLServiceTicket *ticket, GTLQueryTestResponse testResponse) {
+    GTLQuery *testQuery = ticket.originalQuery;
+    XCTAssertEqualObjects(testQuery.requestID, @"gtl_11");
+
+    GTLTasksTasks *tasks = [self taskItemsForTestBlocks];
+    testResponse(tasks, nil);
+  };
+
+  query.completionBlock = ^(GTLServiceTicket *ticket,
+                            id object,
+                            NSError *error) {
+    GTLTasksTasks *tasks = object;
+    GTLTasksTask *item = tasks[0];
+    XCTAssertEqualObjects(@"task alpha", item.title, @"NSString member error");
+
+    [expectQueryCompletion fulfill];
+  };
+
+
+  GTLServiceTicket *ticket = [service executeQuery:query
+                                 completionHandler:^(GTLServiceTicket *ticket,
+                                                     id object,
+                                                     NSError *error) {
+    XCTAssertNotNil(ticket);
+    XCTAssertNil(error);
+
+    GTLTasksTasks *tasks = object;
+    XCTAssertEqual(tasks.items.count, (NSUInteger) 2);
+
+    GTLTasksTask *item = tasks[0];
+    NSString *className = NSStringFromClass([item class]);
+    NSString *expectedName = PREFIXED_CLASSNAME(@"GTLTasksTask");
+
+    XCTAssertEqualObjects(expectedName, className, @"object member error");
+
+    // test members
+    XCTAssertEqualObjects(@"task alpha", item.title, @"NSString member error");
+
+    [expectExecuteCompletion fulfill];
+  }];
+
+  ticket.uploadProgressBlock = ^(GTLServiceTicket *ticket,
+                                 unsigned long long totalBytesUploaded,
+                                 unsigned long long totalBytesExpectedToUpload) {
+    if (totalBytesUploaded == totalBytesExpectedToUpload) {
+      [expectProgress fulfill];
+    }
+  };
+
+  [self waitForExpectationsWithTimeout:5 handler:^(NSError *error) {
+    XCTAssertTrue(ticket.hasCalledCallback);
+  }];
+}
+
+- (void)testMockServiceConvenienceMethod {
+  testServer_ = nil;
+
+  // Test executing a query on the mock service, with success.
+  XCTestExpectation *expectExecuteCompletion = [self expectationWithDescription:@"Completion"];
+
+  GTLObject *fakedObject = [GTLObject object];
+
+  GTLService *service = [GTLService mockServiceWithFakedObject:fakedObject
+                                                    fakedError:nil];
+
+  GTLQueryTasksTest *query = [GTLQueryTasksTest queryForTasksListWithTasklist:@"abcd"];
+  query.requestID = @"gtl_11";
+
+  [service executeQuery:query
+      completionHandler:^(GTLServiceTicket *ticket, id object, NSError *error) {
+        XCTAssertEqualObjects(object, fakedObject);
+        XCTAssertNil(error);
+        [expectExecuteCompletion fulfill];
+  }];
+  [self waitForExpectationsWithTimeout:5 handler:nil];
+
+  // Test executing a query on the mock service, with an error.
+  expectExecuteCompletion = [self expectationWithDescription:@"Completion with Error"];
+
+  NSError *fakedError = [NSError errorWithDomain:@"com.example" code:-1 userInfo:nil];
+
+  service = [GTLService mockServiceWithFakedObject:nil
+                                        fakedError:fakedError];
+  [service executeQuery:query
+      completionHandler:^(GTLServiceTicket *ticket, id object, NSError *error) {
+        XCTAssertNil(object);
+        XCTAssertEqualObjects(error, fakedError);
+        [expectExecuteCompletion fulfill];
+  }];
+  [self waitForExpectationsWithTimeout:5 handler:nil];
+}
+
+// Tests for uploadParams using data, file URL, and file handle.
+- (NSData *)tempDataForUploading {
+  NSMutableString *string = [NSMutableString string];
+  for (int index = 0; index < 1000; index++) {
+    [string appendFormat:@"%c", 'A' + (index % 26)];
+  }
+  return [string dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+- (NSURL *)tempFileURLForUploading {
+  // Write a file that we can test uploading.
+  NSURL *tempDir = [NSURL fileURLWithPath:NSTemporaryDirectory()];
+  NSURL *tempFileURL = [tempDir URLByAppendingPathComponent:@"testServiceRPCFileUploadTestBlock"];
+  NSError *writeError = nil;
+  NSData *data = [self tempDataForUploading];
+  BOOL didWrite = [data writeToURL:tempFileURL
+                           options:NSDataWritingAtomic
+                             error:&writeError];
+  XCTAssert(didWrite, @"%@", writeError);
+  fileToRemove_ = [tempFileURL copy];
+  return tempFileURL;
+}
+
+- (void)testServiceRPCDataUploadTestBlock {
+  GTLUploadParameters *uploadParameters =
+      [GTLUploadParameters uploadParametersWithData:[self tempDataForUploading]
+                                           MIMEType:@"text/plain"];
+  [self performServiceRPCUploadTestBlockWithParameters:uploadParameters];
+}
+
+
+- (void)testServiceRPCFileURLUploadTestBlock {
+  GTLUploadParameters *uploadParameters =
+      [GTLUploadParameters uploadParametersWithFileURL:[self tempFileURLForUploading]
+                                              MIMEType:@"text/plain"];
+  [self performServiceRPCUploadTestBlockWithParameters:uploadParameters];
+}
+
+- (void)testServiceRPCFileHandleUploadTestBlock {
+  NSError *readingError = nil;
+  NSURL *fileURL = [self tempFileURLForUploading];
+  NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingFromURL:fileURL
+                                                                 error:&readingError];
+  XCTAssertNotNil(fileHandle, @"%@", readingError);
+  GTLUploadParameters *uploadParameters =
+      [GTLUploadParameters uploadParametersWithFileHandle:fileHandle
+                                                 MIMEType:@"text/plain"];
+  [self performServiceRPCUploadTestBlockWithParameters:uploadParameters];
+}
+
+// This method allows testing each flavor of upload: data, file URL, and file handle.
+- (void)performServiceRPCUploadTestBlockWithParameters:(GTLUploadParameters *)uploadParameters {
+  // Test a single query.
+  testServer_ = nil;
+
+  XCTestExpectation *expectExecuteCompletion = [self expectationWithDescription:@"Execute block"];
+  XCTestExpectation *expectQueryCompletion = [self expectationWithDescription:@"Query block"];
+  XCTestExpectation *expectProgress = [self expectationWithDescription:@"Upload progress"];
+
+  GTLService *service = [[[GTLService alloc] init] autorelease];
+  service.rpcUploadURL = [NSURL URLWithString:@"https://example.invalid"];
+
+  GTLQueryTasksTest *query = [GTLQueryTasksTest queryForTasksListWithTasklist:@"abcd"];
+  query.uploadParameters = uploadParameters;
+
+  query.testBlock = ^(GTLServiceTicket *ticket, GTLQueryTestResponse testResponse) {
+    GTLTasksTasks *tasks = [self taskItemsForTestBlocks];
+    testResponse(tasks, nil);
+  };
+
+  query.completionBlock = ^(GTLServiceTicket *ticket, id object, NSError *error) {
+    [expectQueryCompletion fulfill];
+  };
+
+  GTLServiceTicket *ticket = [service executeQuery:query
+                                 completionHandler:^(GTLServiceTicket *ticket,
+                                                     id object,
+                                                     NSError *error) {
+    [expectExecuteCompletion fulfill];
+  }];
+
+  __block int progressCallbackCounter = 0;
+  ticket.uploadProgressBlock = ^(GTLServiceTicket *ticket,
+                                 unsigned long long totalBytesUploaded,
+                                 unsigned long long totalBytesExpectedToUpload) {
+    ++progressCallbackCounter;
+    if (totalBytesUploaded == totalBytesExpectedToUpload) {
+      [expectProgress fulfill];
+      XCTAssertEqual(progressCallbackCounter, 3);
+      XCTAssertGreaterThan(totalBytesUploaded, [[self tempDataForUploading] length]);
+    }
+  };
+
+  [self waitForExpectationsWithTimeout:5 handler:nil];
+}
+
+- (void)testServiceRPCErrorTestBlock {
+  // Test a single query, failing with an error.
+  testServer_ = nil;
+
+  XCTestExpectation *expectExecuteCompletion = [self expectationWithDescription:@"Execute block"];
+  XCTestExpectation *expectQueryCompletion = [self expectationWithDescription:@"Query block"];
+  XCTestExpectation *expectRetryBlock = [self expectationWithDescription:@"Retry block"];
+
+  GTLService *service = [[[GTLService alloc] init] autorelease];
+  service.rpcURL = [NSURL URLWithString:@"https://example.invalid"];
+
+  GTLQueryTasksTest *query = [GTLQueryTasksTest queryForTasksListWithTasklist:@"abcd"];
+  query.requestID = @"gtl_13";
+
+  NSError *fakeError = [NSError errorWithDomain:@"invalid.example" code:-1 userInfo:nil];
+
+  // The service's retryBlock should be called once.
+  __block int retryCount = 0;
+  service.retryBlock = ^(GTLServiceTicket *ticket, BOOL suggestedWillRetry, NSError *error) {
+    XCTAssertEqualObjects(error, fakeError);
+    [expectRetryBlock fulfill];
+    XCTAssertEqual(++retryCount, 1);
+    return NO;  // The return value is ignored by the testBlock.
+  };
+
+  query.testBlock = ^(GTLServiceTicket *ticket, GTLQueryTestResponse testResponse) {
+    GTLQuery *testQuery = ticket.originalQuery;
+    XCTAssertEqualObjects(testQuery.requestID, @"gtl_13");
+
+    testResponse(nil, fakeError);
+  };
+
+  query.completionBlock = ^(GTLServiceTicket *ticket,
+                            id object,
+                            NSError *error) {
+    XCTAssertNotNil(ticket);
+    XCTAssertNil(object);
+    XCTAssertEqualObjects(error, fakeError);
+
+    [expectQueryCompletion fulfill];
+  };
+
+  GTLServiceTicket *ticket = [service executeQuery:query
+                                 completionHandler:^(GTLServiceTicket *ticket,
+                                                     id object,
+                                                     NSError *error) {
+     XCTAssertNotNil(ticket);
+     XCTAssertNil(object);
+     XCTAssertEqualObjects(error, fakeError);
+
+     [expectExecuteCompletion fulfill];
+   }];
+
+  [self waitForExpectationsWithTimeout:5 handler:^(NSError *error) {
+    XCTAssertTrue(ticket.hasCalledCallback);
+  }];
+}
+
+- (GTLBatchQuery *)batchQueryForTest {
+  // We'll make a batch with one successful query and one failed query.
+  GTLQueryTasksTest *query1 = [GTLQueryTasksTest queryForTasksListWithTasklist:@"abcd"];
+  query1.requestID = @"gtl_101";
+
+  GTLQueryTasksTest *query2 = [GTLQueryTasksTest queryForTasksListWithTasklist:@"abcd"];
+  query2.requestID = @"gtl_102";
+
+  GTLBatchQuery *batchQuery = [GTLBatchQuery batchQueryWithQueries:@[ query1, query2] ];
+  return batchQuery;
+}
+
+- (void)testServiceRPCBatchTestBlock {
+  // Test a batch query.
+  testServer_ = nil;
+
+  XCTestExpectation *expectExecuteCompletion = [self expectationWithDescription:@"Execute block"];
+  XCTestExpectation *expectQuery1Completion = [self expectationWithDescription:@"Query1 block"];
+  XCTestExpectation *expectQuery2Completion = [self expectationWithDescription:@"Query2 block"];
+
+  GTLService *service = [[[GTLService alloc] init] autorelease];
+  service.rpcURL = [NSURL URLWithString:@"https://example.invalid"];
+
+  GTLBatchQuery *batchQuery = [self batchQueryForTest];
+
+  batchQuery.testBlock = ^(GTLServiceTicket *ticket, GTLQueryTestResponse testResponse) {
+    GTLBatchQuery *testBatch = ticket.originalQuery;
+    GTLQuery *testQuery1 = testBatch.queries[0];
+    GTLQuery *testQuery2 = testBatch.queries[1];
+    XCTAssertEqualObjects(testQuery1.requestID, @"gtl_101");
+    XCTAssertEqualObjects(testQuery2.requestID, @"gtl_102");
+
+    GTLTasksTask *task1 = [GTLTasksTask object];
+    task1.title = @"cat alpha";
+    GTLTasksTask *task2 = [GTLTasksTask object];
+    task2.title = @"cat beta";
+
+    GTLTasksTasks *tasks = [GTLTasksTasks object];
+    tasks.items = @[ task1, task2 ];
+
+    GTLBatchResult *batchResult = [GTLBatchResult object];
+    GTLErrorObject *errorObject = [GTLErrorObject object];
+    errorObject.code = @-1;
+    errorObject.message = @"Sadness prevails";
+
+    batchResult.successes = [@{ @"gtl_101" : tasks } mutableCopy];
+    batchResult.failures = [@{ @"gtl_102" : errorObject } mutableCopy];
+
+    testResponse(batchResult, nil);
+  };
+
+  GTLQuery *query1 = batchQuery.queries[0];
+  query1.completionBlock = ^(GTLServiceTicket *ticket,
+                             id object,
+                             NSError *error) {
+    GTLTasksTasks *tasks = object;
+    GTLTasksTask *item = tasks[0];
+    XCTAssertEqualObjects(item.title, @"cat alpha");
+    XCTAssertNil(error);
+
+    [expectQuery1Completion fulfill];
+  };
+
+  GTLQuery *query2 = batchQuery.queries[1];
+  query2.completionBlock = ^(GTLServiceTicket *ticket,
+                             id object,
+                             NSError *error) {
+    XCTAssertNil(object);
+    XCTAssertEqualObjects(error.domain, kGTLJSONRPCErrorDomain);
+    XCTAssertEqual(error.code, -1);
+    GTLErrorObject *structuredError = error.userInfo[@"GTLStructuredError"];
+    XCTAssertEqualObjects(structuredError.message, @"Sadness prevails");
+
+    [expectQuery2Completion fulfill];
+  };
+
+
+  GTLServiceTicket *ticket = [service executeQuery:batchQuery
+                                 completionHandler:^(GTLServiceTicket *ticket,
+                                                     id object,
+                                                     NSError *error) {
+    XCTAssertNotNil(ticket);
+    XCTAssertNil(error);
+
+    GTLBatchResult *batchResult = object;
+
+    GTLTasksTasks *tasks = batchResult.successes[@"gtl_101"];
+    GTLTasksTask *item = tasks[0];
+    XCTAssertEqualObjects(item.title, @"cat alpha");
+
+    GTLErrorObject *structuredError = batchResult.failures[@"gtl_102"];
+    XCTAssertEqualObjects(structuredError.message, @"Sadness prevails");
+
+    [expectExecuteCompletion fulfill];
+  }];
+
+  [self waitForExpectationsWithTimeout:5 handler:^(NSError *error) {
+    XCTAssertTrue(ticket.hasCalledCallback);
+  }];
+}
+
+- (void)testServiceRPCBatchErrorTestBlock {
+  // Test a batch query, failing with an error rather than a batch result.
+  testServer_ = nil;
+
+  XCTestExpectation *expectExecuteCompletion = [self expectationWithDescription:@"Execute block"];
+  XCTestExpectation *expectQuery1Completion = [self expectationWithDescription:@"Query1 block"];
+  XCTestExpectation *expectQuery2Completion = [self expectationWithDescription:@"Query2 block"];
+
+  GTLService *service = [[[GTLService alloc] init] autorelease];
+  service.rpcURL = [NSURL URLWithString:@"https://example.invalid"];
+
+  GTLBatchQuery *batchQuery = [self batchQueryForTest];
+
+  NSError *fakeError = [NSError errorWithDomain:@"invalid.example" code:-1 userInfo:nil];
+
+  // Unlike earlier tests, we'll attach the test block to the service rather than to the query.
+  service.testBlock = ^(GTLServiceTicket *ticket, GTLQueryTestResponse testResponse) {
+    testResponse(nil, fakeError);
+  };
+
+  GTLQuery *query1 = batchQuery.queries[0];
+  query1.completionBlock = ^(GTLServiceTicket *ticket,
+                             id object,
+                             NSError *error) {
+    XCTAssertNotNil(ticket);
+    XCTAssertNil(object);
+    XCTAssertEqualObjects(error, fakeError);
+
+    [expectQuery1Completion fulfill];
+  };
+
+  GTLQuery *query2 = batchQuery.queries[1];
+  query2.completionBlock = ^(GTLServiceTicket *ticket,
+                             id object,
+                             NSError *error) {
+    XCTAssertNotNil(ticket);
+    XCTAssertNil(object);
+    XCTAssertEqualObjects(error, fakeError);
+
+    [expectQuery2Completion fulfill];
+  };
+
+  GTLServiceTicket *ticket = [service executeQuery:batchQuery
+                                 completionHandler:^(GTLServiceTicket *ticket,
+                                                     id object,
+                                                     NSError *error) {
+    XCTAssertNotNil(ticket);
+    XCTAssertNil(object);
+    XCTAssertEqualObjects(error, fakeError);
+
+    [expectExecuteCompletion fulfill];
+  }];
+
+  [self waitForExpectationsWithTimeout:5 handler:^(NSError *error) {
+    XCTAssertTrue(ticket.hasCalledCallback);
+  }];
 }
 
 @end

@@ -772,11 +772,7 @@
 				GCC_PREFIX_HEADER = "Sherlock/Sherlock-Prefix.pch";
 				INFOPLIST_FILE = "Sherlock/Sherlock-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Google",
-					"API/build/Debug-iphoneos",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-lxml2",
 					"-ObjC",
@@ -803,11 +799,7 @@
 				GCC_PREFIX_HEADER = "Sherlock/Sherlock-Prefix.pch";
 				INFOPLIST_FILE = "Sherlock/Sherlock-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Google",
-					"API/build/Debug-iphoneos",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-lxml2",
 					"-ObjC",

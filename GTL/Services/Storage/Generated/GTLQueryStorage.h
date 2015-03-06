@@ -26,7 +26,7 @@
 // Documentation:
 //   https://developers.google.com/storage/docs/json_api/
 // Classes:
-//   GTLQueryStorage (34 custom class methods, 33 custom properties)
+//   GTLQueryStorage (34 custom class methods, 34 custom properties)
 //   GTLStorageObjectsComposeSourceObjectsItem (0 custom class methods, 3 custom properties)
 //   GTLStorageObjectsComposeSourceObjectsItemObjectPreconditions (0 custom class methods, 1 custom properties)
 
@@ -79,6 +79,7 @@
 @property (copy) NSString *object;
 @property (copy) NSString *pageToken;
 @property (copy) NSString *predefinedAcl;
+@property (copy) NSString *predefinedDefaultObjectAcl;
 @property (copy) NSString *prefix;
 @property (copy) NSString *project;
 @property (copy) NSString *projection;
@@ -180,6 +181,7 @@
 //   ifMetagenerationNotMatch: If set, only deletes the bucket if its
 //     metageneration does not match this value.
 //  Authorization scope(s):
+//   kGTLAuthScopeStorageCloudPlatform
 //   kGTLAuthScopeStorageDevstorageFullControl
 //   kGTLAuthScopeStorageDevstorageReadWrite
 + (id)queryForBucketsDeleteWithBucket:(NSString *)bucket;
@@ -198,6 +200,7 @@
 //      kGTLStorageProjectionFull: Include all properties.
 //      kGTLStorageProjectionNoAcl: Omit acl and defaultObjectAcl properties.
 //  Authorization scope(s):
+//   kGTLAuthScopeStorageCloudPlatform
 //   kGTLAuthScopeStorageDevstorageFullControl
 //   kGTLAuthScopeStorageDevstorageReadOnly
 //   kGTLAuthScopeStorageDevstorageReadWrite
@@ -219,12 +222,28 @@
 //        access, and allUsers get READER access.
 //      kGTLStoragePredefinedAclPublicReadWrite: Project team owners get OWNER
 //        access, and allUsers get WRITER access.
+//   predefinedDefaultObjectAcl: Apply a predefined set of default object access
+//     controls to this bucket.
+//      kGTLStoragePredefinedDefaultObjectAclAuthenticatedRead: Object owner
+//        gets OWNER access, and allAuthenticatedUsers get READER access.
+//      kGTLStoragePredefinedDefaultObjectAclBucketOwnerFullControl: Object
+//        owner gets OWNER access, and project team owners get OWNER access.
+//      kGTLStoragePredefinedDefaultObjectAclBucketOwnerRead: Object owner gets
+//        OWNER access, and project team owners get READER access.
+//      kGTLStoragePredefinedDefaultObjectAclPrivate: Object owner gets OWNER
+//        access.
+//      kGTLStoragePredefinedDefaultObjectAclProjectPrivate: Object owner gets
+//        OWNER access, and project team members get access according to their
+//        roles.
+//      kGTLStoragePredefinedDefaultObjectAclPublicRead: Object owner gets OWNER
+//        access, and allUsers get READER access.
 //   projection: Set of properties to return. Defaults to noAcl, unless the
 //     bucket resource specifies acl or defaultObjectAcl properties, when it
 //     defaults to full.
 //      kGTLStorageProjectionFull: Include all properties.
 //      kGTLStorageProjectionNoAcl: Omit acl and defaultObjectAcl properties.
 //  Authorization scope(s):
+//   kGTLAuthScopeStorageCloudPlatform
 //   kGTLAuthScopeStorageDevstorageFullControl
 //   kGTLAuthScopeStorageDevstorageReadWrite
 // Fetches a GTLStorageBucket.
@@ -243,6 +262,7 @@
 //      kGTLStorageProjectionFull: Include all properties.
 //      kGTLStorageProjectionNoAcl: Omit acl and defaultObjectAcl properties.
 //  Authorization scope(s):
+//   kGTLAuthScopeStorageCloudPlatform
 //   kGTLAuthScopeStorageDevstorageFullControl
 //   kGTLAuthScopeStorageDevstorageReadOnly
 //   kGTLAuthScopeStorageDevstorageReadWrite
@@ -269,10 +289,26 @@
 //        access, and allUsers get READER access.
 //      kGTLStoragePredefinedAclPublicReadWrite: Project team owners get OWNER
 //        access, and allUsers get WRITER access.
+//   predefinedDefaultObjectAcl: Apply a predefined set of default object access
+//     controls to this bucket.
+//      kGTLStoragePredefinedDefaultObjectAclAuthenticatedRead: Object owner
+//        gets OWNER access, and allAuthenticatedUsers get READER access.
+//      kGTLStoragePredefinedDefaultObjectAclBucketOwnerFullControl: Object
+//        owner gets OWNER access, and project team owners get OWNER access.
+//      kGTLStoragePredefinedDefaultObjectAclBucketOwnerRead: Object owner gets
+//        OWNER access, and project team owners get READER access.
+//      kGTLStoragePredefinedDefaultObjectAclPrivate: Object owner gets OWNER
+//        access.
+//      kGTLStoragePredefinedDefaultObjectAclProjectPrivate: Object owner gets
+//        OWNER access, and project team members get access according to their
+//        roles.
+//      kGTLStoragePredefinedDefaultObjectAclPublicRead: Object owner gets OWNER
+//        access, and allUsers get READER access.
 //   projection: Set of properties to return. Defaults to full.
 //      kGTLStorageProjectionFull: Include all properties.
 //      kGTLStorageProjectionNoAcl: Omit acl and defaultObjectAcl properties.
 //  Authorization scope(s):
+//   kGTLAuthScopeStorageCloudPlatform
 //   kGTLAuthScopeStorageDevstorageFullControl
 //   kGTLAuthScopeStorageDevstorageReadWrite
 // Fetches a GTLStorageBucket.
@@ -299,10 +335,26 @@
 //        access, and allUsers get READER access.
 //      kGTLStoragePredefinedAclPublicReadWrite: Project team owners get OWNER
 //        access, and allUsers get WRITER access.
+//   predefinedDefaultObjectAcl: Apply a predefined set of default object access
+//     controls to this bucket.
+//      kGTLStoragePredefinedDefaultObjectAclAuthenticatedRead: Object owner
+//        gets OWNER access, and allAuthenticatedUsers get READER access.
+//      kGTLStoragePredefinedDefaultObjectAclBucketOwnerFullControl: Object
+//        owner gets OWNER access, and project team owners get OWNER access.
+//      kGTLStoragePredefinedDefaultObjectAclBucketOwnerRead: Object owner gets
+//        OWNER access, and project team owners get READER access.
+//      kGTLStoragePredefinedDefaultObjectAclPrivate: Object owner gets OWNER
+//        access.
+//      kGTLStoragePredefinedDefaultObjectAclProjectPrivate: Object owner gets
+//        OWNER access, and project team members get access according to their
+//        roles.
+//      kGTLStoragePredefinedDefaultObjectAclPublicRead: Object owner gets OWNER
+//        access, and allUsers get READER access.
 //   projection: Set of properties to return. Defaults to full.
 //      kGTLStorageProjectionFull: Include all properties.
 //      kGTLStorageProjectionNoAcl: Omit acl and defaultObjectAcl properties.
 //  Authorization scope(s):
+//   kGTLAuthScopeStorageCloudPlatform
 //   kGTLAuthScopeStorageDevstorageFullControl
 //   kGTLAuthScopeStorageDevstorageReadWrite
 // Fetches a GTLStorageBucket.
@@ -316,6 +368,7 @@
 // Method: storage.channels.stop
 // Stop watching resources through this channel
 //  Authorization scope(s):
+//   kGTLAuthScopeStorageCloudPlatform
 //   kGTLAuthScopeStorageDevstorageFullControl
 //   kGTLAuthScopeStorageDevstorageReadOnly
 //   kGTLAuthScopeStorageDevstorageReadWrite
@@ -547,6 +600,7 @@
 //     object's current metageneration matches the given value.
 //   kind: The kind of item this is. (Default storage#composeRequest)
 //  Authorization scope(s):
+//   kGTLAuthScopeStorageCloudPlatform
 //   kGTLAuthScopeStorageDevstorageFullControl
 //   kGTLAuthScopeStorageDevstorageReadWrite
 // Fetches a GTLStorageObject.
@@ -605,6 +659,7 @@
 //   sourceGeneration: If present, selects a specific revision of the source
 //     object (as opposed to the latest version, the default).
 //  Authorization scope(s):
+//   kGTLAuthScopeStorageCloudPlatform
 //   kGTLAuthScopeStorageDevstorageFullControl
 //   kGTLAuthScopeStorageDevstorageReadWrite
 // Fetches a GTLStorageObject.
@@ -631,13 +686,14 @@
 //   ifMetagenerationNotMatch: Makes the operation conditional on whether the
 //     object's current metageneration does not match the given value.
 //  Authorization scope(s):
+//   kGTLAuthScopeStorageCloudPlatform
 //   kGTLAuthScopeStorageDevstorageFullControl
 //   kGTLAuthScopeStorageDevstorageReadWrite
 + (id)queryForObjectsDeleteWithBucket:(NSString *)bucket
                                object:(NSString *)object;
 
 // Method: storage.objects.get
-// Retrieves objects or their metadata.
+// Retrieves an object or its metadata.
 //  Required:
 //   bucket: Name of the bucket in which the object resides.
 //   object: Name of the object.
@@ -656,6 +712,7 @@
 //      kGTLStorageProjectionFull: Include all properties.
 //      kGTLStorageProjectionNoAcl: Omit the acl property.
 //  Authorization scope(s):
+//   kGTLAuthScopeStorageCloudPlatform
 //   kGTLAuthScopeStorageDevstorageFullControl
 //   kGTLAuthScopeStorageDevstorageReadOnly
 //   kGTLAuthScopeStorageDevstorageReadWrite
@@ -703,6 +760,7 @@
 //  Upload Parameters:
 //   Accepted MIME type(s): */*
 //  Authorization scope(s):
+//   kGTLAuthScopeStorageCloudPlatform
 //   kGTLAuthScopeStorageDevstorageFullControl
 //   kGTLAuthScopeStorageDevstorageReadWrite
 // Fetches a GTLStorageObject.
@@ -730,6 +788,7 @@
 //      kGTLStorageProjectionNoAcl: Omit the acl property.
 //   versions: If true, lists all versions of a file as distinct results.
 //  Authorization scope(s):
+//   kGTLAuthScopeStorageCloudPlatform
 //   kGTLAuthScopeStorageDevstorageFullControl
 //   kGTLAuthScopeStorageDevstorageReadOnly
 //   kGTLAuthScopeStorageDevstorageReadWrite
@@ -768,6 +827,7 @@
 //      kGTLStorageProjectionFull: Include all properties.
 //      kGTLStorageProjectionNoAcl: Omit the acl property.
 //  Authorization scope(s):
+//   kGTLAuthScopeStorageCloudPlatform
 //   kGTLAuthScopeStorageDevstorageFullControl
 //   kGTLAuthScopeStorageDevstorageReadWrite
 // Fetches a GTLStorageObject.
@@ -807,6 +867,7 @@
 //      kGTLStorageProjectionFull: Include all properties.
 //      kGTLStorageProjectionNoAcl: Omit the acl property.
 //  Authorization scope(s):
+//   kGTLAuthScopeStorageCloudPlatform
 //   kGTLAuthScopeStorageDevstorageFullControl
 //   kGTLAuthScopeStorageDevstorageReadWrite
 // Fetches a GTLStorageObject.
@@ -834,6 +895,7 @@
 //      kGTLStorageProjectionNoAcl: Omit the acl property.
 //   versions: If true, lists all versions of a file as distinct results.
 //  Authorization scope(s):
+//   kGTLAuthScopeStorageCloudPlatform
 //   kGTLAuthScopeStorageDevstorageFullControl
 //   kGTLAuthScopeStorageDevstorageReadOnly
 //   kGTLAuthScopeStorageDevstorageReadWrite

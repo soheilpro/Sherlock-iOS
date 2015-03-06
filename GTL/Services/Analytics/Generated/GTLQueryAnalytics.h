@@ -233,7 +233,8 @@
 // Lists account summaries (lightweight tree comprised of
 // accounts/properties/profiles) to which the user has access.
 //  Optional:
-//   maxResults: The maximum number of filters to include in this response.
+//   maxResults: The maximum number of account summaries to include in this
+//     response, where the largest acceptable value is 1000.
 //   startIndex: An index of the first entity to retrieve. Use this parameter as
 //     a pagination mechanism along with the max-results parameter.
 //  Authorization scope(s):
@@ -277,6 +278,7 @@
 //     parameter as a pagination mechanism along with the max-results parameter.
 //  Authorization scope(s):
 //   kGTLAuthScopeAnalyticsManageUsers
+//   kGTLAuthScopeAnalyticsManageUsersReadonly
 // Fetches a GTLAnalyticsEntityUserLinks.
 + (id)queryForManagementAccountUserLinksListWithAccountId:(NSString *)accountId;
 
@@ -906,6 +908,7 @@
 //     parameter as a pagination mechanism along with the max-results parameter.
 //  Authorization scope(s):
 //   kGTLAuthScopeAnalyticsManageUsers
+//   kGTLAuthScopeAnalyticsManageUsersReadonly
 // Fetches a GTLAnalyticsEntityUserLinks.
 + (id)queryForManagementProfileUserLinksListWithAccountId:(NSString *)accountId
                                             webPropertyId:(NSString *)webPropertyId
@@ -1292,6 +1295,7 @@
 //     parameter.
 //  Authorization scope(s):
 //   kGTLAuthScopeAnalyticsManageUsers
+//   kGTLAuthScopeAnalyticsManageUsersReadonly
 // Fetches a GTLAnalyticsEntityUserLinks.
 + (id)queryForManagementWebpropertyUserLinksListWithAccountId:(NSString *)accountId
                                                 webPropertyId:(NSString *)webPropertyId;

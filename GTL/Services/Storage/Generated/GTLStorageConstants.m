@@ -29,6 +29,7 @@
 #import "GTLStorageConstants.h"
 
 // Authorization scope
+NSString * const kGTLAuthScopeStorageCloudPlatform         = @"https://www.googleapis.com/auth/cloud-platform";
 NSString * const kGTLAuthScopeStorageDevstorageFullControl = @"https://www.googleapis.com/auth/devstorage.full_control";
 NSString * const kGTLAuthScopeStorageDevstorageReadOnly    = @"https://www.googleapis.com/auth/devstorage.read_only";
 NSString * const kGTLAuthScopeStorageDevstorageReadWrite   = @"https://www.googleapis.com/auth/devstorage.read_write";
@@ -49,6 +50,14 @@ NSString * const kGTLStoragePredefinedAclPrivate               = @"private";
 NSString * const kGTLStoragePredefinedAclProjectPrivate        = @"projectPrivate";
 NSString * const kGTLStoragePredefinedAclPublicRead            = @"publicRead";
 NSString * const kGTLStoragePredefinedAclPublicReadWrite       = @"publicReadWrite";
+
+// GTLQueryStorage - PredefinedDefaultObjectAcl
+NSString * const kGTLStoragePredefinedDefaultObjectAclAuthenticatedRead = @"authenticatedRead";
+NSString * const kGTLStoragePredefinedDefaultObjectAclBucketOwnerFullControl = @"bucketOwnerFullControl";
+NSString * const kGTLStoragePredefinedDefaultObjectAclBucketOwnerRead = @"bucketOwnerRead";
+NSString * const kGTLStoragePredefinedDefaultObjectAclPrivate  = @"private";
+NSString * const kGTLStoragePredefinedDefaultObjectAclProjectPrivate = @"projectPrivate";
+NSString * const kGTLStoragePredefinedDefaultObjectAclPublicRead = @"publicRead";
 
 // GTLQueryStorage - Projection
 NSString * const kGTLStorageProjectionFull  = @"full";

@@ -34,7 +34,7 @@
   #import "GTLObject.h"
 #endif
 
-@class GTLYouTubeAnalyticsBatchReportDefinitionTemplate;
+@class GTLYouTubeAnalyticsBatchReportDefinition;
 
 // ----------------------------------------------------------------------------
 //
@@ -50,7 +50,7 @@
 @interface GTLYouTubeAnalyticsBatchReportDefinitionList : GTLCollectionObject
 
 // A list of batchReportDefinition resources that match the request criteria.
-@property (retain) NSArray *items;  // of GTLYouTubeAnalyticsBatchReportDefinitionTemplate
+@property (retain) NSArray *items;  // of GTLYouTubeAnalyticsBatchReportDefinition
 
 // This value specifies the type of data included in the API response. For the
 // list method, the kind property value is

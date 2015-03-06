@@ -1,4 +1,4 @@
-/* Copyright (c) 2013 Google Inc.
+/* Copyright (c) 2014 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@
 // Documentation:
 //   https://developers.google.com/cloud-sql/docs/admin-api/
 // Classes:
-//   GTLSQLAdminIpConfiguration (0 custom class methods, 3 custom properties)
+//   GTLSQLAdminIpConfiguration (0 custom class methods, 4 custom properties)
 
 #import "GTLSQLAdminIpConfiguration.h"
 
@@ -36,13 +36,17 @@
 //
 
 @implementation GTLSQLAdminIpConfiguration
-@dynamic authorizedNetworks, enabled, requireSsl;
+@dynamic authorizedNetworks, enabled, kind, requireSsl;
 
 + (NSDictionary *)arrayPropertyToClassMap {
   NSDictionary *map =
     [NSDictionary dictionaryWithObject:[NSString class]
                                 forKey:@"authorizedNetworks"];
   return map;
+}
+
++ (void)load {
+  [self registerObjectClassForKind:@"sql#ipConfiguration"];
 }
 
 @end

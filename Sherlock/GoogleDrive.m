@@ -70,7 +70,7 @@ NSString *const kClientSecret = @"YOUR_CLIENT_SECRET";
 {
     GTLQueryDrive *query = [GTLQueryDrive queryForFilesList];
     query.q = q;
-    query.maxResults = NSIntegerMax;
+    query.maxResults = INT_MAX;
 
     [self.service executeQuery:query completionHandler:^(GTLServiceTicket* ticket, GTLDriveFileList* files, NSError* error)
     {

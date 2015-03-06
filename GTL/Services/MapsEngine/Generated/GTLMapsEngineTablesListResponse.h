@@ -42,12 +42,15 @@
 //   GTLMapsEngineTablesListResponse
 //
 
-// The response returned by a call to tables.List.
+// The response returned by a call to tables.List. Note: The list response does
+// not include all the fields available in a table. Refer to the table resource
+// description for details of the fields that are not included. You'll need to
+// send a get request to retrieve the additional fields for each table.
 
 @interface GTLMapsEngineTablesListResponse : GTLObject
 
 // Next page token.
-@property (copy) NSString *nextPageToken;
+@property (copy) NSString *nextPageToken;  // GTLBase64 can encode/decode (probably web-safe format)
 
 // Resources returned.
 @property (retain) NSArray *tables;  // of GTLMapsEngineTable

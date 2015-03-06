@@ -26,7 +26,7 @@
 // Documentation:
 //   https://developers.google.com/books/docs/v1/getting_started
 // Classes:
-//   GTLQueryBooks (40 custom class methods, 65 custom properties)
+//   GTLQueryBooks (45 custom class methods, 69 custom properties)
 
 #if GTL_BUILT_AS_FRAMEWORK
   #import "GTL/GTLQuery.h"
@@ -36,6 +36,7 @@
 
 @class GTLBooksAnnotation;
 @class GTLBooksCloudloadingResource;
+@class GTLBooksUsersettings;
 
 @interface GTLQueryBooks : GTLQuery
 
@@ -58,6 +59,7 @@
 @property (retain) id annotationDataId;
 @property (copy) NSString *annotationId;
 @property (copy) NSString *association;
+@property (retain) NSArray *categoryId;  // of NSString
 @property (copy) NSString *contentVersion;
 @property (copy) NSString *country;
 @property (copy) NSString *cpksver;
@@ -85,6 +87,7 @@
 @property (copy) NSString *offerId;
 @property (copy) NSString *orderBy;
 @property (retain) NSArray *pageIds;  // of NSString
+@property (assign) NSUInteger pageSize;
 @property (copy) NSString *pageToken;
 @property (copy) NSString *partner;
 @property (copy) NSString *position;
@@ -94,8 +97,10 @@
 @property (copy) NSString *projection;
 @property (copy) NSString *q;
 @property (copy) NSString *rating;
+@property (copy) NSString *reason;
 @property (assign) NSInteger scale;
 @property (copy) NSString *serial;
+@property (retain) GTLBooksUsersettings *settings;
 @property (copy) NSString *shelf;
 @property (assign) BOOL showDeleted;
 @property (assign) BOOL showOnlySummaryInResponse;
@@ -199,6 +204,19 @@
 //   kGTLAuthScopeBooks
 // Fetches a GTLBooksCloudloadingResource.
 + (id)queryForCloudloadingUpdateBookWithObject:(GTLBooksCloudloadingResource *)object;
+
+#pragma mark -
+#pragma mark "dictionary" methods
+// These create a GTLQueryBooks object.
+
+// Method: books.dictionary.listOfflineMetadata
+// Returns a list of offline dictionary meatadata available
+//  Required:
+//   cpksver: The device/version ID from which to request the data.
+//  Authorization scope(s):
+//   kGTLAuthScopeBooks
+// Fetches a GTLBooksMetadata.
++ (id)queryForDictionaryListOfflineMetadataWithCpksver:(NSString *)cpksver;
 
 #pragma mark -
 #pragma mark "layers.annotationData" methods
@@ -350,6 +368,13 @@
 #pragma mark "myconfig" methods
 // These create a GTLQueryBooks object.
 
+// Method: books.myconfig.getUserSettings
+// Gets the current settings for the user.
+//  Authorization scope(s):
+//   kGTLAuthScopeBooks
+// Fetches a GTLBooksUsersettings.
++ (id)queryForMyconfigGetUserSettings;
+
 // Method: books.myconfig.releaseDownloadAccess
 // Release downloaded content access restriction.
 //  Required:
@@ -406,6 +431,16 @@
                                              nonce:(NSString *)nonce
                                            cpksver:(NSString *)cpksver;
 
+// Method: books.myconfig.updateUserSettings
+// Sets the settings for the user. Unspecified sub-objects will retain the
+// existing value.
+//  Optional:
+//   settings: GTLBooksUsersettings
+//  Authorization scope(s):
+//   kGTLAuthScopeBooks
+// Fetches a GTLBooksUsersettings.
++ (id)queryForMyconfigUpdateUserSettings;
+
 #pragma mark -
 #pragma mark "mylibrary.annotations" methods
 // These create a GTLQueryBooks object.
@@ -434,6 +469,7 @@
 // Method: books.mylibrary.annotations.insert
 // Inserts a new annotation.
 //  Optional:
+//   country: ISO-3166-1 code to override the IP-based location.
 //   showOnlySummaryInResponse: Requests that only the summary of the specified
 //     layer be provided in the response.
 //   source: String to identify the originator of this request.
@@ -498,6 +534,8 @@
 //   shelf: ID of bookshelf to which to add a volume.
 //   volumeId: ID of volume to add.
 //  Optional:
+//   reason: The reason for which the book is added to the library.
+//      kGTLBooksReasonOnboarding: Volumes added from onboarding flow.
 //   source: String to identify the originator of this request.
 //  Authorization scope(s):
 //   kGTLAuthScopeBooks
@@ -628,6 +666,34 @@
 + (id)queryForMylibraryReadingpositionsSetPositionWithVolumeId:(NSString *)volumeId
                                                      timestamp:(NSString *)timestamp
                                                       position:(NSString *)position;
+
+#pragma mark -
+#pragma mark "onboarding" methods
+// These create a GTLQueryBooks object.
+
+// Method: books.onboarding.listCategories
+// List categories for onboarding experience.
+//  Optional:
+//   locale: ISO-639-1 language and ISO-3166-1 country code. Default is en-US if
+//     unset.
+//  Authorization scope(s):
+//   kGTLAuthScopeBooks
+// Fetches a GTLBooksCategory.
++ (id)queryForOnboardingListCategories;
+
+// Method: books.onboarding.listCategoryVolumes
+// List available volumes under categories for onboarding experience.
+//  Optional:
+//   categoryId: List of category ids requested.
+//   locale: ISO-639-1 language and ISO-3166-1 country code. Default is en-US if
+//     unset.
+//   pageSize: Number of maximum results per page to be included in the
+//     response.
+//   pageToken: The value of the nextToken from the previous page.
+//  Authorization scope(s):
+//   kGTLAuthScopeBooks
+// Fetches a GTLBooksVolume2.
++ (id)queryForOnboardingListCategoryVolumes;
 
 #pragma mark -
 #pragma mark "promooffer" methods

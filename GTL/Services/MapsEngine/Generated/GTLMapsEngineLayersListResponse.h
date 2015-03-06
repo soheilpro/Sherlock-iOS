@@ -42,7 +42,10 @@
 //   GTLMapsEngineLayersListResponse
 //
 
-// The response returned by a call to layers.List.
+// The response returned by a call to layers.List. Note: The list response does
+// not include all the fields available in a layer. Refer to the layer resource
+// description for details of the fields that are not included. You'll need to
+// send a get request to retrieve the additional fields for each layer.
 
 @interface GTLMapsEngineLayersListResponse : GTLObject
 
@@ -50,6 +53,6 @@
 @property (retain) NSArray *layers;  // of GTLMapsEngineLayer
 
 // Next page token.
-@property (copy) NSString *nextPageToken;
+@property (copy) NSString *nextPageToken;  // GTLBase64 can encode/decode (probably web-safe format)
 
 @end

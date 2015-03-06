@@ -26,7 +26,7 @@
 // Documentation:
 //   https://developers.google.com/drive/
 // Classes:
-//   GTLQueryDrive (59 custom class methods, 43 custom properties)
+//   GTLQueryDrive (59 custom class methods, 45 custom properties)
 
 #if GTL_BUILT_AS_FRAMEWORK
   #import "GTL/GTLQuery.h"
@@ -56,6 +56,7 @@
 //
 // Method-specific parameters; see the comments below for more information.
 //
+@property (assign) BOOL acknowledgeAbuse;
 @property (copy) NSString *addParents;
 @property (copy) NSString *appFilterExtensions;
 @property (copy) NSString *appFilterMimeTypes;
@@ -65,6 +66,7 @@
 @property (copy) NSString *childId;
 @property (copy) NSString *commentId;
 @property (assign) BOOL convert;
+@property (copy) NSString *corpus;
 @property (copy) NSString *email;
 @property (copy) NSString *emailMessage;
 @property (copy) NSString *fileId;
@@ -336,7 +338,6 @@
 //  Authorization scope(s):
 //   kGTLAuthScopeDrive
 //   kGTLAuthScopeDriveFile
-//   kGTLAuthScopeDriveReadonly
 // Fetches a GTLDriveComment.
 + (id)queryForCommentsInsertWithObject:(GTLDriveComment *)object
                                 fileId:(NSString *)fileId;
@@ -404,7 +405,8 @@
 //     false)
 //   ocrLanguage: If ocr is true, hints at the language to use. Valid values are
 //     ISO 639-1 codes.
-//   pinned: Whether to pin the head revision of the new copy. (Default false)
+//   pinned: Whether to pin the head revision of the new copy. A file can have a
+//     maximum of 200 pinned revisions. (Default false)
 //   timedTextLanguage: The language of the timed text.
 //   timedTextTrackName: The timed text track name.
 //   visibility: The visibility of the new file. This parameter is only relevant
@@ -444,6 +446,8 @@
 //  Required:
 //   fileId: The ID for the file in question.
 //  Optional:
+//   acknowledgeAbuse: Whether the user is acknowledging the risk of downloading
+//     known malware or other abusive files. (Default false)
 //   projection: This parameter is deprecated and has no function.
 //      kGTLDriveProjectionBasic: Deprecated
 //      kGTLDriveProjectionFull: Deprecated
@@ -468,8 +472,8 @@
 //     false)
 //   ocrLanguage: If ocr is true, hints at the language to use. Valid values are
 //     ISO 639-1 codes.
-//   pinned: Whether to pin the head revision of the uploaded file. (Default
-//     false)
+//   pinned: Whether to pin the head revision of the uploaded file. A file can
+//     have a maximum of 200 pinned revisions. (Default false)
 //   timedTextLanguage: The language of the timed text.
 //   timedTextTrackName: The timed text track name.
 //   useContentAsIndexableText: Whether to use the content as indexable text.
@@ -495,6 +499,9 @@
 // Method: drive.files.list
 // Lists the user's files.
 //  Optional:
+//   corpus: The body of items (files/documents) to which the query applies.
+//      kGTLDriveCorpusDefault: The items that the user has accessed.
+//      kGTLDriveCorpusDomain: Items shared to the user's domain.
 //   maxResults: Maximum number of files to return. (Default 100)
 //   pageToken: Page token for files.
 //   projection: This parameter is deprecated and has no function.
@@ -520,15 +527,16 @@
 //   convert: Whether to convert this file to the corresponding Google Docs
 //     format. (Default false)
 //   newRevision: Whether a blob upload should create a new revision. If false,
-//     the blob data in the current head revision is replaced. If not set or
-//     true, a new blob is created as head revision, and previous revisions are
+//     the blob data in the current head revision is replaced. If true or not
+//     set, a new blob is created as head revision, and previous revisions are
 //     preserved (causing increased use of the user's data storage quota).
 //     (Default true)
 //   ocr: Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads. (Default
 //     false)
 //   ocrLanguage: If ocr is true, hints at the language to use. Valid values are
 //     ISO 639-1 codes.
-//   pinned: Whether to pin the new revision. (Default false)
+//   pinned: Whether to pin the new revision. A file can have a maximum of 200
+//     pinned revisions. (Default false)
 //   removeParents: Comma-separated list of parent IDs to remove.
 //   setModifiedDate: Whether to set the modified date with the supplied
 //     modified date. (Default false)
@@ -566,6 +574,7 @@
 //   fileId: The ID of the file to trash.
 //  Authorization scope(s):
 //   kGTLAuthScopeDrive
+//   kGTLAuthScopeDriveAppdata
 //   kGTLAuthScopeDriveAppsReadonly
 //   kGTLAuthScopeDriveFile
 // Fetches a GTLDriveFile.
@@ -577,6 +586,7 @@
 //   fileId: The ID of the file to untrash.
 //  Authorization scope(s):
 //   kGTLAuthScopeDrive
+//   kGTLAuthScopeDriveAppdata
 //   kGTLAuthScopeDriveAppsReadonly
 //   kGTLAuthScopeDriveFile
 // Fetches a GTLDriveFile.
@@ -591,15 +601,16 @@
 //   convert: Whether to convert this file to the corresponding Google Docs
 //     format. (Default false)
 //   newRevision: Whether a blob upload should create a new revision. If false,
-//     the blob data in the current head revision is replaced. If not set or
-//     true, a new blob is created as head revision, and previous revisions are
+//     the blob data in the current head revision is replaced. If true or not
+//     set, a new blob is created as head revision, and previous revisions are
 //     preserved (causing increased use of the user's data storage quota).
 //     (Default true)
 //   ocr: Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads. (Default
 //     false)
 //   ocrLanguage: If ocr is true, hints at the language to use. Valid values are
 //     ISO 639-1 codes.
-//   pinned: Whether to pin the new revision. (Default false)
+//   pinned: Whether to pin the new revision. A file can have a maximum of 200
+//     pinned revisions. (Default false)
 //   removeParents: Comma-separated list of parent IDs to remove.
 //   setModifiedDate: Whether to set the modified date with the supplied
 //     modified date. (Default false)
@@ -628,6 +639,8 @@
 //  Required:
 //   fileId: The ID for the file in question.
 //  Optional:
+//   acknowledgeAbuse: Whether the user is acknowledging the risk of downloading
+//     known malware or other abusive files. (Default false)
 //   projection: This parameter is deprecated and has no function.
 //      kGTLDriveProjectionBasic: Deprecated
 //      kGTLDriveProjectionFull: Deprecated

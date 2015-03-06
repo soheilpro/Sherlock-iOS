@@ -58,9 +58,9 @@
 // The parsed email structure in the message parts.
 @property (retain) GTLGmailMessagePart *payload;
 
-// The entire email message in an RFC 2822 formatted string. Returned in
-// messages.get and drafts.get responses when the format=RAW parameter is
-// supplied.
+// The entire email message in an RFC 2822 formatted and base64url encoded
+// string. Returned in messages.get and drafts.get responses when the format=RAW
+// parameter is supplied.
 @property (copy) NSString *raw;  // GTLBase64 can encode/decode (probably web-safe format)
 
 // Estimated size in bytes of the message.
@@ -74,7 +74,7 @@
 // - The requested threadId must be specified on the Message or Draft.Message
 // you supply with your request.
 // - The References and In-Reply-To headers must be set in compliance with the
-// <a href="https://tools.ietf.org/html/rfc2822"RFC 2822 standard.
+// RFC 2822 standard.
 // - The Subject headers must match.
 @property (copy) NSString *threadId;
 

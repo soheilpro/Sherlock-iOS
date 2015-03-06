@@ -1,4 +1,4 @@
-/* Copyright (c) 2013 Google Inc.
+/* Copyright (c) 2014 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@
 // Documentation:
 //   https://developers.google.com/cloud-sql/docs/admin-api/
 // Classes:
-//   GTLSQLAdminIpConfiguration (0 custom class methods, 3 custom properties)
+//   GTLSQLAdminIpConfiguration (0 custom class methods, 4 custom properties)
 
 #if GTL_BUILT_AS_FRAMEWORK
   #import "GTL/GTLObject.h"
@@ -50,6 +50,9 @@
 
 // Whether the instance should be assigned an IP address or not.
 @property (retain) NSNumber *enabled;  // boolValue
+
+// This is always sql#ipConfiguration.
+@property (copy) NSString *kind;
 
 // Whether the mysqld should default to 'REQUIRE X509' for users connecting over
 // IP.
