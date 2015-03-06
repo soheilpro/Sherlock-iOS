@@ -50,6 +50,8 @@
 	<true/>
 	<key>UIFileSharingEnabled</key>
 	<true/>
+	<key>UILaunchStoryboardName</key>
+	<string>iPhone</string>
 	<key>UIMainStoryboardFile</key>
 	<string>iPhone</string>
 	<key>UIPrerenderedIcon</key>
