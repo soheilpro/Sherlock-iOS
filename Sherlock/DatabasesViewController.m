@@ -245,8 +245,9 @@
 
     [((AppDelegate*)[UIApplication sharedApplication].delegate) didOpenDatabase:self.selectedDatabase];
 
-    [viewController dismissModalViewControllerAnimated:NO];
-    [self dismissModalViewControllerAnimated:YES];
+    [viewController dismissViewControllerAnimated:NO completion:^{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
 
     return YES;
 }
