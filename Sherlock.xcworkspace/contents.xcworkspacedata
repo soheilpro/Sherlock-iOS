@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:GTL/GTL.xcodeproj">
+      location = "group:Google/Source/GTLCore.xcodeproj">
    </FileRef>
    <FileRef
       location = "container:Sherlock.xcodeproj">

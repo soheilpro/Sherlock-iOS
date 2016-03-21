@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5B1542AC199D5E1600C1E7D2 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B8942C617076DE600A618C7 /* SystemConfiguration.framework */; };
-		5B1542AE199D5EC500C1E7D2 /* GTMOAuth2ViewTouch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B1542AD199D5EC500C1E7D2 /* GTMOAuth2ViewTouch.xib */; };
-		5B1542B1199D5F0E00C1E7D2 /* GTLDrive_Sources.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1542B0199D5F0E00C1E7D2 /* GTLDrive_Sources.m */; };
 		5B1542B4199D616D00C1E7D2 /* GoogleDrive.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1542B3199D616D00C1E7D2 /* GoogleDrive.m */; };
 		5B1542B6199D6DE400C1E7D2 /* GoogleDrive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B1542B5199D6DE400C1E7D2 /* GoogleDrive@2x.png */; };
 		5B1542B9199D724000C1E7D2 /* GoogleDriveStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1542B8199D724000C1E7D2 /* GoogleDriveStorage.m */; };
@@ -24,7 +22,6 @@
 		5B4F2577170EE67400609904 /* Dropbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4F2576170EE67400609904 /* Dropbox.m */; };
 		5B51B31A199E09280040F2D9 /* StorageWithCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B51B319199E09280040F2D9 /* StorageWithCache.m */; };
 		5B59E1FE1708311400AEC98D /* DatabasesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B59E1FD1708311400AEC98D /* DatabasesViewController.m */; };
-		5B63BC23199E044E00179180 /* libGTLTouchStaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B63BC22199E044E00179180 /* libGTLTouchStaticLib.a */; };
 		5B8942D2170773EC00A618C7 /* PasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8942D1170773EC00A618C7 /* PasswordViewController.m */; };
 		5B8942D51707837800A618C7 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8942D41707837800A618C7 /* SettingsViewController.m */; };
 		5B9D48C117195AB80010F064 /* UIViewController+ActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B9D48BE17195AB80010F064 /* UIViewController+ActivityIndicator.m */; };
@@ -36,6 +33,9 @@
 		5BBDB016170B8B6100439235 /* UIView+Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBDB015170B8B6100439235 /* UIView+Animation.m */; };
 		5BBDB01A170B8C6800439235 /* TripleDES.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBDB019170B8C6800439235 /* TripleDES.m */; };
 		5BBDB01D170B95C100439235 /* NewPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBDB01C170B95C100439235 /* NewPasswordViewController.m */; };
+		5BC9D4F41C9F4D5900537FC3 /* GTL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BCC87C71C9F49A9002AD637 /* GTL.framework */; };
+		5BC9D4F61C9F4D8100537FC3 /* GTMOAuth2ViewTouch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BC9D4F51C9F4D8100537FC3 /* GTMOAuth2ViewTouch.xib */; };
+		5BC9D4F91C9F4DD800537FC3 /* GTLDrive_Sources.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9D4F71C9F4DD800537FC3 /* GTLDrive_Sources.m */; };
 		5BD5664218E6CD590077A954 /* DatabasesModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5664118E6CD590077A954 /* DatabasesModalViewController.m */; };
 		5BD5664618E6CE680077A954 /* EditFolderModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5664518E6CE680077A954 /* EditFolderModalViewController.m */; };
 		5BD5664A18E6D2D00077A954 /* EditItemModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5664918E6D2D00077A954 /* EditItemModalViewController.m */; };
@@ -50,7 +50,6 @@
 		5BF812A51706E83E00039E45 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF812A41706E83E00039E45 /* UIKit.framework */; };
 		5BF812A71706E83E00039E45 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF812A61706E83E00039E45 /* Foundation.framework */; };
 		5BF812A91706E83E00039E45 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF812A81706E83E00039E45 /* CoreGraphics.framework */; };
-		5BF812AF1706E83E00039E45 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5BF812AD1706E83E00039E45 /* InfoPlist.strings */; };
 		5BF812B11706E83E00039E45 /* Main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF812B01706E83E00039E45 /* Main.m */; };
 		5BF812B51706E83E00039E45 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF812B41706E83E00039E45 /* AppDelegate.m */; };
 		5BF812B71706E83E00039E45 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BF812B61706E83E00039E45 /* Default.png */; };
@@ -68,9 +67,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5B1542AD199D5EC500C1E7D2 /* GTMOAuth2ViewTouch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GTMOAuth2ViewTouch.xib; sourceTree = "<group>"; };
-		5B1542AF199D5F0E00C1E7D2 /* GTLDrive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLDrive.h; sourceTree = "<group>"; };
-		5B1542B0199D5F0E00C1E7D2 /* GTLDrive_Sources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTLDrive_Sources.m; sourceTree = "<group>"; };
 		5B1542B2199D616D00C1E7D2 /* GoogleDrive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleDrive.h; sourceTree = "<group>"; };
 		5B1542B3199D616D00C1E7D2 /* GoogleDrive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleDrive.m; sourceTree = "<group>"; };
 		5B1542B5199D6DE400C1E7D2 /* GoogleDrive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GoogleDrive@2x.png"; sourceTree = "<group>"; };
@@ -92,7 +88,6 @@
 		5B51B319199E09280040F2D9 /* StorageWithCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StorageWithCache.m; sourceTree = "<group>"; };
 		5B59E1FC1708311400AEC98D /* DatabasesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabasesViewController.h; sourceTree = "<group>"; };
 		5B59E1FD1708311400AEC98D /* DatabasesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabasesViewController.m; sourceTree = "<group>"; };
-		5B63BC22199E044E00179180 /* libGTLTouchStaticLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGTLTouchStaticLib.a; path = "GTL/build/Debug-iphoneos/libGTLTouchStaticLib.a"; sourceTree = "<group>"; };
 		5B8942C217076DD600A618C7 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		5B8942C417076DDE00A618C7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		5B8942C617076DE600A618C7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -119,6 +114,10 @@
 		5BBDB019170B8C6800439235 /* TripleDES.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TripleDES.m; sourceTree = "<group>"; };
 		5BBDB01B170B95C100439235 /* NewPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPasswordViewController.h; sourceTree = "<group>"; };
 		5BBDB01C170B95C100439235 /* NewPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPasswordViewController.m; sourceTree = "<group>"; };
+		5BC9D4F51C9F4D8100537FC3 /* GTMOAuth2ViewTouch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GTMOAuth2ViewTouch.xib; path = "Google/Deps/gtm-oauth2/Source/Touch/GTMOAuth2ViewTouch.xib"; sourceTree = SOURCE_ROOT; };
+		5BC9D4F71C9F4DD800537FC3 /* GTLDrive_Sources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GTLDrive_Sources.m; path = Google/Source/Services/Drive/Generated/GTLDrive_Sources.m; sourceTree = SOURCE_ROOT; };
+		5BC9D4F81C9F4DD800537FC3 /* GTLDrive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTLDrive.h; path = Google/Source/Services/Drive/Generated/GTLDrive.h; sourceTree = SOURCE_ROOT; };
+		5BCC87C71C9F49A9002AD637 /* GTL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GTL.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Sherlock-csdgltxrkkxoneagcywymizwrafn/Build/Products/Debug/GTL.framework"; sourceTree = "<group>"; };
 		5BD5664018E6CD590077A954 /* DatabasesModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabasesModalViewController.h; sourceTree = "<group>"; };
 		5BD5664118E6CD590077A954 /* DatabasesModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabasesModalViewController.m; sourceTree = "<group>"; };
 		5BD5664418E6CE680077A954 /* EditFolderModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditFolderModalViewController.h; sourceTree = "<group>"; };
@@ -145,7 +144,6 @@
 		5BF812A61706E83E00039E45 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5BF812A81706E83E00039E45 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		5BF812AC1706E83E00039E45 /* Sherlock-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Sherlock-Info.plist"; sourceTree = "<group>"; };
-		5BF812AE1706E83E00039E45 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5BF812B01706E83E00039E45 /* Main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Main.m; sourceTree = "<group>"; };
 		5BF812B21706E83E00039E45 /* Sherlock-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sherlock-Prefix.pch"; sourceTree = "<group>"; };
 		5BF812B31706E83E00039E45 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -177,7 +175,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B63BC23199E044E00179180 /* libGTLTouchStaticLib.a in Frameworks */,
+				5BC9D4F41C9F4D5900537FC3 /* GTL.framework in Frameworks */,
 				5B1542AC199D5E1600C1E7D2 /* SystemConfiguration.framework in Frameworks */,
 				5B1A481D170E13C600D81762 /* QuartzCore.framework in Frameworks */,
 				5B1A481C170E13C000D81762 /* Security.framework in Frameworks */,
@@ -488,11 +486,11 @@
 		5BF812A31706E83E00039E45 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5BCC87C71C9F49A9002AD637 /* GTL.framework */,
 				5B8942C217076DD600A618C7 /* CFNetwork.framework */,
 				5BF812A81706E83E00039E45 /* CoreGraphics.framework */,
 				5B1A481A170E139900D81762 /* DropboxSDK.framework */,
 				5BF812A61706E83E00039E45 /* Foundation.framework */,
-				5B63BC22199E044E00179180 /* libGTLTouchStaticLib.a */,
 				5B8942C817076DEC00A618C7 /* QuartzCore.framework */,
 				5B8942C417076DDE00A618C7 /* Security.framework */,
 				5B8942C617076DE600A618C7 /* SystemConfiguration.framework */,
@@ -522,10 +520,9 @@
 				5BF812BA1706E83E00039E45 /* Default-568h@2x.png */,
 				5BF812B61706E83E00039E45 /* Default.png */,
 				5BF812B81706E83E00039E45 /* Default@2x.png */,
-				5B1542AF199D5F0E00C1E7D2 /* GTLDrive.h */,
-				5B1542B0199D5F0E00C1E7D2 /* GTLDrive_Sources.m */,
-				5B1542AD199D5EC500C1E7D2 /* GTMOAuth2ViewTouch.xib */,
-				5BF812AD1706E83E00039E45 /* InfoPlist.strings */,
+				5BC9D4F71C9F4DD800537FC3 /* GTLDrive_Sources.m */,
+				5BC9D4F81C9F4DD800537FC3 /* GTLDrive.h */,
+				5BC9D4F51C9F4D8100537FC3 /* GTMOAuth2ViewTouch.xib */,
 				5BF812AC1706E83E00039E45 /* Sherlock-Info.plist */,
 				5BF812B21706E83E00039E45 /* Sherlock-Prefix.pch */,
 			);
@@ -595,8 +592,13 @@
 		5BF812971706E83E00039E45 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = Softtool;
+				TargetAttributes = {
+					5BF8129F1706E83E00039E45 = {
+						DevelopmentTeam = 68F7BYW5G2;
+					};
+				};
 			};
 			buildConfigurationList = 5BF8129A1706E83E00039E45 /* Build configuration list for PBXProject "Sherlock" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -620,9 +622,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B1542AE199D5EC500C1E7D2 /* GTMOAuth2ViewTouch.xib in Resources */,
+				5BC9D4F61C9F4D8100537FC3 /* GTMOAuth2ViewTouch.xib in Resources */,
 				5B1C1E011AA9963800BCD9B7 /* Images.xcassets in Resources */,
-				5BF812AF1706E83E00039E45 /* InfoPlist.strings in Resources */,
 				5BF812B71706E83E00039E45 /* Default.png in Resources */,
 				5BF812B91706E83E00039E45 /* Default@2x.png in Resources */,
 				5BF812BB1706E83E00039E45 /* Default-568h@2x.png in Resources */,
@@ -665,6 +666,7 @@
 				5B4466AB1708B12A00A42D7C /* LocalStorage.m in Sources */,
 				5B4466AE1708B20500A42D7C /* DropboxStorage.m in Sources */,
 				5B4466B11708C05D00A42D7C /* NewDatabaseViewController.m in Sources */,
+				5BC9D4F91C9F4DD800537FC3 /* GTLDrive_Sources.m in Sources */,
 				5BFB94CC170A138200459F8E /* EditFolderViewController.m in Sources */,
 				5B51B31A199E09280040F2D9 /* StorageWithCache.m in Sources */,
 				5BFB94D0170A279600459F8E /* EditItemViewController.m in Sources */,
@@ -677,7 +679,6 @@
 				5BBDB01D170B95C100439235 /* NewPasswordViewController.m in Sources */,
 				5BD5666318E742500077A954 /* FolderCell.m in Sources */,
 				5B4F2577170EE67400609904 /* Dropbox.m in Sources */,
-				5B1542B1199D5F0E00C1E7D2 /* GTLDrive_Sources.m in Sources */,
 				5B9D48C117195AB80010F064 /* UIViewController+ActivityIndicator.m in Sources */,
 				5B9D48C217195AB80010F064 /* UIViewController+Alert.m in Sources */,
 			);
@@ -686,14 +687,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		5BF812AD1706E83E00039E45 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5BF812AE1706E83E00039E45 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 		5BF812BC1706E83E00039E45 /* iPhone.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -716,19 +709,21 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					"GTL_BUILT_AS_FRAMEWORK=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-lxml2";
 				SDKROOT = iphoneos;
@@ -749,11 +744,12 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = "GTL_BUILT_AS_FRAMEWORK=1";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "-lxml2";
 				SDKROOT = iphoneos;
@@ -769,6 +765,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -776,14 +773,21 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sherlock/Sherlock-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"GTL_BUILT_AS_FRAMEWORK=1",
+				);
 				INFOPLIST_FILE = "Sherlock/Sherlock-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-lxml2",
 					"-ObjC",
 					"-all_load",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.soheilrashidi.sherlock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -798,6 +802,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -805,14 +810,17 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sherlock/Sherlock-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "GTL_BUILT_AS_FRAMEWORK=1";
 				INFOPLIST_FILE = "Sherlock/Sherlock-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-lxml2",
 					"-ObjC",
 					"-all_load",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.soheilrashidi.sherlock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;

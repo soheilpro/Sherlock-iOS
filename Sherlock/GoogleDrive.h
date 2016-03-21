@@ -7,7 +7,7 @@
 //
 
 #import "GTLDrive.h"
-#import "GTMOAuth2ViewControllerTouch.h"
+#import "GTL/GTMOAuth2ViewControllerTouch.h"
 #import <Foundation/Foundation.h>
 
 @interface GoogleDrive : NSObject

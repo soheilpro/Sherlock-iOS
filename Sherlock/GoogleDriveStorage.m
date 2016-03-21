@@ -27,7 +27,7 @@
 {
     NSString* query = [NSString stringWithFormat:@"fileExtension = '%@' and trashed=false", DB_FILE_EXTENSION];
 
-    [[GoogleDrive sharedGoogleDrive] findFilesWithQuery:query callback:^(GTLDriveFileList* files, NSError* error)
+    [[GoogleDrive sharedGoogleDrive] findFilesWithQuery:query callback:^(GTLDriveFileList* fileList, NSError* error)
     {
         if (error != nil)
         {
@@ -37,10 +37,10 @@
 
         NSMutableArray* databases = [[NSMutableArray alloc] init];
 
-        for (GTLDriveFile* file in files)
+        for (GTLDriveFile* file in fileList.files)
         {
             Database* database = [[Database alloc] init];
-            database.name = file.title;
+            database.name = file.name;
             database.metadata[@"file"] = file;
             database.storage = self;
 
@@ -65,7 +65,7 @@
     if (file == nil)
     {
         file = [GTLDriveFile object];
-        file.title = database.name;
+        file.name = database.name;
 
         [[GoogleDrive sharedGoogleDrive] createFile:file data:data mimeType:DB_FILE_MIMETYPE callback:^(NSError* error)
         {

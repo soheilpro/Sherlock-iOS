@@ -70,7 +70,6 @@ NSString *const kClientSecret = @"YOUR_CLIENT_SECRET";
 {
     GTLQueryDrive *query = [GTLQueryDrive queryForFilesList];
     query.q = q;
-    query.maxResults = INT_MAX;
 
     [self.service executeQuery:query completionHandler:^(GTLServiceTicket* ticket, GTLDriveFileList* files, NSError* error)
     {
@@ -80,7 +79,9 @@ NSString *const kClientSecret = @"YOUR_CLIENT_SECRET";
 
 - (void)readFile:(GTLDriveFile*)file callback:(void (^)(NSData* data, NSError* error))callback
 {
-    GTMHTTPFetcher *fetcher = [self.service.fetcherService fetcherWithURLString:file.downloadUrl];
+    NSString* fileURL = [NSString stringWithFormat:@"https://www.googleapis.com/drive/v3/files/%@?alt=media", file.identifier];
+
+    GTMSessionFetcher *fetcher = [self.service.fetcherService fetcherWithURLString:fileURL];
 
     [fetcher beginFetchWithCompletionHandler:callback];
 }
@@ -89,7 +90,7 @@ NSString *const kClientSecret = @"YOUR_CLIENT_SECRET";
 {
     GTLUploadParameters* uploadParameters = [GTLUploadParameters uploadParametersWithData:data MIMEType:mimeType];
 
-    GTLQueryDrive* query = [GTLQueryDrive queryForFilesInsertWithObject:file uploadParameters:uploadParameters];
+    GTLQueryDrive* query = [GTLQueryDrive queryForFilesCreateWithObject:file uploadParameters:uploadParameters];
     [self.service executeQuery:query completionHandler:^(GTLServiceTicket* ticket, GTLDriveFile* updatedFile, NSError* error)
     {
         callback(error);
